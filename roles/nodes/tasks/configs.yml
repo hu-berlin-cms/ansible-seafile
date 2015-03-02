@@ -1,0 +1,27 @@
+# This playbook contains the config file for the seafile nodes.
+
+- name: Configure nginx seafile conf
+  template: src=seafile.j2 dest=/etc/nginx/sites-available/seafile
+  notify:
+  - Reload nginx
+
+- name: configure memcached.conf
+  template: src=memcached.conf.j2 dest=/etc/memcached.conf
+
+- name: configure ccnet.conf
+  template: src=ccnet.conf.j2 dest=/data/seafile/ccnet/ccnet.conf
+
+- name: configure seahub_settings.py
+  template: src=seahub_settings.py.j2 dest=/data/seafile/seahub_settings.py
+
+- name: configure seafile.conf
+  template: src=seafile.conf.j2 dest=/data/seafile/seafile-data/seafile.conf
+
+- name: configure seafevents.conf
+  template: src=seafevents.conf.j2 dest=/data/seafile/pro-data/seafevents.conf
+
+- name: copy ceph.conf
+  file: src=ceph.conf dest=/etc/ceph/ceph.conf
+
+- name: copy client.seafile
+  file: src=client.seafile dest=/etc/ceph/client.seafile

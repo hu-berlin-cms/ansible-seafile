@@ -1,0 +1,27 @@
+[General]
+USER_NAME = {{ ccnet_general_user_name }}
+ID = 76b8d77ea4a83b76f3c0c74ed57270bf7aef0c2a
+NAME = filesync
+SERVICE_URL = {{ ccnet_general_service_url }}
+
+[Network]
+PORT = {{ ccnet_network_port }}
+
+[Client]
+PORT = {{ ccnet_client_port }}
+
+[Database]
+ENGINE = mysql
+HOST = {{ ccnet_database_host }}
+PORT = 3306
+USER = {{ ccnet_database_user }}
+PASSWD = {{ ccnet_database_passwd }}
+DB = ccnet-db
+CONNECTION_CHARSET = utf8
+
+[LDAP]
+#testbranch
+HOST = {{ ccnet_ldap_host }}
+BASE = {{ ccnet_ldap_base }}
+LOGIN_ATTR = {{ ccnet_ldap_login_attr }}
+USE_PAGED_RESULT = true

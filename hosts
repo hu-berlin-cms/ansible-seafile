@@ -1,0 +1,6 @@
+[db]
+141.20.237.149	ansible_connection=ssh	ansible_ssh_user=ubuntu
+
+[nodes]
+141.20.237.15	ansible_connection=ssh	ansible_ssh_user=ubuntu
+141.20.237.150	ansible_connection=ssh	ansible_ssh_user=ubuntu

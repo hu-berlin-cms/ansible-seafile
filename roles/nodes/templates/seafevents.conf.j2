@@ -1,0 +1,26 @@
+[DATABASE]
+type = mysql
+host = {{ seafevents_database_host }}
+port = 3306
+username = {{ seafevents_database_username }}
+password = {{ seafevents_database_password }}
+name = seahub-db
+
+
+
+[INDEX FILES]
+external_es_server = true
+es_host = {{ seafevents_index_files_es_host }}
+es_port = 9500
+enabled = true
+interval = 10m
+index_office_pdf = false
+
+[OFFICE CONVERTER]
+enabled = true
+workers = 1
+
+[SEAHUB EMAIL]
+enabled = true
+interval = 30m
+

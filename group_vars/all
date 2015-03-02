@@ -1,0 +1,52 @@
+---
+# Variables for all host groups
+
+server_name: filesync.ostack.hu-berlin.de
+db_server: 141.20.237.149
+bg_server: 192.168.1.30
+
+
+#ccnet.conf
+
+ccnet_general_user_name: filesync
+ccnet_general_service_url: https://filesync.ostack.hu-berlin.de
+ccnet_network_port: 10001
+ccnet_client_port: 13418
+ccnet_database_host: "{{ db_server }}"  #db server
+ccnet_database_user: seafile
+ccnet_database_passwd: 8thdCP}VrP6{4o}}QN9u
+ccnet_ldap_host: ldaps://ldapmaster.cms.hu-berlin.de/
+ccnet_ldap_base: ou=users,ou=filesync,ou=Server,ou=Computer- und Medienservice,o=Humboldt-Universitaet zu Berlin,c=de
+ccnet_ldap_login_attr: mail
+
+# seahub_settings.py
+
+seahub_settings_databases_user: "{{ ccnet_database_user }}"
+seahub_settings_databases_password: "{{ ccnet_database_passwd }}"
+seahub_settings_databases_host: "{{ db_server }}"
+seahub_settings_file_server_root: "{{ ccnet_general_service_url }}/seafhttp"
+seahub_settings_office_convertor_root: "http://{{ bg_server }}"
+
+# seafile.conf
+
+seafile_memcached_options: --SERVER=191.168.1.60 --POOL-MIN=10 --POOL-MAX=100
+seafile_network_port: 12001
+seafile_fileserver_port: 8082
+seafile_database_host: "{{ db_server }}"
+seafile_database_user: "{{ ccnet_database_user }}"
+seafile_database_password: "{{ ccnet_database_passwd }}"
+seafile_ceph_name: ceph
+seafile_ceph_config: /etc/ceph/ceph.conf
+seafile_ceph_client_id: seafile
+seafile_ceph_pool_block: seafile-blocks
+seafile_ceph_pool_commit: seafile-commits
+seafile_ceph_pool_fs: seafile-fs
+
+# seafevents.conf
+
+seafevents_database_host: "{{ db_server }}"
+seafevents_database_username: "{{ ccnet_database_user }}"
+seafevents_database_password: "{{ ccnet_database_passwd }}"
+seafevents_index_files_es_host: "{{ bg_server }}"
+
+

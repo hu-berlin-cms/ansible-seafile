@@ -1,0 +1,7 @@
+# This playbook contains all plays for the seafile nodes.
+
+- include: install.yml
+  tags: install
+
+- include: configs.yml
+  tags: configs

@@ -1,0 +1,24 @@
+#This playbook installs a clustersetup
+
+- name: apply common configuration to all nodes
+  hosts: all
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - common
+
+- name: deploy seafile and apply configuration
+  hosts: nodes
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - nodes
+
+- name: deploy MySQL and configure the databases
+  hosts: dbserver
+  remote_user: ubuntu
+
+  roles:
+    - db
