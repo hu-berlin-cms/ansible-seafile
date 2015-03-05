@@ -1,5 +1,13 @@
 #This playbook installs a clustersetup
 
+# update packet cache
+- hosts: all
+  tasks:
+  - apt:
+      cache_valid_time: 3600
+      update_cache: yes
+  sudo: yes
+
 - name: apply common configuration to all nodes
   hosts: all
   remote_user: ubuntu
