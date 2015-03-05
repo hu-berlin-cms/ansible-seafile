@@ -10,6 +10,11 @@
   notify:
   - Reload nginx
 
+- name: "nginx: disable default site"
+  file: state=absent dest=/etc/nginx/sites-enabled/default
+  notify:
+  - Reload nginx
+
 - name: "nginx: install certificate"
   copy: src={{ item }} dest=/etc/ssl/ owner=root group=root
   with_items:
