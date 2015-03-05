@@ -38,4 +38,4 @@
   tags: unarchive
 
 - name: copy seafile license
-  file: src=seafile-license.txt dest=/data/seafile/
+  copy: src=seafile-license.txt dest=/data/seafile/
