@@ -36,3 +36,6 @@
 - name: Copy Seafilestuff
   unarchive: src=seafile.tar dest=/data/
   tags: unarchive
+
+- name: copy seafile license
+  file: src=seafile-license.txt dest=/data/seafile/
