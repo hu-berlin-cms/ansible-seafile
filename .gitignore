@@ -1,3 +1,9 @@
+# Seafile files #
+#################
+roles/nodes/files/filesync-chain.pem
+roles/nodes/files/filesync-key.pem
+roles/nodes/files/seafile-current.tgz
+
 # Compiled source #
 ###################
 *.com
