@@ -30,11 +30,11 @@
 - name: Install memcached
   apt: name=memcached state=present
 
-- name: create /data
-  file: name=/data state=directory
+- name: create /data/seafile
+  file: name=/data/seafile state=directory
 
-- name: Copy Seafilestuff
-  unarchive: src=seafile.tar dest=/data/
+- name: copy current seafile blob
+  unarchive: src=seafile-current.tgz dest=/data/seafile
   tags: unarchive
 
 - name: copy seafile license
