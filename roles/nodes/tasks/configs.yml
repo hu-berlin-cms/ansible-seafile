@@ -5,6 +5,11 @@
   notify:
   - Reload nginx
 
+- name: "nginx: enable seafile site"
+  file: state=link src=/etc/nginx/sites-available/seafile dest=/etc/nginx/sites-enabled/seafile
+  notify:
+  - Reload nginx
+
 - name: configure memcached.conf
   template: src=memcached.conf.j2 dest=/etc/memcached.conf
 
