@@ -18,6 +18,9 @@
   notify:
   - Reload nginx
 
+- name: "nginx: hash_bucket_size fix"
+  lineinfile: dest=/etc/nginx/nginx.conf insertafter="http {" line="server_names_hash_bucket_size 64;" state=present
+
 - name: configure memcached.conf
   template: src=memcached.conf.j2 dest=/etc/memcached.conf
 
