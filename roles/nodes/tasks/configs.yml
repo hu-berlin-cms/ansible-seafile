@@ -70,6 +70,9 @@
 - name: configure seafevents.conf
   template: src=seafevents.conf.j2 dest=/data/seafile/pro-data/seafevents.conf
 
+- name: check /etc/ceph
+  file: state=directory dest=/etc/ceph
+
 - name: copy ceph.conf
   file: src=ceph.conf dest=/etc/ceph/ceph.conf
 
