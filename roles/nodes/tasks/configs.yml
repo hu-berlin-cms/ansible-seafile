@@ -74,7 +74,7 @@
   file: state=directory dest=/etc/ceph
 
 - name: copy ceph.conf
-  file: src=ceph.conf dest=/etc/ceph/ceph.conf
+  copy: src=ceph.conf dest=/etc/ceph/ceph.conf
 
 - name: copy client.seafile
-  file: src=client.seafile dest=/etc/ceph/client.seafile
+  copy: src=client.seafile dest=/etc/ceph/client.seafile
