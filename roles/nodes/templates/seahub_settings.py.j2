@@ -19,7 +19,7 @@ FILE_SERVER_ROOT = '{{ seahub_settings_file_server_root }}'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '192.168.1.60:11211',
+        'LOCATION': '{{ memcached_server }}:11211',
     }
 }
 

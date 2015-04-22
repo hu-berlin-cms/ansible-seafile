@@ -30,7 +30,8 @@ seahub_settings_office_convertor_root: "http://{{ bg_server }}"
 
 # seafile.conf
 
-seafile_memcached_options: --SERVER=191.168.1.60 --POOL-MIN=10 --POOL-MAX=100
+memcached_server: 192.168.1.60
+seafile_memcached_options: "--SERVER={{ memcached_server }} --POOL-MIN=10 --POOL-MAX=100"
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
 seafile_database_host: "{{ db_server }}"
