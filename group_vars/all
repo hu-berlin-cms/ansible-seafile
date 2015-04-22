@@ -4,6 +4,7 @@
 server_name: filesync.ostack.hu-berlin.de
 db_server: 141.20.237.149
 bg_server: 192.168.1.30
+seafile_base_dir: /data/seafile
 
 
 #ccnet.conf

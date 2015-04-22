@@ -41,7 +41,7 @@ server {
     }
 
     location /media {
-        root /data/seafile/seafile-server-latest/seahub;
+        root {{ seafile_base_dir }}/seafile-server-latest/seahub;
     }
 
     location /seafdav {

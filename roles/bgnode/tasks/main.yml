@@ -10,9 +10,9 @@
   apt: name=python3-uno state=present
 
 - name: configure seahub_settings.py
-  template: src=seahub_settings.py.j2 dest=/data/seafile/seahub_settings.py
+  template: src=seahub_settings.py.j2 dest={{ seafile_base_dir }}/seahub_settings.py
 
 - name: configure seafevents.conf
-  template: src=seafevents.conf.j2 dest=/data/seafile/pro-data/seafevents.conf
+  template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
 
 #TODO: restart seafile.sh, seahub.sh and start seafile-background-tasks.sh
