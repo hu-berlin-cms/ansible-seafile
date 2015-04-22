@@ -1,6 +1,6 @@
 # This playbook contains all plays for the seafile nodes.
 
-- include: install.yml
+- include: dependencies.yml
   tags: install
 
 - include: configs.yml

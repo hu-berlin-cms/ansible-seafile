@@ -1,7 +1,4 @@
-# This playbook installs packages for the seafile nodes
-
-#- name: add nameserver
-#  shell: echo "nameserver 141.20.1.3" >> /etc/resolv.conf
+# This playbook installs dependency packages for the seafile nodes
 
 - name: Install python2.7
   apt: name=python2.7 state=present
@@ -27,15 +24,7 @@
 - name: Install nginx
   apt: name=nginx state=present
 
+# FIXME
+# additional IP on seafile-node
 - name: Install memcached
   apt: name=memcached state=present
-
-- name: create {{ seafile_base_dir }}
-  file: name={{ seafile_base_dir }} state=directory
-
-- name: copy current seafile blob
-  unarchive: src=seafile-current.tgz dest={{ seafile_base_dir }}
-  tags: unarchive
-
-- name: copy seafile license
-  copy: src=seafile-license.txt dest={{ seafile_base_dir }}/
