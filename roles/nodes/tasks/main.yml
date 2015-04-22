@@ -1,7 +1,21 @@
 # This playbook contains all plays for the seafile nodes.
 
+# dependencies for all seafile nodes
 - include: dependencies.yml
   tags: install
 
-- include: configs.yml
-  tags: configs
+# configure ceph
+- include: ceph.yml
+
+# configure nginx
+- include: nginx.yml
+
+# configure golden image / master
+- include: master.yml
+  hosts: nodes[0]
+  tags: master
+
+# sync clones
+- include: clones.yml
+  hosts: nodes:!nodes[0]
+  tags: clones

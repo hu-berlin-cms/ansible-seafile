@@ -1,0 +1,34 @@
+# master node stuff
+
+- name: create {{ seafile_base_dir }}
+  file: name={{ seafile_base_dir }} state=directory
+
+- name: copy seafile license
+  copy: src=seafile-license.txt dest={{ seafile_base_dir }}/
+
+# TODO
+## check if initial config already exists
+### initialize cluster, if it doesn't (this is the hard part)
+
+- name: gather ccnet ID
+  shell: fgrep ID = {{ seafile_base_dir }}/ccnet/ccnet.conf | cut -d= -f 2
+  register: ccnet_id
+
+- name: gather seahub SECRET_KEY
+  shell: fgrep SECRET_KEY {{ seafile_base_dir }}/seahub_settings.py | cut -d\" -f 2
+  register: seahub_secret
+
+- name: configure ccnet.conf
+  template: src=ccnet.conf.j2 dest={{ seafile_base_dir }}/ccnet/ccnet.conf
+
+- name: configure seahub_settings.py
+  template: src=seahub_settings.py.j2 dest={{ seafile_base_dir }}/seahub_settings.py
+
+- name: configure seafile.conf
+  template: src=seafile.conf.j2 dest={{ seafile_base_dir }}/seafile-data/seafile.conf
+
+- name: copy seafdav.conf (default settings)
+  copy: src=seafdav.conf dest={{ seafile_base_dir }}/conf/
+
+- name: configure seafevents.conf
+  template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
