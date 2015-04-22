@@ -23,8 +23,3 @@
 
 - name: Install nginx
   apt: name=nginx state=present
-
-# FIXME
-# additional IP on seafile-node
-- name: Install memcached
-  apt: name=memcached state=present

@@ -4,3 +4,6 @@
 [nodes]
 141.20.237.15	ansible_connection=ssh	ansible_ssh_user=ubuntu
 141.20.237.150	ansible_connection=ssh	ansible_ssh_user=ubuntu
+
+[memcached]
+nodes[0]

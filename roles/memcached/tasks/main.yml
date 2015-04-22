@@ -1,0 +1,9 @@
+# install and configure memcached
+
+# FIXME
+# additional IP on seafile-node
+- name: Install memcached
+  apt: name=memcached state=present
+
+- name: configure memcached.conf
+  template: src=memcached.conf.j2 dest=/etc/memcached.conf
