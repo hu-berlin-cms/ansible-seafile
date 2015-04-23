@@ -1,9 +1,9 @@
 # clones of golden image
 #
-- name: create {{ seafile_base_dir }}
+- name: "create {{ seafile_base_dir }}"
   file: name={{ seafile_base_dir }} state=directory
 
-- name: sync from golden image
+- name: "sync from golden image"
   synchronize: >
     src={{ seafile_base_dir }} dest={{ seafile_base_dir }}
     delegate_to: nodes[0]

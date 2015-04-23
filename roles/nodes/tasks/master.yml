@@ -1,6 +1,6 @@
 # master node stuff
 
-- name: create {{ seafile_base_dir }}
+- name: "create {{ seafile_base_dir }}"
   file: name={{ seafile_base_dir }} state=directory
 
 - name: copy seafile license

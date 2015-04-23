@@ -3,9 +3,9 @@
 
 server_name: filesync.ostack.hu-berlin.de
 db_server: 141.20.237.149
-db_root_pw: {{ vaulted_db_root_pw }}
+db_root_pw: "{{ vaulted_db_root_pw }}"
 seafile_db_user: seafile
-seafile_db_pw: {{ vaulted_seafile_db_pw }}
+seafile_db_pw: "{{ vaulted_seafile_db_pw }}"
 bg_server: 192.168.1.30
 seafile_base_dir: /data/seafile
 
@@ -17,8 +17,8 @@ ccnet_general_service_url: https://filesync.ostack.hu-berlin.de
 ccnet_network_port: 10001
 ccnet_client_port: 13418
 ccnet_database_host: "{{ db_server }}"
-ccnet_database_user: {{ seafile_db_user }}
-ccnet_database_passwd: {{ seafile_db_pw }}
+ccnet_database_user: "{{ seafile_db_user }}"
+ccnet_database_passwd: "{{ seafile_db_pw }}"
 ccnet_ldap_host: ldaps://ldapmaster.cms.hu-berlin.de/
 ccnet_ldap_base: ou=users,ou=filesync,ou=Server,ou=Computer- und Medienservice,o=Humboldt-Universitaet zu Berlin,c=de
 ccnet_ldap_login_attr: mail
