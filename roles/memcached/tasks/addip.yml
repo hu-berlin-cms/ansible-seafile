@@ -1,0 +1,18 @@
+# additional IP on seafile-node (if no separate server)
+# FIXME cloud-image dependant
+- name: Add memcached ip to node
+  lineinfile: >
+    dest=/etc/network/interfaces.d/eth0.cfg
+    regexp="^\s*up ip a add .* dev eth0"
+    line="   up ip a add {{ memcached_server }} dev eth0"
+    insertafter=EOF
+    state=present
+  register: ip_config
+
+- name: reboot for changes to take effect
+  command: reboot
+  when: ip_config.changed
+
+- name: wait for ssh
+  local_action: wait_for host={{ inventory_hostname }} port=22 delay=60 timeout=240 state=started
+  when: ip_config.changed
