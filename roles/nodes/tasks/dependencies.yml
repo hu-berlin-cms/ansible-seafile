@@ -23,3 +23,6 @@
 
 - name: Install nginx
   apt: name=nginx state=present
+
+- name: Install rsync (needed for configstack)
+  apt: name=rsync state=present
