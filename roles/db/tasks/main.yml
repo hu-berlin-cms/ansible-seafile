@@ -39,7 +39,7 @@
     login_user=root
     login_password={{ db_root_pw }}
 - copy: src=avatar_uploaded.sql dest=/tmp
-- name: seahub-db: creating avatar_uploaded table
+- name: "seahub-db: creating avatar_uploaded table"
   mysql_db: >
     name=seahub-db
     state=import
