@@ -18,6 +18,7 @@
   shell: fgrep SECRET_KEY {{ seafile_base_dir }}/seahub_settings.py | cut -d\" -f 2
   register: seahub_secret
 
+- include_vars: dbconfig.yml
 - name: configure ccnet.conf
   template: src=ccnet.conf.j2 dest={{ seafile_base_dir }}/ccnet/ccnet.conf
 
