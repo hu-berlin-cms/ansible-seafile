@@ -64,5 +64,5 @@
   register: db_ips
 
 - name: restart mariadb
-  service: name=mysql-server state=restarted
+  service: name=mysql state=restarted
   when: db_ips.changed
