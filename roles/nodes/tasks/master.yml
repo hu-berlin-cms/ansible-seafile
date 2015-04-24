@@ -33,3 +33,11 @@
 
 - name: configure seafevents.conf
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
+
+- name: make sure ssh-agent works via sudo
+  lineinfile: >
+    dest=/etc/sudoers
+    state=present
+    insertafter='^Defaults.*env_reset'
+    line='Defaults\tenv_keep+=SSH_AUTH_SOCK'
+    validate='visudo -cf %s'
