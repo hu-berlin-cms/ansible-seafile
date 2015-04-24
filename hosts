@@ -1,9 +1,20 @@
 [db]
-141.20.237.149	ansible_connection=ssh	ansible_ssh_user=ubuntu
+192.168.1.108	ansible_connection=ssh	ansible_ssh_user=ubuntu
 
-[nodes]
-141.20.237.15	ansible_connection=ssh	ansible_ssh_user=ubuntu
-141.20.237.150	ansible_connection=ssh	ansible_ssh_user=ubuntu
+[master]
+192.168.1.107	ansible_connection=ssh	ansible_ssh_user=ubuntu
 
-[memcached]
-nodes[0]
+[clones]
+192.168.1.109	ansible_connection=ssh	ansible_ssh_user=ubuntu
+
+# background task node
+[background]
+
+[nodes:children]
+master
+clones
+background
+
+#[memcached]
+[memcached:children]
+master

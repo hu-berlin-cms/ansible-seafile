@@ -12,10 +12,10 @@
 
 # configure golden image / master
 - include: master.yml
-  hosts: nodes[0]
   tags: master
+  when: '"master" in group_names'
 
 # sync clones
 - include: clones.yml
-  hosts: nodes:!nodes[0]
   tags: clones
+  when: 'not "master" in group_names'
