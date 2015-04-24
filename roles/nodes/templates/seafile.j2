@@ -7,8 +7,8 @@ server {
 server {
     listen 443;
     ssl on;
-    ssl_certificate /etc/ssl/filesync-chain.pem;	# path to your cacert.pem
-    ssl_certificate_key /etc/ssl/filesync-key.pem;	# path to your privkey.pem
+    ssl_certificate /etc/ssl/seafile-chain.pem;	# path to your cacert.pem
+    ssl_certificate_key /etc/ssl/seafile-key.pem;	# path to your privkey.pem
     server_name filesync.ostack.hu-berlin.de;
 
     location / {
