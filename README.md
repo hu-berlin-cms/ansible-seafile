@@ -10,6 +10,16 @@ Ansible >=1.6 is needed (installing mariadb/mysql using Ansible 1.5.4 doesn't wo
 
 We assume you already have a ceph install.
 
+Files needed in files/ directory (see the README there):
+
+```
+ceph.conf
+client.seafile
+seafile-chain.pem
+seafile-key.pem
+seafile-license.txt
+```
+
 ## Create Ceph pools for Seafile
 
 Create pools:
