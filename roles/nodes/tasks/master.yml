@@ -11,12 +11,14 @@
 ### initialize cluster, if it doesn't (this is the hard part)
 
 - name: gather ccnet ID
-  shell: fgrep ID = {{ seafile_base_dir }}/ccnet/ccnet.conf | cut -d= -f 2
-  register: ccnet_id
+  shell: fgrep ID = {{ seafile_base_dir }}/ccnet/ccnet.conf | cut -d= -f 2 | xargs echo
+  register: ccnet_id_cmd
 
 - name: gather seahub SECRET_KEY
-  shell: fgrep SECRET_KEY {{ seafile_base_dir }}/seahub_settings.py | cut -d\" -f 2
-  register: seahub_secret
+  shell: fgrep SECRET_KEY {{ seafile_base_dir }}/seahub_settings.py | cut -d\" -f 2 | xargs echo
+  register: seahub_secret_cmd
+
+- set_fact: ccnet_id="{{ ccnet_id_cmd.stdout }}" seahub_secret="{{ seahub_secret_cmd.stdout }}"
 
 - include_vars: dbconfig.yml
 - name: configure ccnet.conf
