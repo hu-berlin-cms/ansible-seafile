@@ -6,9 +6,17 @@
 - name: copy seafile license
   copy: src=seafile-license.txt dest={{ seafile_base_dir }}/
 
-# TODO
-## check if initial config already exists
-### initialize cluster, if it doesn't (this is the hard part)
+# check if initial config already exists
+- name: check for existing config
+  stat: >
+    path="{{ seafile_base_dir }}/ccnet/ccnet.conf"
+    get_md5=no
+    get_checksum=no
+  register: ccnet_config
+
+# fail, when config doesn't exist
+- fail: msg="ccnet.conf doesn't exist. Cluster not initialized? Maybe you should run master-init.yml."
+  when: not ccnet_config.stat.exists
 
 - name: gather ccnet ID
   shell: fgrep ID = {{ seafile_base_dir }}/ccnet/ccnet.conf | cut -d= -f 2 | xargs echo
