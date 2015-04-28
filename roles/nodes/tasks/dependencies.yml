@@ -21,6 +21,9 @@
 - name: Install boto via pip
   pip: name=boto
 
+- name: Install libnss3
+  apt: name=libnss3 state=present
+
 - name: Install nginx
   apt: name=nginx state=present
 
