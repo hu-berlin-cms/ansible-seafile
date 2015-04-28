@@ -110,7 +110,7 @@ def main():
     seaset.create_seafile_server_symlink()
     seaset.set_file_perm()
 
-    module.exit_json(change=True)
+    module.exit_json(changed=True)
 
 
 # import module snippets
