@@ -1,0 +1,33 @@
+# cluster initialization
+
+- fail: msg="force_install not given. Run with -e force_install=true for a fresh install. THIS WILL REMOVE ALL CONTENTS from {{ seafile_base_dir }}"
+  when: not force_install|default(False)
+
+# wipe existing stuff for a clean start
+- name: "remove existing {{ seafile_base_dir }}"
+  file: name={{ seafile_base_dir }} state=absent
+
+- name: "create {{ seafile_base_dir }}"
+  file: name={{ seafile_base_dir }} state=directory
+
+# unarchive installer
+- name: extract seafile
+  unarchive: >
+    src="files/{{ installer_archive }}"
+    dest="{{ seafile_base_dir }}"
+
+# get install dir
+- name: get install dir
+  command: "ls -1 {{ seafile_base_dir }}"
+  register: install_dir_cmd
+
+- set_fact: install_dir="{{ install_dir_cmd.stdout }}"
+
+# run install module
+- name: init seafile master install
+  seafile-init: >
+    path="{{ seafile_base_dir }}"
+    subdir="{{ install_dir }}"
+    seafile_mysql_user="{{ seafile_db_user }}"
+    seafile_mysql_password="{{ seafile_db_pw }}"
+    mysql_host="{{ db_server }}"

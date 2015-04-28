@@ -3,9 +3,6 @@
 - name: "create {{ seafile_base_dir }}"
   file: name={{ seafile_base_dir }} state=directory
 
-- name: copy seafile license
-  copy: src=seafile-license.txt dest={{ seafile_base_dir }}/
-
 # check if initial config already exists
 - name: check for existing config
   stat: >
@@ -14,13 +11,18 @@
     get_checksum=no
   register: ccnet_config
 
-# fail, when config doesn't exist
-- fail: msg="ccnet.conf doesn't exist. Cluster not initialized? Maybe you should run master-init.yml."
+- include_vars: dbconfig.yml
+
+# run initial install, if config doesn't exist
+- include: initial_install.yml
   when: not ccnet_config.stat.exists
 
 - name: gather ccnet ID
   shell: fgrep ID = {{ seafile_base_dir }}/ccnet/ccnet.conf | cut -d= -f 2 | xargs echo
   register: ccnet_id_cmd
+
+- name: copy seafile license
+  copy: src=seafile-license.txt dest={{ seafile_base_dir }}/
 
 - name: gather seahub SECRET_KEY
   shell: fgrep SECRET_KEY {{ seafile_base_dir }}/seahub_settings.py | cut -d\" -f 2 | xargs echo
@@ -28,7 +30,6 @@
 
 - set_fact: ccnet_id="{{ ccnet_id_cmd.stdout }}" seahub_secret="{{ seahub_secret_cmd.stdout }}"
 
-- include_vars: dbconfig.yml
 - name: configure ccnet.conf
   template: src=ccnet.conf.j2 dest={{ seafile_base_dir }}/ccnet/ccnet.conf
 
@@ -43,6 +44,8 @@
 
 - name: configure seafevents.conf
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
+
+# TODO create admin after install
 
 - name: make sure ssh-agent works via sudo
   lineinfile: >

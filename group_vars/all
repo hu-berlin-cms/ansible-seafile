@@ -8,6 +8,7 @@ seafile_db_user: seafile
 seafile_db_pw: "{{ vaulted_seafile_db_pw }}"
 bg_server: 192.168.1.30
 seafile_base_dir: /data/seafile
+installer_archive: seafile-install.tar.gz
 
 
 #ccnet.conf

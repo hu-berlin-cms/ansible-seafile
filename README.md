@@ -18,6 +18,7 @@ client.seafile
 seafile-chain.pem
 seafile-key.pem
 seafile-license.txt
+seafile-install.tar.gz  # symlink to pro installer archive
 ```
 
 ## Create Ceph pools for Seafile
@@ -43,4 +44,11 @@ for pool in seafile-blocks seafile-commits seafile-fs; do ceph osd pool set $poo
 
 ```
 ceph auth get-or-create client.seafile mon 'allow r' osd 'allow rwx pool=seafile-blocks, allow rwx pool=seafile-commits, allow rwx pool=seafile-fs' -o client.seafile
+```
+
+
+# First Run (initial install)
+
+```
+ansible-playbook -i hosts -e force_install=true site.yaml
 ```
