@@ -10,6 +10,9 @@
 # configure nginx
 - include: nginx.yml
 
+# startup config
+- include: startup.yml
+
 # configure golden image / master
 - include: master.yml
   tags: master
@@ -19,3 +22,6 @@
 - include: clones.yml
   tags: clones
   when: 'not "master" in group_names'
+
+- name: start cluster
+  service: name=seafile-server state=started

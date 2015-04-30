@@ -1,0 +1,15 @@
+- name: Create init.d script
+  template: >
+    src=init-seafile-server.j2
+    dest=/etc/init.d/seafile-server
+    owner=root
+    group=root
+    mode=0755
+
+- name: Create upstart job
+  copy: >
+    src=seafile-server.conf
+    dest=/etc/init/
+    owner=root
+    group=root
+    mode=0644
