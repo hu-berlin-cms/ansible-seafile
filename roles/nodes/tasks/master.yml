@@ -74,6 +74,7 @@
 #- service: name=seafile-server state=started
 #  ignore_errors: yes  # seahub.sh not starting?
 - command: "{{ seafile_base_dir }}/seafile-server-latest/seafile.sh start"
+  when: not ccnet_config.stat.exists
 
 - include_vars: admin.yml
 - name: create admin user, if there is none
@@ -85,6 +86,7 @@
   when: not ccnet_config.stat.exists
 
 - service: name=seafile-server state=stopped
+  when: not ccnet_config.stat.exists
 
 - name: make sure ssh-agent works via sudo
   lineinfile: >
