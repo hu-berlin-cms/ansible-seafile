@@ -3,6 +3,7 @@
 roles/nodes/files/filesync-chain.pem
 roles/nodes/files/filesync-key.pem
 vars/dbconfig.yml
+vars/admin.yml
 /files/*
 
 # Compiled source #

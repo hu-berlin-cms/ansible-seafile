@@ -7,6 +7,9 @@ db_root_pw: "{{ vaulted_db_root_pw }}"
 seafile_user: root
 seafile_db_user: seafile
 seafile_db_pw: "{{ vaulted_seafile_db_pw }}"
+# admin user needs to be a valid email address
+seafile_admin_user: "admin@{{ server_name }}"
+seafile_admin_pw: "{{ vaulted_seafile_admin_pw }}"
 bg_server: 192.168.1.30
 seafile_base_dir: /data/seafile
 installer_archive: seafile-install.tar.gz

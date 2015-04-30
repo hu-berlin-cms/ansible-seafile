@@ -51,7 +51,6 @@
 - name: configure seafevents.conf
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
 
-# TODO create admin after install
 # FIXME config var, only do this, when needed
 # ldap workaround, see #940
 - name: ldap woraround
@@ -62,6 +61,26 @@
     - liblber-2.4.so.2
     - libldap-2.4.so.2
     - libsasl2.so.2
+
+# create admin after install
+# needed for init scripts to work
+- name: Create log directory
+  file: path="{{ seafile_base_dir }}/logs" state=directory
+
+#- service: name=seafile-server state=started
+#  ignore_errors: yes  # seahub.sh not starting?
+- command: "{{ seafile_base_dir }}/seafile-server-latest/seafile.sh start"
+
+- include_vars: admin.yml
+- name: create admin user, if there is none
+  seafile-admin-init: >
+    path="{{ seafile_base_dir }}"
+    subdir="{{ install_dir }}"
+    name="{{ seafile_admin_user }}"
+    password="{{ seafile_admin_pw }}"
+  when: not ccnet_config.stat.exists
+
+- service: name=seafile-server state=stopped
 
 - name: make sure ssh-agent works via sudo
   lineinfile: >
