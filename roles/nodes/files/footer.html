@@ -1,0 +1,26 @@
+{% load i18n %}
+<div id="footer" class="ovhd">           
+  <div class="items fleft">
+    <div class="item">
+      <h4>{% trans "Documents" %}</h4>
+      <ul>
+        <!-- <li><a href="http://seafile.com/{% if LANGUAGE_CODE != 'zh-cn' %}en/{% endif %}home/" target="_blank">{% trans "Introduction" %}</a></li> 
+		<li><a href="{{SITE_ROOT}}help/" target="_blank">{% trans "Help" %}</a></li> -->
+		<li><a href="https://blog.hu-berlin.de/filesync/hilfe-faq/" target="_blank" title="Hilfe - FAQ">{% trans "Help" %}</a></li>
+      </ul>
+    </div>
+    <div class="item">
+      <h4>{% trans "Client" %}</h4>
+      <ul>
+        <!--<li><a href="{% url 'download_client' %}">{% trans "Seafile for Windows, Mac and Linux" %}</a></li>-->
+		<li><a href="http://seafile.com/en/download/" target="_blank" title="Seafile Desktop &amp; Mobile Clients">Seafile für Windows, Mac und Linux &mdash; Android und iPhone (Seafile's official download page)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="other-info fright">
+    <p>{% trans "Server Version: " %}{{ seafile_version }}</p>
+    <p>© 2014 {% trans "Seafile" %}</p>
+    <!--<p><a href="http://seafile.com/{% if LANGUAGE_CODE != 'zh-cn' %}en/{% endif %}contact/" target="_blank">{% trans "Contact Us" %}</a></p>-->
+	<p><a href="https://blog.hu-berlin.de/filesync/kontakt/" target="_blank" title="Kontakt">Kontakt</a></p>
+  </div>
+</div>
