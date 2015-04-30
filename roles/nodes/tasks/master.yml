@@ -17,6 +17,12 @@
 - include: initial_install.yml
   when: not ccnet_config.stat.exists
 
+- name: remove unnecessary java dependency check
+  lineinfile: >
+    dest="{{ seafile_base_dir }}/seafile-server-latest/seafile.sh"
+    regexp="^\s*test_java;"
+    state=absent
+
 - name: gather ccnet ID
   shell: fgrep ID = {{ seafile_base_dir }}/ccnet/ccnet.conf | cut -d= -f 2 | xargs echo
   register: ccnet_id_cmd
@@ -46,6 +52,16 @@
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
 
 # TODO create admin after install
+# FIXME config var, only do this, when needed
+# ldap workaround, see #940
+- name: ldap woraround
+  file: >
+    name="{{ seafile_base_dir }}/seafile-server-latest/seafile/lib/{{ item }}"
+    state=absent
+  with_items:
+    - liblber-2.4.so.2
+    - libldap-2.4.so.2
+    - libsasl2.so.2
 
 - name: make sure ssh-agent works via sudo
   lineinfile: >
