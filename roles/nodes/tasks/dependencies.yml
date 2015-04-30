@@ -12,6 +12,9 @@
 - name: Install python-mysqldb
   apt: name=python-mysqldb state=present
 
+- name: Install python-memcache
+  apt: name=python-memcache state=present
+
 - name: Install python-flup
   apt: name=python-flup state=present
 
