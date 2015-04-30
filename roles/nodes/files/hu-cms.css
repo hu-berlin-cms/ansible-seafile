@@ -1,0 +1,249 @@
+/* =====================================================================
+******************************** Seafile *******************************
+* 
+* Additional styles for Seafile - HU CI 
+* https://filesync.cms.hu-berlin.de
+*
+* File: /data/seedatei/seahub-data/custom/hu-cms.css
+*
+* HU CI base style: 
+* https://www.cms.hu-berlin.de/portale/entwickler/css/
+*
+*
+* Karsten Asshauer - Computer- und Medienservice - HU Berlin 
+* Projekt Online-Speicher https://blogs.hu-berlin.de/filesync/
+* =================================================================== */
+
+
+/* ===[ Font ]===
+===================================================================== */
+
+/* Verdana font - no longer in use because of diverse element breaks, 
+e.g. top menu - fallback to seafile original
+font: 13px/1.5 Verdana, Arial, Helvetica, sans-serif; */
+
+/* body, input, textarea, button, select {
+	font-family: Verdana, sans-serif; } */
+/*	letter-spacing: -0.066em; /* workaround if Verdana is a must */
+
+/* ===[ Font Icons - FontAwesome - not yet in use ]===
+===================================================================== 
+
+.element:before {
+    color: #003366;
+    font-size: 18px;
+    padding-right: 0.5em;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+	color: #003366;
+}
+*/
+
+
+/* ===[ Colors ]===
+* Farben - Links, Navigation - seafile orange #ff9933
+===================================================================== */
+
+
+/* login*/
+.new-narrow-panel .hd {
+    background: none repeat scroll 0% 0% #CCD6E0;
+}
+
+
+/* header für  Test - Logo -  
+   see template - base-Test-Logo.html */
+#header-inner {
+	height: 42px;
+} 
+
+
+/* header für HU - Logo - not in use in testphase - 
+   see template - base-HU-Logo.html */
+/* #header-inner {
+    height: 88px;
+} */
+
+/* header Hintergrund */
+#header {
+    background-color: #CCD6E0;
+}
+
+/* Links */
+a {
+    color: #006699; /*#003366;*/
+}
+
+
+a:hover { 
+	color: #003366; /*#4477AA;*/
+}
+
+
+/* Header Navigation */
+#header .nav .a, #header .nav .a:visited {
+    color: /*#8A948F; #003366;*/ #006699;
+}
+
+#header .nav .a:hover {
+    color: #003366;
+}
+
+#header .nav .a.cur {
+    color: /*#000;*/ #003366;
+}
+
+
+
+#right-panel .hd, .tabnav, .repo-file-list-topbar, .wiki-top {
+    background: none repeat scroll 0% 0% #CCD6E0;
+}
+
+/* Breadcrumb Pfad 
+.path {
+    background-color: #CCD6E0;
+} */
+
+/* #view-hd, */
+
+#view-path-op, #file-op, #sf-commit-op {
+	background-color: #CCD6E0;
+}
+
+/* 
+h2 {
+    background-color: #FFFFFF;
+}
+*/
+
+
+
+/* Tabs - Profileinstellungen */
+.side-textnav-tabs .tab a {
+    color: #006699;
+}
+
+.side-textnav-tabs .tab-cur a, .side-textnav-tabs .tab a:hover {
+    color: #003366;
+}
+
+.side-textnav-tabs .tab a:hover {
+	text-decoration: underline;
+}
+
+
+
+.tabnav-tab-cur a, .tabnav-tab a:hover, .wiki-nav .cur-item .link, .wiki-nav .link:hover, #right-panel .hd .ui-state-active .a, #right-panel .hd .a:hover {
+    color: #006699;
+    border-bottom-color: #006699;
+}
+
+
+
+
+.side-tabnav-tabs .tab a {
+    color: #006699; /*#003366;*/
+}
+
+.side-tabnav-tabs .tab a:hover {
+    background-color: /*#feefb8;*/ #CCD6E0;
+}
+
+.side-tabnav-tabs .tab-cur a,
+.side-tabnav-tabs .tab-cur a:hover {
+    background-color: /*#feac74;*/ #CCD6E0;
+}
+
+.side-tabnav h3.hd, .side-tabnav .hd h3 {
+    color: #000;
+}
+
+
+
+.op-target {
+    color: #4477AA;
+}
+
+
+.info-item-top {
+    background: none repeat scroll 0% 0% #CCD6E0;
+	border-bottom: 1px solid #C5C5C5;
+}
+
+.group-hl {
+    background: /*#CCD6E0;*/ #FAFAFA;
+}
+
+/* Popup bei Upload, Links, Mitglieder etc. - seafile orange #EB8205; */
+.tab-popup-tabs-nav .ui-state-active .a, .tab-popup-tabs-nav .tab .a:hover {
+    color: #006699;
+    border-bottom-color: #006699;
+}
+
+
+/* Popup bei Ordner Teilen - Button */
+.ui-tabs .ui-tabs-panel {
+/*    display: block;*/
+	padding: 2.5em 1.8em;
+}
+
+
+/* Upload progress bar - seafile orange #e83 */
+.ui-progressbar-value,
+.progress .bar {
+    background:#003366;
+}
+
+
+/* Bibliothek - Listenansicht - Stern*/
+.file-item .icon-star {
+    color: #003366;
+}
+
+
+/* Modal Window - File Share + Download - Buttons */
+.left-right-tabs-nav .ui-state-active a {
+    background: none repeat scroll 0% 0% #CCD6E0;
+    color: #333;
+}
+
+.left-right-tabs-nav .ui-state-active a:hover {
+    background: none repeat scroll 0% 0% #003366;
+    color: #FFF;
+}
+
+.left-right-tabs-nav a {
+    background: none repeat scroll 0% 0% #CCD6E0;
+	color: #333;
+	margin-top: 15px;
+}
+
+
+.left-right-tabs-nav a:hover {
+    background: none repeat scroll 0% 0% #003366;
+	color: #FFF;
+	margin-top: 15px;
+}
+
+
+/* Bibliothek-Papierkorb - Go-Back Button*/
+.go-back:hover {
+    color: #003366;
+}
+
+/* Bibliothek-Verlauf - Details */
+#ls-ch a {
+    color: #006699;
+}
+
+
+/* Seiten Footer */
+#footer {
+    color: #636363;
+    border-top: 1px solid #CCD6E0;
+}
