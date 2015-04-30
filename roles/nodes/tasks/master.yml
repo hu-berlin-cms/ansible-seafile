@@ -51,6 +51,10 @@
 - name: configure seafevents.conf
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
 
+# Customization
+- name: copy seahub customizations
+  copy: src=seahub-custom/ dest={{ seafile_base_dir }}/seahub-data/custom
+
 # FIXME config var, only do this, when needed
 # ldap workaround, see #940
 - name: ldap woraround

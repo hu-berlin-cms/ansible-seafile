@@ -31,6 +31,7 @@ ccnet_ldap_login_attr: mail
 
 # seahub_settings.py
 
+seahub_custom_css: ''
 seahub_settings_databases_user: "{{ seafile_db_user }}"
 seahub_settings_databases_password: "{{ seafile_db_pw }}"
 seahub_settings_databases_host: "{{ db_server }}"
