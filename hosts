@@ -1,6 +1,21 @@
 [db]
-141.20.237.149	ansible_connection=ssh	ansible_ssh_user=ubuntu
+192.168.1.108	ansible_connection=ssh	ansible_ssh_user=ubuntu
+## WARNING: adjust group_vars/all db_server!
 
-[nodes]
-141.20.237.15	ansible_connection=ssh	ansible_ssh_user=ubuntu
-141.20.237.150	ansible_connection=ssh	ansible_ssh_user=ubuntu
+[master]
+192.168.1.107	ansible_connection=ssh	ansible_ssh_user=ubuntu
+
+[clones]
+192.168.1.109	ansible_connection=ssh	ansible_ssh_user=ubuntu
+
+# background task node
+[background]
+
+[nodes:children]
+master
+clones
+background
+
+#[memcached]
+[memcached:children]
+master

@@ -1,0 +1,12 @@
+Place the following files here:
+
+# ceph config
+ceph.conf
+client.seafile
+
+# HTTPS certificates (certificate chain and key)
+seafile-chain.pem
+seafile-key.pem
+
+# license file
+seafile-license.txt

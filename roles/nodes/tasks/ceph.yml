@@ -1,0 +1,10 @@
+# ceph stuff
+
+- name: check /etc/ceph
+  file: state=directory dest=/etc/ceph
+
+- name: copy ceph.conf
+  copy: src=ceph.conf dest=/etc/ceph/ceph.conf
+
+- name: copy client.seafile
+  copy: src=client.seafile dest=/etc/ceph/client.seafile

@@ -1,0 +1,25 @@
+- name: Configure nginx seafile conf
+  template: src=seafile.j2 dest=/etc/nginx/sites-available/seafile
+  notify:
+  - Reload nginx
+
+- name: "nginx: enable seafile site"
+  file: state=link src=/etc/nginx/sites-available/seafile dest=/etc/nginx/sites-enabled/seafile
+  notify:
+  - Reload nginx
+
+- name: "nginx: disable default site"
+  file: state=absent dest=/etc/nginx/sites-enabled/default
+  notify:
+  - Reload nginx
+
+- name: "nginx: install certificate"
+  copy: src={{ item }} dest=/etc/ssl/ owner=root group=root
+  with_items:
+    - seafile-chain.pem
+    - seafile-key.pem
+  notify:
+  - Reload nginx
+
+- name: "nginx: hash_bucket_size fix"
+  lineinfile: dest=/etc/nginx/nginx.conf insertafter="http {" line="server_names_hash_bucket_size 64;" state=present

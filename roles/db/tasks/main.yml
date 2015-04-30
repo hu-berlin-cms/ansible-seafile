@@ -1,0 +1,68 @@
+# install and configure mariadb db stuff
+
+# install mariadb
+- name: Install MariaDB server
+  apt: name=mariadb-server state=present
+
+- name: Install MariaDB client (for maintenance / debugging)
+  apt: name=mariadb-client state=present
+
+- name: Install stack requirements
+  apt: name=python-mysqldb state=present
+
+# configure initial mysql root pw
+- include_vars: dbconfig.yml
+## FIXME: changing root password in dbconfig doesn't work right now!
+- mysql_user: name=root password={{ db_root_pw }} state=present
+  ignore_errors: True
+
+# configure seafile databases
+- name: creating/checking ccnet-db
+  mysql_db: >
+    name=ccnet-db
+    encoding=utf8
+    state=present
+    login_user=root
+    login_password={{ db_root_pw }}
+- name: creating/checking seafile-db
+  mysql_db: >
+    name=seafile-db
+    encoding=utf8
+    state=present
+    login_user=root
+    login_password={{ db_root_pw }}
+- name: creating/checking seahub-db
+  mysql_db: >
+    name=seahub-db
+    encoding=utf8
+    state=present
+    login_user=root
+    login_password={{ db_root_pw }}
+- copy: src=avatar_uploaded.sql dest=/tmp
+- name: "seahub-db: creating avatar_uploaded table"
+  mysql_db: >
+    name=seahub-db
+    state=import
+    target=/tmp/avatar_uploaded.sql
+    login_user=root
+    login_password={{ db_root_pw }}
+
+# configure seafile database user
+- name: configure seafile database user
+  mysql_user: >
+    name={{ seafile_db_user }}
+    password={{ seafile_db_pw }}
+    host={{ item }}
+    priv=ccnet-db.*:ALL/seafile-db.*:ALL/seahub-db.*:ALL
+    state=present
+    login_user=root
+    login_password={{ db_root_pw }}
+  with_items: groups['nodes'] + ['127.0.0.1', 'localhost']
+
+- name: bind mariadb to all IPs
+  lineinfile: "dest=/etc/mysql/my.cnf regexp='^bind-address' line='bind-address		= 0.0.0.0'"
+  register: db_ips
+
+- name: restart mariadb
+  service: name=mysql state=restarted
+  when: db_ips.changed

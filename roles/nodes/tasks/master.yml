@@ -1,0 +1,91 @@
+# master node stuff
+
+- name: "create {{ seafile_base_dir }}"
+  file: name={{ seafile_base_dir }} state=directory
+
+# check if initial config already exists
+- name: check for existing config
+  stat: >
+    path="{{ seafile_base_dir }}/ccnet/ccnet.conf"
+    get_md5=no
+    get_checksum=no
+  register: ccnet_config
+
+- include_vars: dbconfig.yml
+
+# run initial install, if config doesn't exist
+- include: initial_install.yml
+  when: not ccnet_config.stat.exists
+
+- name: remove unnecessary java dependency check
+  lineinfile: >
+    dest="{{ seafile_base_dir }}/seafile-server-latest/seafile.sh"
+    regexp="^\s*test_java;"
+    state=absent
+
+- name: gather ccnet ID
+  shell: fgrep ID = {{ seafile_base_dir }}/ccnet/ccnet.conf | cut -d= -f 2 | xargs echo
+  register: ccnet_id_cmd
+
+- name: copy seafile license
+  copy: src=seafile-license.txt dest={{ seafile_base_dir }}/
+
+- name: gather seahub SECRET_KEY
+  shell: fgrep SECRET_KEY {{ seafile_base_dir }}/seahub_settings.py | cut -d\" -f 2 | xargs echo
+  register: seahub_secret_cmd
+
+- set_fact: ccnet_id="{{ ccnet_id_cmd.stdout }}" seahub_secret="{{ seahub_secret_cmd.stdout }}"
+
+- name: configure ccnet.conf
+  template: src=ccnet.conf.j2 dest={{ seafile_base_dir }}/ccnet/ccnet.conf
+
+- name: configure seahub_settings.py
+  template: src=seahub_settings.py.j2 dest={{ seafile_base_dir }}/seahub_settings.py
+
+- name: configure seafile.conf
+  template: src=seafile.conf.j2 dest={{ seafile_base_dir }}/seafile-data/seafile.conf
+
+- name: copy seafdav.conf (default settings)
+  copy: src=seafdav.conf dest={{ seafile_base_dir }}/conf/
+
+- name: configure seafevents.conf
+  template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
+
+# FIXME config var, only do this, when needed
+# ldap workaround, see #940
+- name: ldap woraround
+  file: >
+    name="{{ seafile_base_dir }}/seafile-server-latest/seafile/lib/{{ item }}"
+    state=absent
+  with_items:
+    - liblber-2.4.so.2
+    - libldap-2.4.so.2
+    - libsasl2.so.2
+
+# create admin after install
+# needed for init scripts to work
+- name: Create log directory
+  file: path="{{ seafile_base_dir }}/logs" state=directory
+
+#- service: name=seafile-server state=started
+#  ignore_errors: yes  # seahub.sh not starting?
+- command: "{{ seafile_base_dir }}/seafile-server-latest/seafile.sh start"
+
+- include_vars: admin.yml
+- name: create admin user, if there is none
+  seafile-admin-init: >
+    path="{{ seafile_base_dir }}"
+    subdir="{{ install_dir }}"
+    name="{{ seafile_admin_user }}"
+    password="{{ seafile_admin_pw }}"
+  when: not ccnet_config.stat.exists
+
+- service: name=seafile-server state=stopped
+
+- name: make sure ssh-agent works via sudo
+  lineinfile: >
+    dest=/etc/sudoers
+    state=present
+    insertafter='^Defaults.*env_reset'
+    line='Defaults\tenv_keep+=SSH_AUTH_SOCK'
+    validate='visudo -cf %s'

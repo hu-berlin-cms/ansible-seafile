@@ -1,7 +1,27 @@
 # This playbook contains all plays for the seafile nodes.
 
-- include: install.yml
+# dependencies for all seafile nodes
+- include: dependencies.yml
   tags: install
 
-- include: configs.yml
-  tags: configs
+# configure ceph
+- include: ceph.yml
+
+# configure nginx
+- include: nginx.yml
+
+# startup config
+- include: startup.yml
+
+# configure golden image / master
+- include: master.yml
+  tags: master
+  when: '"master" in group_names'
+
+# sync clones
+- include: clones.yml
+  tags: clones
+  when: 'not "master" in group_names'
+
+- name: start cluster
+  service: name=seafile-server state=started

@@ -1,0 +1,12 @@
+# install and configure memcached
+
+# additional IP on seafile-node (if no separate server)
+# FIXME cloud-image dependant
+- include: addip.yml
+  when: inventory_hostname in groups['nodes']
+
+- name: Install memcached
+  apt: name=memcached state=present
+
+- name: Configure memcached.conf
+  template: src=memcached.conf.j2 dest=/etc/memcached.conf

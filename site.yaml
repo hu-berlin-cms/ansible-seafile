@@ -16,6 +16,22 @@
   roles:
     - common
 
+- name: deploy and configure memcached server
+  hosts: memcached
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - memcached
+
+- name: deploy MySQL and configure the databases
+  hosts: db
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - db
+
 - name: deploy seafile and apply configuration
   hosts: nodes
   remote_user: ubuntu
@@ -23,10 +39,3 @@
 
   roles:
     - nodes
-
-- name: deploy MySQL and configure the databases
-  hosts: dbserver
-  remote_user: ubuntu
-
-  roles:
-    - db
