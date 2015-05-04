@@ -13,7 +13,8 @@ seafile_admin_pw: "{{ vaulted_seafile_admin_pw }}"
 bg_server: 192.168.1.30
 seafile_base_dir: /data/seafile
 installer_archive: seafile-install.tar.gz
-fastcgi: true
+# fastcgi needs to be String! (surrounded by quotes)
+fastcgi: "true"
 
 
 #ccnet.conf
