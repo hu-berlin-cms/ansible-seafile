@@ -52,8 +52,14 @@
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
 
 # Customization
+- name: make sure customization folder exists
+  file: path={{ seafile_base_dir }}/seafile-server-latest/seahub/media/custom state=directory
 - name: copy seahub customizations
-  copy: src=seahub-custom/ dest={{ seafile_base_dir }}/seahub-data/custom
+  copy: src=seahub-custom/ dest={{ seafile_base_dir }}/seafile-server-latest/seahub/media/custom/
+- name: make sure template folder exists
+  file: path="{{ seafile_base_dir }}/seahub-data/custom/templates" state=directory
+- name: copy seahub templates
+  copy: src=seahub-templates/ dest={{ seafile_base_dir }}/seahub-data/custom/templates
 
 # FIXME config var, only do this, when needed
 # ldap workaround, see #940
