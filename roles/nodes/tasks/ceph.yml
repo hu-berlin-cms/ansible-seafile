@@ -8,3 +8,6 @@
 
 - name: copy client.seafile
   copy: src=client.seafile dest=/etc/ceph/client.seafile
+
+- name: install ceph dependencies
+  apt: name=python-ceph state=present

@@ -23,5 +23,9 @@
   tags: clones
   when: 'not "master" in group_names'
 
+# needed for init scripts to work
+- name: make sure log directory exists
+  file: path="{{ seafile_base_dir }}/logs" state=directory
+
 - name: start cluster
   service: name=seafile-server state=started
