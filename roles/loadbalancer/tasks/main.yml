@@ -1,0 +1,37 @@
+- name: Install haproxy
+  apt: name=haproxy state=present
+
+- name: Configure haproxy
+  template: >
+    src=haproxy.cfg.j2
+    dest=/etc/haproxy/haproxy.cfg
+    mode=0644
+
+- name: enable haproxy
+  lineinfile: >
+    dest=/etc/default/haproxy
+    regexp="^ENABLED="
+    line="ENABLED=1"
+
+- name: start haproxy
+  service: name=haproxy state=started
+
+## haproxyctl
+- name: install git
+  apt: name=git state=present
+
+- name: install python2.7
+  apt: name=python2.7 state=present
+
+- name: Install python-setuptools
+  apt: name=python-setuptools state=present
+
+- name: git neurogeek/haproxyctl repo
+  git: >
+    repo=https://github.com/neurogeek/haproxyctl.git
+    dest=/opt/haproxy
+  register: get_haproxyctl
+
+- name: install haproxyctl
+  command: python setup.py install chdir=/opt/haproxy
+  when: get_haproxyctl.changed

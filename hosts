@@ -16,6 +16,8 @@ master
 clones
 background
 
+[loadbalancer]
+
 #[memcached]
 [memcached:children]
 master

@@ -39,3 +39,15 @@
 
   roles:
     - nodes
+
+
+- name: deploy loadbalancer
+  hosts: loadbalancer
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - loadbalancer
+
+  tags:
+    - loadbalancer
