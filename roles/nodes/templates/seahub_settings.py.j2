@@ -43,3 +43,19 @@ REST_FRAMEWORK = {
 }
 
 BRANDING_CSS = '{{ seahub_custom_css }}'
+
+{% if seahub_settings_mail %} #TODO test
+EMAIL_USE_TLS = False
+EMAIL_HOST = '{{ seahub_settings_email_host }}' # smpt server
+EMAIL_HOST_USER = '{{ seahub_settings_email_host_user }}'   # username and domain
+EMAIL_HOST_PASSWORD = '{{ seahub_settings_email_host_password }}'    # password
+EMAIL_PORT = '{{ seahub_settings_email_port }}'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+{% endif %}
+
+{% if seahub_settings_cloud %}
+# Enable cloude mode and hide `Organization` tab.
+CLOUD_MODE = True
+{% endif %}
+

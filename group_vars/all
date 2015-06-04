@@ -38,6 +38,16 @@ seahub_settings_databases_password: "{{ seafile_db_pw }}"
 seahub_settings_databases_host: "{{ db_server }}"
 seahub_settings_file_server_root: "{{ ccnet_general_service_url }}/seafhttp"
 seahub_settings_office_convertor_root: "http://{{ bg_server }}"
+#set True if you want Email Notifications on Seahub
+seahub_settings_mail: False
+seahub_settings_email_use_tls = False
+seahub_settings_email_host = smtp.example.com        # smpt server
+seahub_settings_email_host_user = username@example.com    # username and domain
+seahub_settings_email_host_password = password    # password
+seahub_settings_email_port = 25
+#cloud mode. set True to hide organization tab. useful for big ldaps or unknown user base
+seahub_settings_cloud: False
+
 
 # seafile.conf
 
