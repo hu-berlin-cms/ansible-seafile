@@ -27,8 +27,15 @@ OFFICE_CONVERTOR_ROOT = '{{ seahub_settings_office_convertor_root }}'
 
 AVATAR_FILE_STORAGE = 'seahub.base.database_storage.DatabaseStorage'
 
+{% if seahub_settings_enable_thumbnail %}
 # Enable or disable thumbnails
-ENABLE_THUMBNAIL = True
+ENABLE_THUMBNAIL = seahub_settings_enable_thumbnail
+# Absolute filesystem path to the directory that will hold thumbnail files.
+THUMBNAIL_ROOT = '{{ seahub_settings_thumbnail_root }}'
+THUMBNAIL_EXTENSION = '{{ seahub_settings_thumbnail_extension }}'
+THUMBNAIL_DEFAULT_SIZE = '{{ seahub_settings_thumbnail_default_size }}'
+PREVIEW_DEFAULT_SIZE = '{{ seahub_settings_preview_default_size }}'
+{% endif %}
 
 # disable throttling
 REST_FRAMEWORK = {
@@ -42,20 +49,61 @@ REST_FRAMEWORK = {
     },
 }
 
-BRANDING_CSS = '{{ seahub_custom_css }}'
 
 {% if seahub_settings_mail %} #TODO test
-EMAIL_USE_TLS = False
+EMAIL_USE_TLS = {{ seahub_settings_email_use_tls }}
 EMAIL_HOST = '{{ seahub_settings_email_host }}' # smpt server
 EMAIL_HOST_USER = '{{ seahub_settings_email_host_user }}'   # username and domain
 EMAIL_HOST_PASSWORD = '{{ seahub_settings_email_host_password }}'    # password
 EMAIL_PORT = '{{ seahub_settings_email_port }}'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = '{{ seahub_settings_default_from_email }}'
+SERVER_EMAIL = '{{ seahub_settings_server_email }}'
+# Whether to send email when a system admin adding a new member. Default is `True`.
+# NOTE: since version 1.4.
+SEND_EMAIL_ON_ADDING_SYSTEM_MEMBER = {{ seahub_settings_send_email_on_adding_system_member }}
+# Whether to send email when a system admin resetting a user's password. Default is `True`.
+# NOTE: since version 1.4.
+SEND_EMAIL_ON_RESETTING_USER_PASSWD = {{ seahub_settings_send_email_on_resetting_user_passwd }}
 {% endif %}
 
 {% if seahub_settings_cloud %}
 # Enable cloude mode and hide `Organization` tab.
 CLOUD_MODE = True
 {% endif %}
+
+{% if seahub_settings_password %}
+# mininum length for password of encrypted library
+REPO_PASSWORD_MIN_LENGTH = {{ seahub_settings_repo_password_min_length }}
+# mininum length for user's password
+USER_PASSWORD_MIN_LENGTH = {{ seahub_settings_user_password_min_length }}
+# LEVEL based on four types of input:
+# num, upper letter, lower letter, other symbols
+# '3' means password must have at least 3 types of the above.
+USER_PASSWORD_STRENGTH_LEVEL = {{ seahub_settings_user_password_strength_level }}
+# default False, only check USER_PASSWORD_MIN_LENGTH
+# when True, check password strength level, STRONG(or above) is allowed
+USER_STRONG_PASSWORD_REQUIRED = {{ seahub_settings_user_strong_password_required }}
+{% endif %}
+
+# Set this to seahub website's URL. This URL is contained in email notifications.
+SITE_BASE = '{{ seahub_settings_site_base }}'
+# Set this to your website's name. This is contained in email notifications.
+SITE_NAME = '{{ seahub_settings_site_name }}'
+# Set seahub website's title
+SITE_TITLE = '{{ seahub_settings_site_title }}'
+# If you don't want to run seahub website on your site's root path, set this option to your preferred path.
+# e.g. setting it to '/seahub/' would run seahub on http://example.com/seahub/.
+SITE_ROOT = '{{ seahub_settings_site_root }}'
+BRANDING_CSS = '{{ seahub_settings_custom_css }}'
+LOGO_PATH = '{{ seahub_settings_logo_path }}'
+LOGO_URL = '{{ seahub_settings_logo_url }}'
+
+# Age of cookie, in seconds (default: 2 weeks).
+SESSION_COOKIE_AGE = {{ seahub_settings_session_cookie_age }}
+# Whether to save the session data on every request.
+SESSION_SAVE_EVERY_REQUEST = {{ seahub_settings_session_save_every_request }}
+# Whether a user's session cookie expires when the Web browser is closed.
+SESSION_EXPIRE_AT_BROWSER_CLOSE = {{ seahub_settings_session_expire_at_browser_close }}
+# Using server side crypto by default, otherwise, let user choose crypto method.
+FORCE_SERVER_CRYPTO = {{ seahub_settings_force_server_crypto }}
 

@@ -32,7 +32,6 @@ ccnet_ldap_login_attr: mail
 
 # seahub_settings.py
 
-seahub_custom_css: ''
 seahub_settings_databases_user: "{{ seafile_db_user }}"
 seahub_settings_databases_password: "{{ seafile_db_pw }}"
 seahub_settings_databases_host: "{{ db_server }}"
@@ -40,14 +39,43 @@ seahub_settings_file_server_root: "{{ ccnet_general_service_url }}/seafhttp"
 seahub_settings_office_convertor_root: "http://{{ bg_server }}"
 #set True if you want Email Notifications on Seahub
 seahub_settings_mail: False
-seahub_settings_email_use_tls = False
-seahub_settings_email_host = smtp.example.com        # smpt server
-seahub_settings_email_host_user = username@example.com    # username and domain
-seahub_settings_email_host_password = password    # password
+seahub_settings_email_use_tls: True
+seahub_settings_email_host: mailhost.cms.hu-berlin.de        # smpt server
+seahub_settings_email_host_user: ''    # username and domain
+seahub_settings_email_host_password: ''    # password
 seahub_settings_email_port = 25
+seahub_settings_default_from_email: filesync@cms.hu-berlin.de
+seahub_settings_server_email: EMAIL_HOST_USER
+seahub_settings_send_email_on_adding_system_member: True
+seahub_settings_send_email_on_resetting_user_passwd: True
+seahub_settings_
 #cloud mode. set True to hide organization tab. useful for big ldaps or unknown user base
 seahub_settings_cloud: False
-
+#password options. set true to use
+seahub_settings_password: False
+seahub_settings_repo_password_min_length: 8
+seahub_settings_user_password_min_length: 6
+seahub_settings_user_password_strength_level: 3
+seahub_settings_user_strong_password_required: False
+#site options
+seahub_settings_site_base: "https://{{ server_name }}/"
+seahub_settings_site_name: hu-berlin.de
+seahub_settings_site_title: Seafile - Online-Speicher Test - CMS - HU Berlin
+seahub_settings_site_root: /
+seahub_settings_custom_css: custom/hu-cms.css
+seahub_settings_logo_path: custom/test-sign-75.png
+seahub_settings_logo_url: "{{ seahub_settings_site_base }}"
+#thumbnail options
+seahub_settings_enable_thumbnail: True
+seahub_settings_thumbnail_root: /haiwen/seahub-data/thumbnail/thumb/
+seahub_settings_thumbnail_extension: png
+seahub_settings_thumbnail_default_size: 24
+seahub_settings_preview_default_size: 100
+#session options
+seahub_settings_session_cookie_age: "60 * 60 * 24 * 7 * 2"
+seahub_settings_session_save_every_request: False
+seahub_settings_session_expire_at_browser_close: False
+seahub_settings_force_server_crypto: True
 
 # seafile.conf
 
