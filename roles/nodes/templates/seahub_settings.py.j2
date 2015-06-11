@@ -50,7 +50,7 @@ REST_FRAMEWORK = {
 }
 
 
-{% if seahub_settings_mail %} #TODO test
+{% if seahub_settings_mail %}
 EMAIL_USE_TLS = {{ seahub_settings_email_use_tls }}
 EMAIL_HOST = '{{ seahub_settings_email_host }}' # smpt server
 EMAIL_HOST_USER = '{{ seahub_settings_email_host_user }}'   # username and domain
