@@ -3,6 +3,7 @@
 
 server_name: filesync.ostack.hu-berlin.de
 db_server: 141.20.237.149
+db_port: 3306
 db_root_pw: "{{ vaulted_db_root_pw }}"
 seafile_user: root
 seafile_db_user: seafile
@@ -24,6 +25,7 @@ ccnet_general_service_url: https://filesync.ostack.hu-berlin.de
 ccnet_network_port: 10001
 ccnet_client_port: 13418
 ccnet_database_host: "{{ db_server }}"
+ccnet_database_port: "{{ db_port }}"
 ccnet_database_user: "{{ seafile_db_user }}"
 ccnet_database_passwd: "{{ seafile_db_pw }}"
 ccnet_ldap_host: ldaps://ldapmaster.cms.hu-berlin.de/
@@ -35,6 +37,7 @@ ccnet_ldap_login_attr: mail
 seahub_settings_databases_user: "{{ seafile_db_user }}"
 seahub_settings_databases_password: "{{ seafile_db_pw }}"
 seahub_settings_databases_host: "{{ db_server }}"
+seahub_settings_databases_port: "{{ db_port }}"
 seahub_settings_file_server_root: "{{ ccnet_general_service_url }}/seafhttp"
 seahub_settings_office_convertor_root: "http://{{ bg_server }}"
 #set True if you want Email Notifications on Seahub
@@ -83,6 +86,7 @@ seafile_memcached_options: "--SERVER={{ memcached_server }} --POOL-MIN=10 --POOL
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
 seafile_database_host: "{{ db_server }}"
+seafile_database_port: "{{ db_port }}"
 seafile_database_user: "{{ seafile_db_user }}"
 seafile_database_password: "{{ seafile_db_pw }}"
 seafile_ceph_name: ceph
@@ -95,6 +99,7 @@ seafile_ceph_pool_fs: seafile-fs
 # seafevents.conf
 
 seafevents_database_host: "{{ db_server }}"
+seafevents_database_port: "{{ db_port }}"
 seafevents_database_username: "{{ seafile_db_user }}"
 seafevents_database_password: "{{ seafile_db_pw }}"
 seafevents_index_files_es_host: "{{ bg_server }}"

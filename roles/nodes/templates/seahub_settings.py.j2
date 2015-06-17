@@ -7,7 +7,7 @@ DATABASES = {
         'USER': '{{ seahub_settings_databases_user }}',
         'PASSWORD': '{{ seahub_settings_databases_password }}',
         'HOST': '{{ seahub_settings_databases_host }}',
-        'PORT': '3306',
+        'PORT': '{{ seahub_settings_databases_port }}',
         'OPTIONS': {
             'init_command': 'SET storage_engine=INNODB',
         }
