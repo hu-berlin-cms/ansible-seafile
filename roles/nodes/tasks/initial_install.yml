@@ -32,3 +32,6 @@
     seafile_mysql_password="{{ seafile_db_pw }}"
     mysql_host="{{ db_server }}"
     mysql_port="{{ db_port }}"
+    ccnet_db_name="{{ ccnet_database_name }}"
+    seafile_db_name="{{ seafile_database_name }}"
+    seahub_db_name="{{ seahub_settings_databases_name }}"

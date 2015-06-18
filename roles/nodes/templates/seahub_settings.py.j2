@@ -3,7 +3,7 @@ SECRET_KEY = "{{ seahub_secret }}"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'seahub-db',
+        'NAME': '{{ seahub_settings_databases_name }}',
         'USER': '{{ seahub_settings_databases_user }}',
         'PASSWORD': '{{ seahub_settings_databases_password }}',
         'HOST': '{{ seahub_settings_databases_host }}',

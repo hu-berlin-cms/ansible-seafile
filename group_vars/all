@@ -28,6 +28,7 @@ ccnet_database_host: "{{ db_server }}"
 ccnet_database_port: "{{ db_port }}"
 ccnet_database_user: "{{ seafile_db_user }}"
 ccnet_database_passwd: "{{ seafile_db_pw }}"
+ccnet_database_name: "ccnet-db"
 ccnet_ldap_host: ldaps://ldapmaster.cms.hu-berlin.de/
 ccnet_ldap_base: ou=users,ou=filesync,ou=Server,ou=Computer- und Medienservice,o=Humboldt-Universitaet zu Berlin,c=de
 ccnet_ldap_login_attr: mail
@@ -36,6 +37,7 @@ ccnet_ldap_login_attr: mail
 
 seahub_settings_databases_user: "{{ seafile_db_user }}"
 seahub_settings_databases_password: "{{ seafile_db_pw }}"
+seahub_settings_databases_name: "seahub-db"
 seahub_settings_databases_host: "{{ db_server }}"
 seahub_settings_databases_port: "{{ db_port }}"
 seahub_settings_file_server_root: "{{ ccnet_general_service_url }}/seafhttp"
@@ -87,6 +89,7 @@ seafile_network_port: 12001
 seafile_fileserver_port: 8082
 seafile_database_host: "{{ db_server }}"
 seafile_database_port: "{{ db_port }}"
+seafile_database_name: "seafile-db"
 seafile_database_user: "{{ seafile_db_user }}"
 seafile_database_password: "{{ seafile_db_pw }}"
 seafile_ceph_name: ceph

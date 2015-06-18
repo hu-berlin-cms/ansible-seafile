@@ -19,29 +19,33 @@
 # configure seafile databases
 - name: creating/checking ccnet-db
   mysql_db: >
-    name=ccnet-db
+    name={{ ccnet_database_name }}
     encoding=utf8
     state=present
     login_user=root
     login_password={{ db_root_pw }}
 - name: creating/checking seafile-db
   mysql_db: >
-    name=seafile-db
+    name={{ seafile_database_name }}
     encoding=utf8
     state=present
     login_user=root
     login_password={{ db_root_pw }}
 - name: creating/checking seahub-db
   mysql_db: >
-    name=seahub-db
+    name={{ seahub_settings_databases_name }}
     encoding=utf8
     state=present
     login_user=root
     login_password={{ db_root_pw }}
+# create cluster avatar database
+## to support external databases this gets done
+## in nodes/tasks/master.yml, too
+## But it's guarded by IF NOT EXISTS
 - copy: src=avatar_uploaded.sql dest=/tmp
-- name: "seahub-db: creating avatar_uploaded table"
+- name: "seahub-db: creating avatar_uploaded table (if not exists)"
   mysql_db: >
-    name=seahub-db
+    name={{ seahub_settings_databases_name }}
     state=import
     target=/tmp/avatar_uploaded.sql
     login_user=root
@@ -53,7 +57,7 @@
     name={{ seafile_db_user }}
     password={{ seafile_db_pw }}
     host={{ item }}
-    priv=ccnet-db.*:ALL/seafile-db.*:ALL/seahub-db.*:ALL
+    priv="{{ ccnet_database_name }}.*:ALL/{{ seafile_database_name }}.*:ALL/{{ seahub_settings_databases_name }}.*:ALL"
     state=present
     login_user=root
     login_password={{ db_root_pw }}

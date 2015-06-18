@@ -17,6 +17,24 @@
 - include: initial_install.yml
   when: not ccnet_config.stat.exists
 
+# create cluster avatar database (duplicate)
+## to support external databases this gets done
+## here, too (originally in db/tasks/main.yml)
+## But it's guarded by IF NOT EXISTS
+- name: Install mysql-client for db import
+  apt: name=mysql-client state=present
+
+- copy: src=avatar_uploaded.sql dest=/tmp
+- name: "seahub-db: creating avatar_uploaded table (if not exists)"
+  mysql_db: >
+    name={{ seahub_settings_databases_name }}
+    state=import
+    target=/tmp/avatar_uploaded.sql
+    login_host={{ db_server }}
+    login_port={{ db_port }}
+    login_user={{ seahub_settings_databases_user }}
+    login_password={{ seahub_settings_databases_password }}
+
 - name: remove unnecessary java dependency check
   lineinfile: >
     dest="{{ seafile_base_dir }}/seafile-server-latest/seafile.sh"
