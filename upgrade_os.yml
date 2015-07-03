@@ -1,0 +1,12 @@
+#This playbook upgrades the os packages
+#(including dependencies)
+# It doesn't install/upgrade Seafile itself
+
+# update packet cache
+- hosts: all
+  tasks:
+  - apt:
+      cache_valid_time: 3600
+      update_cache: yes
+      upgrade: "yes"
+  sudo: yes
