@@ -29,7 +29,7 @@ AVATAR_FILE_STORAGE = 'seahub.base.database_storage.DatabaseStorage'
 
 {% if seahub_settings_enable_thumbnail %}
 # Enable or disable thumbnails
-ENABLE_THUMBNAIL = seahub_settings_enable_thumbnail
+ENABLE_THUMBNAIL = {{ seahub_settings_enable_thumbnail }}
 # Absolute filesystem path to the directory that will hold thumbnail files.
 THUMBNAIL_ROOT = '{{ seahub_settings_thumbnail_root }}'
 THUMBNAIL_EXTENSION = '{{ seahub_settings_thumbnail_extension }}'
