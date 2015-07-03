@@ -37,18 +37,17 @@ THUMBNAIL_DEFAULT_SIZE = '{{ seahub_settings_thumbnail_default_size }}'
 PREVIEW_DEFAULT_SIZE = '{{ seahub_settings_preview_default_size }}'
 {% endif %}
 
+
+{% if seahub_disable_throttling %}
 # disable throttling
 REST_FRAMEWORK = {
-    'DEFAULT_THROTTLE_CLASSES': (
-        'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle',
-    ),
     'DEFAULT_THROTTLE_RATES': {
+        'ping': None,
         'anon': None,
         'user': None,
     },
 }
-
+{% endif %}
 
 {% if seahub_settings_mail %}
 EMAIL_USE_TLS = {{ seahub_settings_email_use_tls }}
