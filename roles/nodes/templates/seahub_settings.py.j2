@@ -107,3 +107,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = {{ seahub_settings_session_expire_at_browser_c
 # Using server side crypto by default, otherwise, let user choose crypto method.
 FORCE_SERVER_CRYPTO = {{ seahub_settings_force_server_crypto }}
 
+# settings new in 4.2
+SERVE_STATIC = False
+MEDIA_URL = '/media/'
+COMPRESS_URL = MEDIA_URL
+STATIC_URL = MEDIA_URL+'assets/'
