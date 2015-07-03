@@ -4,24 +4,56 @@ Ansible playbook to deploy seafile-pro cluster using nginx, mariadb (single-node
 
 Ansible >=1.6 is needed (installing mariadb/mysql using Ansible 1.5.4 doesn't work). Tested with Ansible 1.9.
 
-**TODO**
+This playbook tries to keep in sync with the official manuals and therefore uses a "golden image", that is used
+as clone source for the other instances.
+
+It is tested against Seafile-Pro 4.2.1 deployed on Ubuntu 14.04.
+
+This is work in progress. If you have ideas or find bugs, please file an issue.
+We are planning to make this pretty flexible and modular, to ease adjusting it to your needs.
+
+Currently planned features:
+* support background node (unfinished)
+* Switching to Apache with Shibboleth support
+* SSL-decryption at loadbalancer (haproxy)
+* Support running seafile as arbitrary user
 
 # Prerequisites
 
-We assume you already have a ceph install.
+## General 
 
 Files needed in files/ directory (see the README there):
 
 ```
-ceph.conf
-client.seafile
+ceph.conf  # for ceph only
+client.seafile  # for ceph only
 seafile-chain.pem
 seafile-key.pem
 seafile-license.txt
 seafile-install.tar.gz  # symlink to pro installer archive
 ```
 
-## Create Ceph pools for Seafile
+
+Adjust parameters:
+
+```
+groups_vars/all
+```
+
+Set passwords in separate files. You may use the templates:
+
+```
+cd vars
+cp admin.yml.templ admin.yml
+cp dbconfig.yml.templ dbconfig.yml
+## edit the files
+```
+
+## Ceph
+
+We assume you already have a ceph install.
+
+### Create Ceph pools for Seafile
 
 Create pools:
 
@@ -40,7 +72,7 @@ Adjust pool parameters:
 for pool in seafile-blocks seafile-commits seafile-fs; do ceph osd pool set $pool size 3 ; ceph osd pool set $pool pg_num 1024; sleep 60; ceph osd pool set $pool pgp_num 1024; done
 ```
 
-## Create Ceph user for Seafile (if Ceph is not used solely for seafile)
+### Create Ceph user for Seafile (if Ceph is not used solely for seafile)
 
 ```
 ceph auth get-or-create client.seafile mon 'allow r' osd 'allow rwx pool=seafile-blocks, allow rwx pool=seafile-commits, allow rwx pool=seafile-fs' -o client.seafile
@@ -51,4 +83,9 @@ ceph auth get-or-create client.seafile mon 'allow r' osd 'allow rwx pool=seafile
 
 ```
 ansible-playbook -i hosts -e force_install=true site.yaml
+```
+
+# Further runs (config changes...)
+```
+ansible-playbook -i hosts site.yaml
 ```
