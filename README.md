@@ -13,7 +13,6 @@ This is work in progress. If you have ideas or find bugs, please file an issue.
 We are planning to make this pretty flexible and modular, to ease adjusting it to your needs.
 
 Currently planned features:
-* support background node (unfinished)
 * Switching to Apache with Shibboleth support
 * SSL-decryption at loadbalancer (haproxy)
 * Support running seafile as arbitrary user

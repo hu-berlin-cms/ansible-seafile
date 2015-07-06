@@ -106,5 +106,6 @@ seafevents_database_port: "{{ db_port }}"
 seafevents_database_username: "{{ seafile_db_user }}"
 seafevents_database_password: "{{ seafile_db_pw }}"
 seafevents_index_files_es_host: "{{ bg_server }}"
+index_office_pdf: "true"
 
 

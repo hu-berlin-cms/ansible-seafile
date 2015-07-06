@@ -9,11 +9,34 @@
 - name: Install python3-uno 
   apt: name=python3-uno state=present
 
-- include_vars: dbconfig.yml
-- name: configure seahub_settings.py
-  template: src=seahub_settings.py.j2 dest={{ seafile_base_dir }}/seahub_settings.py
+- name: Install poppler-utils (pdftotext)
+  apt: name=poppler-utils state=present
 
+# adapt seahub_settings.py
+- name: Remove CONVERTOR_ROOT from seahub_settings.py
+  lineinfile: dest={{ seafile_base_dir }}/seahub_settings.py state=absent regexp="^OFFICE_CONVERTOR_ROOT"
+- name: Add CONVERTOR_NODE to seahub_settings.py
+  lineinfile: dest={{ seafile_base_dir }}/seahub_settings.py state=present line="OFFICE_CONVERTOR_NODE = True"
+
+# rollout background init.d script
+- name: Create init.d script
+  template: >
+    src=init-seafile-server.j2
+    dest=/etc/init.d/seafile-server
+    owner=root
+    group=root
+    mode=0755
+
+#rollout custom nginx config
+#depends on existing nginx node rollout
+- name: Configure nginx seafile conf
+  template: src=seafile.j2 dest=/etc/nginx/sites-available/seafile
+  notify:
+  - Reload nginx
+
+- include_vars: dbconfig.yml
 - name: configure seafevents.conf
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
 
-#TODO: restart seafile.sh, seahub.sh and start seafile-background-tasks.sh
+- name: restart seafile-background-tasks
+  service: name=seafile-server state=restarted

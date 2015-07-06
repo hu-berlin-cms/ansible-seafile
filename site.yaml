@@ -40,6 +40,14 @@
   roles:
     - nodes
 
+- name: deploy seafile background node
+  hosts: background
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - bgnode
+
 
 - name: deploy loadbalancer
   hosts: loadbalancer
