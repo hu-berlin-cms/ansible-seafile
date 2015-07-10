@@ -10,3 +10,5 @@
 
 - name: Configure memcached.conf
   template: src=memcached.conf.j2 dest=/etc/memcached.conf
+  notify:
+  - Restart memcached

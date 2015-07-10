@@ -1,0 +1,3 @@
+- name: Restart memcached
+  shell: service memcached restart
+  sudo: yes

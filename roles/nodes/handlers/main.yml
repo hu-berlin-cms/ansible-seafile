@@ -2,3 +2,4 @@
 
 - name: Reload nginx
   shell: nginx -s reload
+  sudo: yes
