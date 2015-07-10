@@ -1,0 +1,19 @@
+--- db.py.orig	2015-07-07 18:16:13.319461476 +0000
++++ db.py	2015-07-07 18:23:40.471461476 +0000
+@@ -2,6 +2,7 @@
+ import ConfigParser
+ import datetime
+ import logging
++import urllib
+ 
+ from sqlalchemy import create_engine
+ from sqlalchemy.orm import sessionmaker
+@@ -36,7 +37,7 @@
+         username = config.get('DATABASE', 'username')
+         passwd = config.get('DATABASE', 'password')
+         dbname = config.get('DATABASE', 'name')
+-        db_url = "mysql+mysqldb://%s:%s@%s:%s/%s?charset=utf8" % (username, passwd, host, port, dbname)
++        db_url = "mysql+mysqldb://%s:%s@%s:%s/%s?charset=utf8" % (username, urllib.quote_plus(passwd), host, port, dbname)
+         logger.info('[seafevents] database: mysql, name: %s', dbname)
+     else:
+         raise RuntimeError("Unknown database backend: %s" % backend)
