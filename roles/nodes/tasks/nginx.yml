@@ -16,8 +16,8 @@
 - name: "nginx: install certificate"
   copy: src={{ item }} dest=/etc/ssl/ owner=root group=root
   with_items:
-    - seafile-chain.pem
-    - seafile-key.pem
+    - ssl/seafile-chain.pem
+    - ssl/seafile-key.pem
   when: ssl_nodes
   notify:
   - Reload nginx

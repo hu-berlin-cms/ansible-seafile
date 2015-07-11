@@ -5,7 +5,14 @@
   apt_repository: 'ppa:vbernat/haproxy-1.5'
   when: ssl_dec_loadbalancer
 
-- include: ssl_decrypt.yml
+- name: assemble combined cert-key-file
+  assemble: >
+    dest=/etc/ssl/seafile-all.pem
+    src=ssl
+    remote_src=False
+    mode=0600
+    owner=root
+    group=root
   when: ssl_dec_loadbalancer
 
 - name: Install haproxy
