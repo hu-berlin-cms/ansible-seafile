@@ -1,0 +1,25 @@
+# assemble certificate file
+- name: create tmp dir for ssl cert assembly
+  file: >
+    dest=/tmp/ssl_assembly
+    state=directory
+    owner=root
+    group=root
+    mode=0700
+
+- name: copy ssl certs and key
+  copy: src={{ item }} dest=/tmp/ssl_assembly owner=root group=root mode=0600
+  with_items:
+    - seafile-chain.pem
+    - seafile-key.pem
+
+- name: assemble combined cert-key-file
+  assemble: >
+    dest=/etc/ssl/seafile-all.pem
+    src=/tmp/ssl_assembly
+    mode=0600
+    owner=root
+    group=root
+
+- name: remove tmp dir
+  file: dest=/tmp/ssl_assembly state=absent

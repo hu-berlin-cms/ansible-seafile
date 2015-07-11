@@ -1,0 +1,2 @@
+# decrypt ssl at loadbalancer
+ssl_dec_loadbalancer: yes

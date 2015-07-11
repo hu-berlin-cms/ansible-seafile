@@ -1,3 +1,13 @@
+# haproxy supports ssl decryption since 1.5
+# install the PPA of Debian haproxy Maintainer
+# Vincent Bernat (Ubuntu 14.04 LTS only has 1.4)
+- name: Install haproxy-1.5 PPA
+  apt_repository: 'ppa:vbernat/haproxy-1.5'
+  when: ssl_dec_loadbalancer
+
+- include: ssl_decrypt.yml
+  when: ssl_dec_loadbalancer
+
 - name: Install haproxy
   apt: name=haproxy state=present
 
