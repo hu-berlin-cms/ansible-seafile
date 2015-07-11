@@ -18,6 +18,7 @@
   with_items:
     - seafile-chain.pem
     - seafile-key.pem
+  when: ssl_nodes
   notify:
   - Reload nginx
 

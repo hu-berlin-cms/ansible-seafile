@@ -1,6 +1,7 @@
 server {
   listen       80;
   server_name {{ server_name }};
+{% if ssl_nodes %}
   rewrite ^/(.*) https://$server_name/$1 permanent;	# force redirect http to https
 }
 
@@ -9,7 +10,8 @@ server {
   ssl on;
   ssl_certificate /etc/ssl/seafile-chain.pem;	# path to your cacert.pem
   ssl_certificate_key /etc/ssl/seafile-key.pem;	# path to your privkey.pem
-  server_name filesync.ostack.hu-berlin.de;
+  server_name {{ server_name }};
+{% endif %}
 
   location / {
     fastcgi_pass    127.0.0.1:8000;
@@ -24,7 +26,9 @@ server {
     fastcgi_param   SERVER_ADDR         $server_addr;
     fastcgi_param   SERVER_PORT         $server_port;
     fastcgi_param   SERVER_NAME         $server_name;
-    fastcgi_param   HTTPS		    on;
+{% if ssl_nodes %}
+    fastcgi_param   HTTPS               on;
+{% endif %}
     fastcgi_send_timeout	600s;
     fastcgi_read_timeout	600s;
 
@@ -58,7 +62,9 @@ server {
     fastcgi_param   SERVER_PORT         $server_port;
     fastcgi_param   SERVER_NAME         $server_name;
 
+{% if ssl_nodes %}
     fastcgi_param   HTTPS               on;
+{% endif %}
 
     client_max_body_size 0;
 
