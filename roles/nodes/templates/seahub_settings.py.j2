@@ -4,17 +4,17 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': '{{ seahub_settings_databases_name }}',
-        'USER': '{{ seahub_settings_databases_user }}',
-        'PASSWORD': '{{ seahub_settings_databases_password }}',
-        'HOST': '{{ seahub_settings_databases_host }}',
-        'PORT': '{{ seahub_settings_databases_port }}',
+        'USER': '{{ db_user }}',
+        'PASSWORD': '{{ db_pw }}',
+        'HOST': '{{ db_server }}',
+        'PORT': '{{ db_port }}',
         'OPTIONS': {
             'init_command': 'SET storage_engine=INNODB',
         }
     }
 }
 
-FILE_SERVER_ROOT = '{{ seahub_settings_file_server_root }}'
+FILE_SERVER_ROOT = 'https://{{ server_name }}/seafhttp'
 
 CACHES = {
     'default': {
@@ -23,7 +23,7 @@ CACHES = {
     }
 }
 
-OFFICE_CONVERTOR_ROOT = '{{ seahub_settings_office_convertor_root }}'
+OFFICE_CONVERTOR_ROOT = 'https://{{ bg_server }}'
 
 AVATAR_FILE_STORAGE = 'seahub.base.database_storage.DatabaseStorage'
 
@@ -85,7 +85,7 @@ USER_STRONG_PASSWORD_REQUIRED = {{ seahub_settings_user_strong_password_required
 {% endif %}
 
 # Set this to seahub website's URL. This URL is contained in email notifications.
-SITE_BASE = '{{ seahub_settings_site_base }}'
+SITE_BASE = 'https://{{ server_name }}'
 # Set this to your website's name. This is contained in email notifications.
 SITE_NAME = '{{ seahub_settings_site_name }}'
 # Set seahub website's title
@@ -95,7 +95,7 @@ SITE_TITLE = '{{ seahub_settings_site_title }}'
 SITE_ROOT = '{{ seahub_settings_site_root }}'
 BRANDING_CSS = '{{ seahub_settings_custom_css }}'
 LOGO_PATH = '{{ seahub_settings_logo_path }}'
-LOGO_URL = '{{ seahub_settings_logo_url }}'
+LOGO_URL = 'https://{{ server_name }}'
 
 # Age of cookie, in seconds (default: 2 weeks).
 SESSION_COOKIE_AGE = {{ seahub_settings_session_cookie_age }}

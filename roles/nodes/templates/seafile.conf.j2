@@ -10,10 +10,10 @@ port = {{ seafile_fileserver_port }}
 
 [database]
 type = mysql
-host = {{ seafile_database_host }}
-port = {{ seafile_database_port }}
-user = {{ seafile_database_user }}
-password = {{ seafile_database_password }}
+host = {{ db_server }}
+port = {{ db_port }}
+user = {{ db_user }}
+password = {{ db_pw }}
 db_name = {{ seafile_database_name }}
 connection_charset = utf8
 

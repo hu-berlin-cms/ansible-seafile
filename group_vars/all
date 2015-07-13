@@ -2,12 +2,15 @@
 # Variables for all host groups
 
 server_name: filesync.ostack.hu-berlin.de
+
+#db
 db_server: 141.20.237.149
 db_port: 3306
 db_root_pw: "{{ vaulted_db_root_pw }}"
+db_user: seafile
+db_pw: "{{ vaulted_seafile_db_pw }}"
+
 seafile_user: root
-seafile_db_user: seafile
-seafile_db_pw: "{{ vaulted_seafile_db_pw }}"
 # admin user needs to be a valid email address
 seafile_admin_user: "admin@{{ server_name }}"
 seafile_admin_pw: "{{ vaulted_seafile_admin_pw }}"
@@ -21,13 +24,8 @@ fastcgi: "true"
 #ccnet.conf
 
 ccnet_general_user_name: filesync
-ccnet_general_service_url: https://filesync.ostack.hu-berlin.de
 ccnet_network_port: 10001
 ccnet_client_port: 13418
-ccnet_database_host: "{{ db_server }}"
-ccnet_database_port: "{{ db_port }}"
-ccnet_database_user: "{{ seafile_db_user }}"
-ccnet_database_passwd: "{{ seafile_db_pw }}"
 ccnet_database_name: "ccnet-db"
 ccnet_ldap_host: ldaps://ldapmaster.cms.hu-berlin.de/
 ccnet_ldap_base: ou=users,ou=filesync,ou=Server,ou=Computer- und Medienservice,o=Humboldt-Universitaet zu Berlin,c=de
@@ -35,13 +33,7 @@ ccnet_ldap_login_attr: mail
 
 # seahub_settings.py
 
-seahub_settings_databases_user: "{{ seafile_db_user }}"
-seahub_settings_databases_password: "{{ seafile_db_pw }}"
 seahub_settings_databases_name: "seahub-db"
-seahub_settings_databases_host: "{{ db_server }}"
-seahub_settings_databases_port: "{{ db_port }}"
-seahub_settings_file_server_root: "{{ ccnet_general_service_url }}/seafhttp"
-seahub_settings_office_convertor_root: "http://{{ bg_server }}"
 #set True if you want Email Notifications on Seahub
 seahub_settings_mail: True
 seahub_settings_email_use_tls: True
@@ -62,13 +54,11 @@ seahub_settings_user_password_min_length: 6
 seahub_settings_user_password_strength_level: 3
 seahub_settings_user_strong_password_required: False
 #site options
-seahub_settings_site_base: "https://{{ server_name }}/"
 seahub_settings_site_name: hu-berlin.de
 seahub_settings_site_title: Seafile - Online-Speicher Test - CMS - HU Berlin
 seahub_settings_site_root: /
 seahub_settings_custom_css: custom/hu-cms.css
 seahub_settings_logo_path: custom/test-sign-75.png
-seahub_settings_logo_url: "{{ seahub_settings_site_base }}"
 #thumbnail options
 seahub_settings_enable_thumbnail: True
 seahub_settings_thumbnail_root: /haiwen/seahub-data/thumbnail/thumb/
@@ -87,11 +77,7 @@ memcached_server: 192.168.1.60
 seafile_memcached_options: "--SERVER={{ memcached_server }} --POOL-MIN=10 --POOL-MAX=100"
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
-seafile_database_host: "{{ db_server }}"
-seafile_database_port: "{{ db_port }}"
 seafile_database_name: "seafile-db"
-seafile_database_user: "{{ seafile_db_user }}"
-seafile_database_password: "{{ seafile_db_pw }}"
 seafile_ceph_name: ceph
 seafile_ceph_config: /etc/ceph/ceph.conf
 seafile_ceph_client_id: seafile
@@ -101,11 +87,6 @@ seafile_ceph_pool_fs: seafile-fs
 
 # seafevents.conf
 
-seafevents_database_host: "{{ db_server }}"
-seafevents_database_port: "{{ db_port }}"
-seafevents_database_username: "{{ seafile_db_user }}"
-seafevents_database_password: "{{ seafile_db_pw }}"
-seafevents_index_files_es_host: "{{ bg_server }}"
 index_office_pdf: "true"
 
 
