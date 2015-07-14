@@ -8,6 +8,7 @@ global
   daemon
 {% if ssl_dec_loadbalancer %}
   ssl-default-bind-options no-sslv3 no-tls-tickets
+  tune.ssl.default-dh-param 2048
 {% endif %}
 
 defaults
