@@ -71,9 +71,11 @@
 
 # Customization
 - name: make sure customization folder exists
-  file: path={{ seafile_base_dir }}/seafile-server-latest/seahub/media/custom state=directory
+  file: path={{ seafile_base_dir }}/seahub-data/custom state=directory
+- name: make sure customization symlink exists
+  file: path={{ seafile_base_dir }}/seafile-server-latest/seahub/media/custom src=../../../seahub-data/custom state=link
 - name: copy seahub customizations
-  copy: src=seahub-custom/ dest={{ seafile_base_dir }}/seafile-server-latest/seahub/media/custom/
+  copy: src=seahub-custom/ dest={{ seafile_base_dir }}/seahub-data/custom/
 - name: make sure template folder exists
   file: path="{{ seafile_base_dir }}/seahub-data/custom/templates" state=directory
 - name: copy seahub templates
