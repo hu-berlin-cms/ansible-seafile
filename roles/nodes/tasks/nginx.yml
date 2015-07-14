@@ -13,6 +13,12 @@
   notify:
   - Reload nginx
 
+- name: "nginx: generate secure (2048 bit) dh param"
+  command: openssl dhparam 2048 -out /etc/nginx/dhparam.pem creates=/etc/nginx/dhparam.pem
+  when: ssl_nodes
+  notify:
+  - Reload nginx
+
 - name: "nginx: install certificate"
   copy: src={{ item }} dest=/etc/ssl/ owner=root group=root
   with_items:
