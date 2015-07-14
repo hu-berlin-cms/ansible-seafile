@@ -7,14 +7,17 @@ Ansible >=1.6 is needed (installing mariadb/mysql using Ansible 1.5.4 doesn't wo
 This playbook tries to keep in sync with the official manuals and therefore uses a "golden image", that is used
 as clone source for the other instances.
 
-It is tested against Seafile-Pro 4.2.1 deployed on Ubuntu 14.04.
+It is tested against Seafile-Pro 4.2 deployed on Ubuntu 14.04.
 
 This is work in progress. If you have ideas or find bugs, please file an issue.
 We are planning to make this pretty flexible and modular, to ease adjusting it to your needs.
 
+Some possibly interesting features:
+* SSL-decryption at loadbalancer (haproxy); enables load distribution based on traffic/uri (Sync, Web, WebDAV)
+* deploys own mariadb server or can use external server
+
 Currently planned features:
 * Switching to Apache with Shibboleth support
-* SSL-decryption at loadbalancer (haproxy)
 * Support running seafile as arbitrary user
 
 # Prerequisites
