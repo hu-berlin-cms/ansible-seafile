@@ -1,0 +1,2 @@
+Certificates and keys go here.
+Has to be a subdir for Ansible assemble module.

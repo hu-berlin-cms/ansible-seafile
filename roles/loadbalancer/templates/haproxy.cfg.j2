@@ -1,63 +1,64 @@
 global
-	log /dev/log	local0
-	log /dev/log	local1 notice
-	stats socket    /tmp/haproxy.sock
-	chroot /var/lib/haproxy
-	user haproxy
-	group haproxy
-	daemon
+  log 127.0.0.1  local1 notice
+  maxconn 4096
+  stats socket /tmp/haproxy.sock
+  chroot /var/lib/haproxy
+  user haproxy
+  group haproxy
+  daemon
+{% if ssl_dec_loadbalancer %}
+  ssl-default-bind-options no-sslv3 no-tls-tickets
+  tune.ssl.default-dh-param 2048
+{% endif %}
 
 defaults
-	log	global
-	mode	http
-	#option	httplog
-	option	dontlognull
-        contimeout 5000
-        clitimeout 50000
-        srvtimeout 50000
-	errorfile 400 /etc/haproxy/errors/400.http
-	errorfile 403 /etc/haproxy/errors/403.http
-	errorfile 408 /etc/haproxy/errors/408.http
-	errorfile 500 /etc/haproxy/errors/500.http
-	errorfile 502 /etc/haproxy/errors/502.http
-	errorfile 503 /etc/haproxy/errors/503.http
-	errorfile 504 /etc/haproxy/errors/504.http
+  log  global
+  mode  http
+  option  dontlognull
+  retries 3
+  maxconn 2000
+  contimeout 5000
+  clitimeout 50000
+  srvtimeout 50000
+  errorfile 400 /etc/haproxy/errors/400.http
+  errorfile 403 /etc/haproxy/errors/403.http
+  errorfile 408 /etc/haproxy/errors/408.http
+  errorfile 500 /etc/haproxy/errors/500.http
+  errorfile 502 /etc/haproxy/errors/502.http
+  errorfile 503 /etc/haproxy/errors/503.http
+  errorfile 504 /etc/haproxy/errors/504.http
 
-listen seahub :80
-    mode http
-    option httplog
-    option dontlognull
-    option forwardfor
-    {% for node in groups['master'] + groups['clones'] %}
-    server seahubserver{{ loop.index }} {{ node }}:80 check port 11001
-    {% endfor %}
+frontend seahub-http
+  bind *:80
+  option httplog
+  reqadd X-Forwarded-Proto:\ http
+  default_backend seahub-backend
 
-
+{% if ssl_dec_loadbalancer %}
+frontend seahub-https
+  bind *:443 ssl crt /etc/ssl/seafile-all.pem ciphers ECDHE+ECDSA+AES256+GCM+SHA384:ECDHE+ECDSA+AES128+GCM+SHA256:ECDHE+RSA+AES256+GCM+SHA384:ECDHE+RSA+AES128+GCM+SHA256:ECDHE+ECDSA+AES256+SHA384:ECDHE+ECDSA+AES128+SHA256:ECDHE+RSA+AES256+SHA384:ECDHE+RSA+AES128+SHA256:ECDHE+RSA+AES256+SHA:ECDHE+ECDSA+AES256+SHA:ECDHE+RSA+AES128+SHA:ECDHE+ECDSA+AES128+SHA:DHE+RSA+AES256+GCM+SHA384:DHE+RSA+AES256+SHA256:DHE+RSA+AES256+SHA:DHE+RSA+CAMELLIA256+SHA:DHE+RSA+AES128+GCM+SHA256:DHE+RSA+AES128+SHA256:DHE+RSA+AES128+SHA:DHE+RSA+SEED+SHA:DHE+RSA+CAMELLIA128+SHA:HIGH:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS
+  reqadd X-Forwarded-Proto:\ https
+  rspadd Strict-Transport-Security:\ max-age=31536000
+  default_backend seahub-backend
+{% else %}
 listen seahub-https :443
-    mode tcp
-    option tcplog
-    option dontlognull
-    {% for node in groups['master'] + groups['clones'] %}
-    server seahubserver{{ loop.index }} {{ node }}:443 check port 11001
-    {% endfor %}
+  mode tcp
+  option tcplog
+  {% for node in groups['master'] + groups['clones'] %}
+  server seahubserver{{ loop.index }} {{ node }}:443 check port 11001
+  {% endfor %}
+{% endif %}
 
-listen ccnetserver :10001
-    mode tcp
-    option tcplog
-    balance leastconn
-    {% for node in groups['master'] + groups['clones'] %}
-    server seafserver{{ loop.index }} {{ node }}:10001 check port 11001
-    {% endfor %}
-
-listen seafserver :12001
-    mode tcp
-    option tcplog
-    balance leastconn
-    {% for node in groups['master'] + groups['clones'] %}
-    server seafserver{{ loop.index }} {{ node }}:12001 check port 11001
-    {% endfor %}
+backend seahub-backend
+{% if ssl_dec_loadbalancer %}
+  redirect scheme https if !{ ssl_fc }
+{% endif %}
+  option forwardfor
+  {% for node in groups['master'] + groups['clones'] %}
+  server seahubserver{{ loop.index }} {{ node }}:80 check port 11001
+  {% endfor %}
 
 listen monitor :8080
-	mode http
-	stats enable
-	stats uri /
+  mode http
+  stats enable
+  stats uri /
