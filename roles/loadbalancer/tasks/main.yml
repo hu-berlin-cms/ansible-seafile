@@ -14,6 +14,8 @@
     owner=root
     group=root
   when: ssl_dec_loadbalancer
+  notify:
+  - Restart haproxy
 
 - name: Install haproxy
   apt: name=haproxy state=present
@@ -23,6 +25,8 @@
     src=haproxy.cfg.j2
     dest=/etc/haproxy/haproxy.cfg
     mode=0644
+  notify:
+  - Restart haproxy
 
 - name: enable haproxy
   lineinfile: >

@@ -1,0 +1,3 @@
+- name: Restart haproxy
+  shell: service haproxy restart
+  sudo: yes
