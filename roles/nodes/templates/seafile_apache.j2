@@ -57,6 +57,9 @@
   RewriteRule ^/(media.*)$ /$1 [QSA,L,PT]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^(.*)$ /seahub.fcgi/$1 [QSA,L,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  ErrorLog ${APACHE_LOG_DIR}/seahub.error.log
+  CustomLog ${APACHE_LOG_DIR}/seahub.access.log combined
 </VirtualHost>
 
 {% if ssl_nodes %}
