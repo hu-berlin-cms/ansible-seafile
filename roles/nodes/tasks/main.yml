@@ -9,6 +9,11 @@
 
 # configure nginx
 - include: nginx.yml
+  when: webserver == "nginx"
+
+# configure Apache
+- include: apache.yml
+  when: webserver == "apache"
 
 # startup config
 - include: startup.yml

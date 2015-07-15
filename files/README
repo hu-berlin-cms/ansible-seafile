@@ -4,10 +4,13 @@ Place the following files here:
 ceph.conf
 client.seafile
 
-# HTTPS certificates (certificate chain and key)
+# HTTPS certificates (certificate, chain and key)
 # Place in ssl subdir!
-ssl/seafile-chain.pem
+## Certificate and Chain goes into chain subfolder:
+ssl/chain/seafile-cert.pem
+ssl/chain/seafile-chain.pem  # intermediate ca certificates
 ssl/seafile-key.pem
+## This layout is needed for Ansible assemble module and the various variants of SSL configs (nginx, Apache, haproxy)...
 
 # license file
 seafile-license.txt

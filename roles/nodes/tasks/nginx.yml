@@ -1,5 +1,8 @@
+- name: Install nginx
+  apt: name=nginx state=present
+
 - name: Configure nginx seafile conf
-  template: src=seafile.j2 dest=/etc/nginx/sites-available/seafile
+  template: src=seafile_nginx.j2 dest=/etc/nginx/sites-available/seafile
   notify:
   - Reload nginx
 
@@ -19,10 +22,21 @@
   notify:
   - Reload nginx
 
+- name: "nginx: assemble combined cert+chain file"
+  assemble: >
+    dest=/etc/ssl/seafile-chain.pem
+    src=ssl/chain
+    remote_src=False
+    mode=0600
+    owner=root
+    group=root
+  when: ssl_nodes
+  notify:
+  - Reload nginx
+
 - name: "nginx: install certificate"
   copy: src={{ item }} dest=/etc/ssl/ owner=root group=root
   with_items:
-    - ssl/seafile-chain.pem
     - ssl/seafile-key.pem
   when: ssl_nodes
   notify:

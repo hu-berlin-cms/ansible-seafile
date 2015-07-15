@@ -1,0 +1,81 @@
+- name: "apache: install package"
+  apt: name=apache2 state=present
+
+# Apache2 fastcgi support
+- name: "apache: enable multiverse support for fastcgi"
+  apt_repository: repo="{{item}}" update_cache=false
+  register: multiverse_installed
+  when: ansible_distribution == 'Ubuntu'
+  with_items:
+    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse'
+
+- apt:
+    update_cache: true
+  when: multiverse_installed | changed
+
+- name: "apache: install fastcgi support"
+  apt: name=libapache2-mod-fastcgi state=present
+
+- name: "apache: enable rewrite module"
+  apache2_module: name=rewrite state=present
+
+- name: "apache: enable fastcgi module"
+  apache2_module: name=fastcgi state=present
+
+- name: "apache: enable proxy_http module"
+  apache2_module: name=proxy_http state=present
+
+- name: "apache: enable ssl module"
+  apache2_module: name=ssl state=present
+
+# for HSTS Header
+- name: "apache: enable headers module"
+  apache2_module: name=headers state=present
+
+- name: "apache: configure fastcgi for seahub"
+  lineinfile: >
+    dest=/etc/apache2/apache2.conf
+    line="FastCGIExternalServer /var/www/seahub.fcgi -host 127.0.0.1:8000"
+    state=present
+    insertafter=EOF
+
+- name: "apache: configure fastcgi for seafdav"
+  lineinfile: >
+    dest=/etc/apache2/apache2.conf
+    line="FastCGIExternalServer /var/www/seafdav.fcgi -host 127.0.0.1:8080"
+    state=present
+    insertafter=EOF
+
+- name: "apache: Configure seafile.conf"
+  template: src=seafile_apache.j2 dest=/etc/apache2/sites-available/seafile.conf
+  notify:
+  - Restart apache
+
+- name: "apache: enable seafile site"
+  command: a2ensite seafile creates=/etc/apache2/sites-enabled/seafile.conf
+  notify:
+  - Restart apache
+
+- name: "apache: disable default site"
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+  notify:
+  - Restart apache
+
+- name: "apache: generate secure (2048 bit) dh param"
+  command: openssl dhparam 2048 -out /etc/nginx/dhparam.pem creates=/etc/nginx/dhparam.pem
+  when: ssl_nodes
+  notify:
+  - Restart apache
+
+- name: "apache: install certificate"
+  copy: src={{ item }} dest=/etc/ssl/ owner=root group=root
+  with_items:
+    - ssl/seafile-cert.pem
+    - ssl/seafile-chain.pem
+    - ssl/seafile-key.pem
+  when: ssl_nodes
+  notify:
+  - Restart apache

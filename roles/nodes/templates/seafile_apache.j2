@@ -1,0 +1,66 @@
+<VirtualHost *:80>
+  ServerName {{ server_name }}
+{% if ssl_nodes %}
+  Redirect permanent / https://secure.example.com/
+</VirtualHost>
+<VirtualHost *:443>
+  ServerName {{ server_name }}
+
+  SSLEngine On
+  # Apache < 2.4.8 needs separate SSLCertificateChainFile
+  # Apache => 2.4.8 can use seafile-chain.pem in SSLCertificateFile, directly
+  SSLCertificateFile /etc/ssl/seafile-cert.pem
+  SSLCertificateChainFile /etc/ssl/seafile-chain.pem
+  SSLCertificateKeyFile /etc/ssl/seafile-key.pem
+
+  # Intermediate configuration, tweak to your needs
+  SSLProtocol             all -SSLv2 -SSLv3
+  SSLCipherSuite          'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-SEED-SHA:DHE-RSA-CAMELLIA128-SHA:HIGH:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS'
+  SSLHonorCipherOrder     on
+  SSLCompression          off
+
+  # Enable this if your want HSTS (recommended)
+  Header add Strict-Transport-Security "max-age=31536000"
+{% endif %}
+
+  DocumentRoot /var/www
+  Alias /media {{ seafile_base_dir }}/seafile-server-latest/seahub/media
+
+  RewriteEngine On
+
+  # For apache2.2, you may need to change to
+  #  <Location /media>
+  #    Order allow,deny
+  #    Allow from all
+  #  </Location>
+  <Location /media>
+    Require all granted
+  </Location>
+
+  #
+  # seafile fileserver
+  #
+  ProxyPass /seafhttp http://127.0.0.1:8082
+  ProxyPassReverse /seafhttp http://127.0.0.1:8082
+  RewriteRule ^/seafhttp - [QSA,L]
+
+  #
+  # seafile webdav
+  #
+  RewriteCond %{HTTP:Authorization} (.+)
+  RewriteRule ^(/seafdav.*)$ /seafdav.fcgi$1 [QSA,L,e=HTTP_AUTHORIZATION:%1]
+  RewriteRule ^(/seafdav.*)$ /seafdav.fcgi$1 [QSA,L]
+
+  #
+  # seahub
+  #
+  RewriteRule ^/(media.*)$ /$1 [QSA,L,PT]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ /seahub.fcgi/$1 [QSA,L,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</VirtualHost>
+
+{% if ssl_nodes %}
+# TLS Session cache, outside of virtual host, apache 2.4+
+# the path doesn't need to exist
+SSLSessionCache         shmcb:/path/to/ssl_gcache_data(5120000)
+{% endif %}
