@@ -27,12 +27,19 @@
     group=root
     mode=0755
 
-#rollout custom nginx config
-#depends on existing nginx node rollout
+#rollout custom webserver config
+#depends on existing webserver node rollout
 - name: Configure nginx seafile conf
   template: src=seafile_nginx.j2 dest=/etc/nginx/sites-available/seafile
+  when: webserver == "nginx"
   notify:
   - Reload nginx
+
+- name: Configure apache seafile.conf
+  template: src=seafile_apache.j2 dest=/etc/apache2/sites-available/seafile.conf
+  when: webserver == "apache"
+  notify:
+  - Restart apache
 
 - include_vars: dbconfig.yml
 - name: configure seafevents.conf
