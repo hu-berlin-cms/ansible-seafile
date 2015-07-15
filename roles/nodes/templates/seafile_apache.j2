@@ -5,8 +5,6 @@
 </VirtualHost>
 <VirtualHost *:443>
   ServerName {{ server_name }}
-  DocumentRoot /var/www
-  Alias /media {{ seafile_base_dir }}/seafile-server-latest/seahub/media
 
   SSLEngine On
   # Apache < 2.4.8 needs separate SSLCertificateChainFile
@@ -24,6 +22,9 @@
   # Enable this if your want HSTS (recommended)
   Header add Strict-Transport-Security "max-age=31536000"
 {% endif %}
+
+  DocumentRoot /var/www
+  Alias /media {{ seafile_base_dir }}/seafile-server-latest/seahub/media
 
   RewriteEngine On
 
