@@ -1,6 +1,6 @@
 # Introduction
 
-Ansible playbook to deploy seafile-pro cluster using nginx, mariadb (single-node) and ceph.
+Ansible playbook to deploy seafile-pro cluster using HAProxy as loadbalancer, nginx or Apache as webservers, mariadb (single-node) and ceph.
 
 Ansible >=1.6 is needed (installing mariadb/mysql using Ansible 1.5.4 doesn't work). Tested with Ansible 1.9.
 
@@ -15,9 +15,10 @@ We are planning to make this pretty flexible and modular, to ease adjusting it t
 Some possibly interesting features:
 * SSL-decryption at loadbalancer (haproxy); enables load distribution based on traffic/uri (Sync, Web, WebDAV)
 * deploys own mariadb server or can use external server
+* supports nginx and Apache (both with SSL)
 
 Currently planned features:
-* Switching to Apache with Shibboleth support
+* Shibboleth support using Apache
 * Support running seafile as arbitrary user
 
 # Prerequisites
