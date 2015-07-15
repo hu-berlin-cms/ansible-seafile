@@ -27,8 +27,5 @@
 - name: Install libnss3
   apt: name=libnss3 state=present
 
-- name: Install nginx
-  apt: name=nginx state=present
-
 - name: Install rsync (needed for configstack)
   apt: name=rsync state=present

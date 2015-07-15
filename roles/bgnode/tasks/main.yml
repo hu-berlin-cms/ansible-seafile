@@ -30,7 +30,7 @@
 #rollout custom nginx config
 #depends on existing nginx node rollout
 - name: Configure nginx seafile conf
-  template: src=seafile.j2 dest=/etc/nginx/sites-available/seafile
+  template: src=seafile_nginx.j2 dest=/etc/nginx/sites-available/seafile
   notify:
   - Reload nginx
 
