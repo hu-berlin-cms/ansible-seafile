@@ -30,7 +30,8 @@ Files needed in files/ directory (see the README there):
 ```
 ceph.conf  # for ceph only
 client.seafile  # for ceph only
-seafile-chain.pem
+seafile-cert.pem  # server certificate
+seafile-chain.pem  # intermediate certificates
 seafile-key.pem
 seafile-license.txt
 seafile-install.tar.gz  # symlink to pro installer archive
