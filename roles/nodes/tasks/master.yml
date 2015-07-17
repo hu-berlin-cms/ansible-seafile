@@ -32,8 +32,8 @@
     target=/tmp/avatar_uploaded.sql
     login_host={{ db_server }}
     login_port={{ db_port }}
-    login_user={{ seahub_settings_databases_user }}
-    login_password={{ seahub_settings_databases_password }}
+    login_user={{ db_user }}
+    login_password={{ db_pw }}
 
 - name: remove unnecessary java dependency check
   lineinfile: >
