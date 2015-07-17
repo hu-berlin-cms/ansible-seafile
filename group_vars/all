@@ -59,7 +59,7 @@ seahub_settings_site_title: Seafile - Online-Speicher Test - CMS - HU Berlin
 seahub_settings_site_root: /
 seahub_settings_custom_css: custom/hu-cms.css
 seahub_settings_logo_path: custom/test-sign-75.png
-seahub_settings_logo_url: "{{ seahub_settings_site_base }}"
+seahub_settings_logo_url: "https://{{ server_name }}"
 #thumbnail options
 seahub_settings_enable_thumbnail: True
 seahub_settings_thumbnail_root: /haiwen/seahub-data/thumbnail/thumb/
