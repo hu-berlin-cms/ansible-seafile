@@ -28,7 +28,7 @@
   seafile-init: >
     path="{{ seafile_base_dir }}"
     subdir="{{ install_dir }}"
-    seafile_mysql_user="{{ seafile_db_user }}"
+    seafile_mysql_user="{{ db_user }}"
     seafile_mysql_password="{{ seafile_db_pw }}"
     mysql_host="{{ db_server }}"
     mysql_port="{{ db_port }}"
