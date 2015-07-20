@@ -55,7 +55,7 @@
 - name: configure seafile database user
   mysql_user: >
     name={{ db_user }}
-    password={{ seafile_db_pw }}
+    password={{ db_pw }}
     host={{ item }}
     priv="{{ ccnet_database_name }}.*:ALL/{{ seafile_database_name }}.*:ALL/{{ seahub_settings_databases_name }}.*:ALL"
     state=present

@@ -8,7 +8,7 @@ db_server: 141.20.237.149
 db_port: 3306
 db_root_pw: "{{ vaulted_db_root_pw }}"
 db_user: seafile
-db_pw: "{{ vaulted_seafile_db_pw }}"
+db_pw: "{{ vaulted_db_pw }}"
 
 seafile_user: root
 # admin user needs to be a valid email address
