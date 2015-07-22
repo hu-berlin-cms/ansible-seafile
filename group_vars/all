@@ -88,7 +88,3 @@ ccnet_client_port: 13418
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
 
-# index
-index_files_es_host: "{{ bg_server }}"
-index_office_pdf: "true"
-
