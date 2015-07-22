@@ -7,5 +7,5 @@
   synchronize: >
     src="{{ seafile_base_dir }}/" dest="{{ seafile_base_dir }}"
     rsync_path="sudo rsync"
-    rsync_opts="--delete --exclude=/logs --exclude=/pids --exclude=runtime/"
+    rsync_opts="--delete --exclude=/logs --exclude=/pids --exclude=runtime/*"
   delegate_to: "{{ groups['master'][0] }}"
