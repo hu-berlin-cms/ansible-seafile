@@ -15,6 +15,10 @@
 - include: apache.yml
   when: webserver == "apache"
 
+# configure Shibboleth
+- include: shibboleth.yml
+  when: use_shibboleth
+
 # startup config
 - include: startup.yml
 

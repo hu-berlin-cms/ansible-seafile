@@ -1,0 +1,30 @@
+- name: "shibboleth: fail if apache not used"
+  fail: msg="Apache as webserver is needed for shibboleth!"
+  when: webserver != "apache"
+
+- name: "shibboleth: fail if not ssl@webserver"
+  fail: msg="Shibboleth needs SSL ending at Apache to work!"
+  when: not ssl_nodes
+
+- name: "shibboleth: install dependencies"
+  apt: name=libapache2-mod-shib2 state=present
+
+- name: "shibboleth: enable apache module"
+  apache2_module: name=shib2 state=present
+  notify:
+  - Restart apache
+
+- name: "shibboleth: copy shibboleth configuration to node"
+  copy: src={{ item }} dest=/etc/shibboleth
+  with_fileglob:
+    - "shibboleth/*"
+  notify:
+  - Restart apache
+  - Restart shibd
+# FIXME restart of apache necessary?
+
+- name: "shibboleth: assure shibd is running"
+  service: name=shibd state=started
+
+# create metadata?
+# shib-metagen -c sp-cert.pem -h sp.domain.org >sp-metadata.xml
