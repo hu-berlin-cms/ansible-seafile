@@ -3,7 +3,7 @@ SECRET_KEY = "{{ seahub_secret }}"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '{{ seahub_settings_databases_name }}',
+        'NAME': '{{ db_seahub }}',
         'USER': '{{ db_user }}',
         'PASSWORD': '{{ db_pw }}',
         'HOST': '{{ db_server }}',
@@ -49,20 +49,20 @@ REST_FRAMEWORK = {
 }
 {% endif %}
 
-{% if seahub_settings_mail %}
-EMAIL_USE_TLS = {{ seahub_settings_email_use_tls }}
-EMAIL_HOST = '{{ seahub_settings_email_host }}' # smpt server
-EMAIL_HOST_USER = '{{ seahub_settings_email_host_user }}'   # username and domain
-EMAIL_HOST_PASSWORD = '{{ seahub_settings_email_host_password }}'    # password
-EMAIL_PORT = '{{ seahub_settings_email_port }}'
-DEFAULT_FROM_EMAIL = '{{ seahub_settings_default_from_email }}'
-SERVER_EMAIL = '{{ seahub_settings_server_email }}'
+{% if email %}
+EMAIL_USE_TLS = {{ email_use_tls }}
+EMAIL_HOST = '{{ email_host }}' # smpt server
+EMAIL_HOST_USER = '{{ email_host_user }}'   # username and domain
+EMAIL_HOST_PASSWORD = '{{ email_host_password }}'    # password
+EMAIL_PORT = '{{ email_port }}'
+DEFAULT_FROM_EMAIL = '{{ email_default_from }}'
+SERVER_EMAIL = '{{ email_server_email }}'
 # Whether to send email when a system admin adding a new member. Default is `True`.
 # NOTE: since version 1.4.
-SEND_EMAIL_ON_ADDING_SYSTEM_MEMBER = {{ seahub_settings_send_email_on_adding_system_member }}
+SEND_EMAIL_ON_ADDING_SYSTEM_MEMBER = {{ email_on_adding_system_member }}
 # Whether to send email when a system admin resetting a user's password. Default is `True`.
 # NOTE: since version 1.4.
-SEND_EMAIL_ON_RESETTING_USER_PASSWD = {{ seahub_settings_send_email_on_resetting_user_passwd }}
+SEND_EMAIL_ON_RESETTING_USER_PASSWD = {{ email_on_resetting_user_passwd }}
 {% endif %}
 
 {% if seahub_settings_cloud %}
