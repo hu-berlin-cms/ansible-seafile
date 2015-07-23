@@ -29,6 +29,23 @@ ldap_base: ou=users,ou=filesync,ou=Server,ou=Computer- und Medienservice,o=Humbo
 ldap_login_attr: mail
 ldap_cloud: True #cloud mode for seahub. hides organization tab. use this with big ldap or unknown user base
 
+#storage backend
+##ceph
+ceph_name: ceph
+ceph_config: /etc/ceph/ceph.conf
+ceph_client_id: seafile
+ceph_pool_block: seafile-blocks
+ceph_pool_commit: seafile-commits
+ceph_pool_fs: seafile-fs
+
+#memcached
+memcached_server: 192.168.1.60
+memcached_options: "--SERVER={{ memcached_server }} --POOL-MIN=10 --POOL-MAX=100"
+
+#file indexing options
+index_files_es_host: "{{ bg_server }}"
+index_office_pdf: "true"
+
 #mail
 #set True if you want Email Notifications on Seahub
 email: True
@@ -42,14 +59,6 @@ email_server_email: EMAIL_HOST_USER
 email_on_adding_system_member: True
 email_on_resetting_user_passwd: True
 
-#password
-#password options. set true to use
-pw_options: False
-pw_repo_min_length: 8
-pw_user_min_length: 6
-pw_strength_level: 3
-pw_user_strong_password_required: False
-
 #site options
 site_name: hu-berlin.de
 site_title: Seafile - Online-Speicher Test - CMS - HU Berlin
@@ -57,6 +66,14 @@ site_root: /
 site_custom_css: custom/hu-cms.css
 site_logo_path: custom/test-sign-75.png
 site_logo_url: "https://{{ server_name }}"
+
+#password
+#password options. set true to use
+pw_options: False
+pw_repo_min_length: 8
+pw_user_min_length: 6
+pw_strength_level: 3
+pw_user_strong_password_required: False
 
 #thumbnail options
 thumbnail_options: True
@@ -71,28 +88,11 @@ session_save_every_request: False
 session_expire_at_browser_close: False
 session_force_server_crypto: True
 
-#memcached
-memcached_server: 192.168.1.60
-memcached_options: "--SERVER={{ memcached_server }} --POOL-MIN=10 --POOL-MAX=100"
-
-#index
-index_files_es_host: "{{ bg_server }}"
-index_office_pdf: "true"
-
 #ccnet.conf
 ccnet_general_user_name: filesync
 ccnet_network_port: 10001
 ccnet_client_port: 13418
 
-#ceph
-ceph_name: ceph
-ceph_config: /etc/ceph/ceph.conf
-ceph_client_id: seafile
-ceph_pool_block: seafile-blocks
-ceph_pool_commit: seafile-commits
-ceph_pool_fs: seafile-fs
-
 #seafile.conf
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
-
