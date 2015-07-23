@@ -4,13 +4,13 @@ host = {{ db_server }}
 port = {{ db_port }}
 username = {{ db_user }}
 password = {{ db_pw }}
-name = {{ seahub_settings_databases_name }}
+name = {{ db_seahub }}
 
 
 
 [INDEX FILES]
 external_es_server = true
-es_host = {{ seafevents_index_files_es_host }}
+es_host = {{ index_files_es_host }}
 es_port = 9500
 enabled = true
 interval = 10m

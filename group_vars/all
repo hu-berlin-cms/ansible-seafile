@@ -1,15 +1,8 @@
 ---
 # Variables for all host groups
 
+#general
 server_name: filesync.ostack.hu-berlin.de
-
-#db
-db_server: 141.20.237.149
-db_port: 3306
-db_root_pw: "{{ vaulted_db_root_pw }}"
-db_user: seafile
-db_pw: "{{ vaulted_db_pw }}"
-
 seafile_user: root
 # admin user needs to be a valid email address
 seafile_admin_user: "admin@{{ server_name }}"
@@ -20,75 +13,86 @@ installer_archive: seafile-install.tar.gz
 # fastcgi needs to be String! (surrounded by quotes)
 fastcgi: "true"
 
+#db
+db_server: 141.20.237.149
+db_port: 3306
+db_root_pw: "{{ vaulted_db_root_pw }}"
+db_user: seafile
+db_pw: "{{ vaulted_db_pw }}"
+db_ccnet: ccnet-db
+db_seahub: seahub-db
+db_seafile: seafile-db
+
+#ldap
+ldap_host: ldaps://ldapmaster.cms.hu-berlin.de/
+ldap_base: ou=users,ou=filesync,ou=Server,ou=Computer- und Medienservice,o=Humboldt-Universitaet zu Berlin,c=de
+ldap_login_attr: mail
+ldap_cloud: True #cloud mode for seahub. hides organization tab. use this with big ldap or unknown user base
+
+#mail
+#set True if you want Email Notifications on Seahub
+email: True
+email_use_tls: True
+email_host: mailhost.cms.hu-berlin.de        # smpt server
+email_host_user: ''    # username and domain
+email_host_password: ''    # password
+email_port: 25
+email_default_from: filesync@cms.hu-berlin.de
+email_server_email: EMAIL_HOST_USER
+email_on_adding_system_member: True
+email_on_resetting_user_passwd: True
+
+#password
+#password options. set true to use
+pw_options: False
+pw_repo_min_length: 8
+pw_user_min_length: 6
+pw_strength_level: 3
+pw_user_strong_password_required: False
+
+#site options
+site_name: hu-berlin.de
+site_title: Seafile - Online-Speicher Test - CMS - HU Berlin
+site_root: /
+site_custom_css: custom/hu-cms.css
+site_logo_path: custom/test-sign-75.png
+site_logo_url: "https://{{ server_name }}"
+
+#thumbnail options
+thumbnail_options: True
+thumbnail_root: /haiwen/seahub-data/thumbnail/thumb/
+thumbnail_extension: png
+thumbnail_default_size: 24
+thumbnail_preview_default_size: 100
+
+#session options
+session_cookie_age: "60 * 60 * 24 * 7 * 2"
+session_save_every_request: False
+session_expire_at_browser_close: False
+session_force_server_crypto: True
+
+#memcached
+memcached_server: 192.168.1.60
+memcached_options: "--SERVER={{ memcached_server }} --POOL-MIN=10 --POOL-MAX=100"
+
+#index
+index_files_es_host: "{{ bg_server }}"
+index_office_pdf: "true"
 
 #ccnet.conf
-
 ccnet_general_user_name: filesync
 ccnet_network_port: 10001
 ccnet_client_port: 13418
-ccnet_database_name: "ccnet-db"
-ccnet_ldap_host: ldaps://ldapmaster.cms.hu-berlin.de/
-ccnet_ldap_base: ou=users,ou=filesync,ou=Server,ou=Computer- und Medienservice,o=Humboldt-Universitaet zu Berlin,c=de
-ccnet_ldap_login_attr: mail
 
-# seahub_settings.py
+#ceph
+ceph_name: ceph
+ceph_config: /etc/ceph/ceph.conf
+ceph_client_id: seafile
+ceph_pool_block: seafile-blocks
+ceph_pool_commit: seafile-commits
+ceph_pool_fs: seafile-fs
 
-seahub_settings_databases_name: "seahub-db"
-#set True if you want Email Notifications on Seahub
-seahub_settings_mail: True
-seahub_settings_email_use_tls: True
-seahub_settings_email_host: mailhost.cms.hu-berlin.de        # smpt server
-seahub_settings_email_host_user: ''    # username and domain
-seahub_settings_email_host_password: ''    # password
-seahub_settings_email_port: 25
-seahub_settings_default_from_email: filesync@cms.hu-berlin.de
-seahub_settings_server_email: EMAIL_HOST_USER
-seahub_settings_send_email_on_adding_system_member: True
-seahub_settings_send_email_on_resetting_user_passwd: True
-#cloud mode. set True to hide organization tab. useful for big ldaps or unknown user base
-seahub_settings_cloud: True
-#password options. set true to use
-seahub_settings_password: False
-seahub_settings_repo_password_min_length: 8
-seahub_settings_user_password_min_length: 6
-seahub_settings_user_password_strength_level: 3
-seahub_settings_user_strong_password_required: False
-#site options
-seahub_settings_site_name: hu-berlin.de
-seahub_settings_site_title: Seafile - Online-Speicher Test - CMS - HU Berlin
-seahub_settings_site_root: /
-seahub_settings_custom_css: custom/hu-cms.css
-seahub_settings_logo_path: custom/test-sign-75.png
-seahub_settings_logo_url: "https://{{ server_name }}"
-#thumbnail options
-seahub_settings_enable_thumbnail: True
-seahub_settings_thumbnail_root: /haiwen/seahub-data/thumbnail/thumb/
-seahub_settings_thumbnail_extension: png
-seahub_settings_thumbnail_default_size: 24
-seahub_settings_preview_default_size: 100
-#session options
-seahub_settings_session_cookie_age: "60 * 60 * 24 * 7 * 2"
-seahub_settings_session_save_every_request: False
-seahub_settings_session_expire_at_browser_close: False
-seahub_settings_force_server_crypto: True
-
-# seafile.conf
-
-memcached_server: 192.168.1.60
-seafile_memcached_options: "--SERVER={{ memcached_server }} --POOL-MIN=10 --POOL-MAX=100"
+#seafile.conf
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
-seafile_database_name: "seafile-db"
-seafile_ceph_name: ceph
-seafile_ceph_config: /etc/ceph/ceph.conf
-seafile_ceph_client_id: seafile
-seafile_ceph_pool_block: seafile-blocks
-seafile_ceph_pool_commit: seafile-commits
-seafile_ceph_pool_fs: seafile-fs
-
-# seafevents.conf
-
-seafevents_index_files_es_host: "{{ bg_server }}"
-index_office_pdf: "true"
-
 

@@ -1,6 +1,6 @@
 [cluster]
 enabled = true
-memcached_options = {{ seafile_memcached_options }}
+memcached_options = {{ memcached_options }}
 
 [network]
 port = {{ seafile_network_port }}
@@ -14,27 +14,27 @@ host = {{ db_server }}
 port = {{ db_port }}
 user = {{ db_user }}
 password = {{ db_pw }}
-db_name = {{ seafile_database_name }}
+db_name = {{ db_seafile }}
 connection_charset = utf8
 
 [block_backend]
-name = {{ seafile_ceph_name }}
-ceph_config = {{ seafile_ceph_config }}
-ceph_client_id = {{ seafile_ceph_client_id }}
-pool = {{ seafile_ceph_pool_block }}
-memcached_options = {{ seafile_memcached_options }}
+name = {{ ceph_name }}
+ceph_config = {{ ceph_config }}
+ceph_client_id = {{ ceph_client_id }}
+pool = {{ ceph_pool_block }}
+memcached_options = {{ memcached_options }}
 
 [commit_object_backend]
-name = {{ seafile_ceph_name }}
-ceph_config = {{ seafile_ceph_config }}
-ceph_client_id = {{ seafile_ceph_client_id }}
-pool = {{ seafile_ceph_pool_commit }}
-memcached_options = {{ seafile_memcached_options }}
+name = {{ ceph_name }}
+ceph_config = {{ ceph_config }}
+ceph_client_id = {{ ceph_client_id }}
+pool = {{ ceph_pool_commit }}
+memcached_options = {{ memcached_options }}
 
 [fs_object_backend]
-name = {{ seafile_ceph_name }}
-ceph_config = {{ seafile_ceph_config }}
-ceph_client_id = {{ seafile_ceph_client_id }}
-pool = {{ seafile_ceph_pool_fs }}
-memcached_options = {{ seafile_memcached_options }}
+name = {{ ceph_name }}
+ceph_config = {{ ceph_config }}
+ceph_client_id = {{ ceph_client_id }}
+pool = {{ ceph_pool_fs }}
+memcached_options = {{ memcached_options }}
 
