@@ -34,4 +34,4 @@
     mysql_port="{{ db_port }}"
     ccnet_db_name="{{ ccnet_database_name }}"
     seafile_db_name="{{ seafile_database_name }}"
-    seahub_db_name="{{ seahub_settings_databases_name }}"
+    seahub_db_name="{{ db_seahub }}"

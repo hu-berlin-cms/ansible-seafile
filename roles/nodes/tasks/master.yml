@@ -27,7 +27,7 @@
 - copy: src=avatar_uploaded.sql dest=/tmp
 - name: "seahub-db: creating avatar_uploaded table (if not exists)"
   mysql_db: >
-    name={{ seahub_settings_databases_name }}
+    name={{ db_seahub }}
     state=import
     target=/tmp/avatar_uploaded.sql
     login_host={{ db_server }}

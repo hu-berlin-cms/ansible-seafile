@@ -75,7 +75,7 @@ session_force_server_crypto: True
 memcached_server: 192.168.1.60
 memcached_options: "--SERVER={{ memcached_server }} --POOL-MIN=10 --POOL-MAX=100"
 
-# index
+#index
 index_files_es_host: "{{ bg_server }}"
 index_office_pdf: "true"
 
@@ -84,7 +84,15 @@ ccnet_general_user_name: filesync
 ccnet_network_port: 10001
 ccnet_client_port: 13418
 
-# seafile.conf
+#ceph
+ceph_name: ceph
+ceph_config: /etc/ceph/ceph.conf
+ceph_client_id: seafile
+ceph_pool_block: seafile-blocks
+ceph_pool_commit: seafile-commits
+ceph_pool_fs: seafile-fs
+
+#seafile.conf
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
 

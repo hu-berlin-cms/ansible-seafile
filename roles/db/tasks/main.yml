@@ -33,7 +33,7 @@
     login_password={{ db_root_pw }}
 - name: creating/checking seahub-db
   mysql_db: >
-    name={{ seahub_settings_databases_name }}
+    name={{ db_seahub }}
     encoding=utf8
     state=present
     login_user=root
@@ -45,7 +45,7 @@
 - copy: src=avatar_uploaded.sql dest=/tmp
 - name: "seahub-db: creating avatar_uploaded table (if not exists)"
   mysql_db: >
-    name={{ seahub_settings_databases_name }}
+    name={{ db_seahub }}
     state=import
     target=/tmp/avatar_uploaded.sql
     login_user=root
@@ -57,7 +57,7 @@
     name={{ db_user }}
     password={{ seafile_db_pw }}
     host={{ item }}
-    priv="{{ ccnet_database_name }}.*:ALL/{{ seafile_database_name }}.*:ALL/{{ seahub_settings_databases_name }}.*:ALL"
+    priv="{{ ccnet_database_name }}.*:ALL/{{ seafile_database_name }}.*:ALL/{{ db_seahub }}.*:ALL"
     state=present
     login_user=root
     login_password={{ db_root_pw }}
