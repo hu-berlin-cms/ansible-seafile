@@ -77,7 +77,7 @@ pw_user_strong_password_required: False
 
 #thumbnail options
 thumbnail_options: True
-thumbnail_root: /haiwen/seahub-data/thumbnail/thumb/
+thumbnail_root: "{{ seafile_base_dir }}/seahub-data/thumbnail/thumb/" 
 thumbnail_extension: png
 thumbnail_default_size: 24
 thumbnail_preview_default_size: 100
