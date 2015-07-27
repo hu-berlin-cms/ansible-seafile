@@ -33,8 +33,9 @@ ENABLE_THUMBNAIL = {{ thumbnail_options }}
 # Absolute filesystem path to the directory that will hold thumbnail files.
 THUMBNAIL_ROOT = '{{ thumbnail_root }}'
 THUMBNAIL_EXTENSION = '{{ thumbnail_extension }}'
-THUMBNAIL_DEFAULT_SIZE = '{{ thumbnail_default_size }}'
-PREVIEW_DEFAULT_SIZE = '{{ thumbnail_preview_default_size }}'
+# new 4.3 settings (before 4.3 these were strings)
+THUMBNAIL_DEFAULT_SIZE = {{ thumbnail_default_size }}
+PREVIEW_DEFAULT_SIZE = {{ thumbnail_preview_default_size }}
 {% endif %}
 
 
