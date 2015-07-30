@@ -19,14 +19,14 @@
 # configure seafile databases
 - name: creating/checking ccnet-db
   mysql_db: >
-    name={{ ccnet_database_name }}
+    name={{ db_ccnet }}
     encoding=utf8
     state=present
     login_user=root
     login_password={{ db_root_pw }}
 - name: creating/checking seafile-db
   mysql_db: >
-    name={{ seafile_database_name }}
+    name={{ db_seafile }}
     encoding=utf8
     state=present
     login_user=root
@@ -57,7 +57,7 @@
     name={{ db_user }}
     password={{ db_pw }}
     host={{ item }}
-    priv="{{ ccnet_database_name }}.*:ALL/{{ seafile_database_name }}.*:ALL/{{ db_seahub }}.*:ALL"
+    priv="{{ db_ccnet }}.*:ALL/{{ db_seafile }}.*:ALL/{{ db_seahub }}.*:ALL"
     state=present
     login_user=root
     login_password={{ db_root_pw }}
