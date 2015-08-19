@@ -25,8 +25,7 @@ session_force_server_crypto: True
 
 #ccnet.conf
 ccnet_general_user_name: filesync
-ccnet_network_port: 10001
-ccnet_client_port: 13418
+ccnet_client_port: 13419
 
 #seafile.conf
 seafile_network_port: 12001
