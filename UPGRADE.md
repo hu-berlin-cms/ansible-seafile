@@ -20,7 +20,7 @@ If you want to use them, upgrading consists of the following steps:
 * update seafile-install.tar.gz symlink
 * run prepare-upgrade.yml playbook **This STOPS running seafile instances!**
 * manually run upgrade scripts on master node
-* run finish-upgrade.yml playbook to finish the upgrade
+* run finish-upgrade.yml playbook to finish the upgrade (site.yaml would work, too)
 
 Example of an upgrade:
 ```
@@ -54,6 +54,15 @@ exit
 # finish upgrade
 ansible-playbook -i hosts finish-upgrade.yml
 ```
+
+If you don't want to use them, upgrading consists of the following steps:
+* copy new seafile installer archive to files dir
+* update seafile-install.tar.gz symlink (just for consistency)
+* copy new seafile installer to master node
+* extract new seafile installer on master node
+* stop all running seafile instances
+* manually run upgrade scripts on master node
+* run site.yaml playbook to finish the upgrade
 
 # Upgrading OS on nodes
 
