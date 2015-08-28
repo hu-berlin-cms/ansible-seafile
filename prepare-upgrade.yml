@@ -1,0 +1,25 @@
+#This playbook prepares a seafile upgrade
+
+## WARNING: This STOPS ALL your seafile instances
+
+## unarchive new installer on master node
+## stop all instances
+### now you have to run upgrade scripts on master node
+### i.e. sudo {{ seafile_base_dir }}/seafile-pro-server-<new_version>/upgrade/minor-upgrade.sh
+### On major upgrades you need to run the respective upgrade scripts.
+
+# unarchive installer
+- hosts: master
+  tasks:
+  - name: extract seafile
+    unarchive: >
+      src="files/{{ installer_archive }}"
+      dest="{{ seafile_base_dir }}"
+  sudo: yes
+
+# stop seafile instances
+- hosts: nodes
+  tasks:
+  - name: stop all running instances BEFORE upgrade
+    service: name="seafile-server" state=stopped
+  sudo: yes
