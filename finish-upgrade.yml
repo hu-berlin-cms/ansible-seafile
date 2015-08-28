@@ -1,0 +1,20 @@
+#This playbook finishes an upgrade prepared with prepare-upgrade.yml
+
+## You could simply run site.yml instead, but this contains only the steps
+## needed for upgrade (and therefore should be faster).
+
+- name: deploy seafile and apply configuration
+  hosts: nodes
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - nodes
+
+- name: deploy seafile background node
+  hosts: background
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - bgnode
