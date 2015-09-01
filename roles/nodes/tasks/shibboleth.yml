@@ -2,9 +2,7 @@
   fail: msg="Apache as webserver is needed for shibboleth!"
   when: webserver != "apache"
 
-- name: "shibboleth: fail if not ssl@webserver"
-  fail: msg="Shibboleth needs SSL ending at Apache to work!"
-  when: not ssl_nodes
+#FIXME SSL@LB needed variables
 
 - name: "shibboleth: install dependencies"
   apt: name=libapache2-mod-shib2 state=present

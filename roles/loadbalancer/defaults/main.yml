@@ -1,2 +1,4 @@
 # decrypt ssl at loadbalancer
 ssl_dec_loadbalancer: yes
+# use shibboleth? WARNING used in nodes role, too!
+use_shibboleth: no
