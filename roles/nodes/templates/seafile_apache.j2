@@ -67,9 +67,16 @@
   # seahub
   #
 {% if use_shibboleth and not ssl_nodes %}
-  # redirect to shibboleth instance
-  #RewriteRule ^/Shibboleth.sso https://filesync-test-auth.ostack.hu-berlin.de [R,L]
-  RewriteRule ^/shib-login https://filesync-test-auth.ostack.hu-berlin.de [R,L]
+  # proxy shibboleth requests to shibboleth instance
+  SSLProxyEngine on
+  SSLProxyVerify none
+  SSLProxyCheckPeerCN off
+  SSLProxyCheckPeerName off
+  ProxyPreserveHost On
+  ProxyRequests Off
+
+  RewriteRule ^/(Shibboleth.sso.*)$ https://127.0.0.1:8443/$1 [P,L]
+  RewriteRule ^/(shib-login.*)$ https://127.0.0.1:8443/$1 [P,L]
 {% endif %}
   RewriteRule ^/(media.*)$ /$1 [QSA,L,PT]
   RewriteCond %{REQUEST_FILENAME} !-f
@@ -82,9 +89,10 @@
   CustomLog ${APACHE_LOG_DIR}/seahub.access.log combined
 </VirtualHost>
 {% if use_shibboleth and not ssl_nodes %}
-<VirtualHost {{ ansible_default_ipv4.address }}:8443>
-  ServerName {{ shibboleth_name }}
+<VirtualHost 127.0.0.1:8443>
+  ServerName {{ server_name }}
 
+  RewriteEngine On
   SSLEngine On
   # Apache < 2.4.8 needs separate SSLCertificateChainFile
   # Apache => 2.4.8 can use seafile-chain.pem in SSLCertificateFile, directly
@@ -107,6 +115,9 @@
     ShibRequestSetting requireSession true
     Require valid-user
   </Location>
+
+  RewriteCond %{REQUEST_URI} !^/Shibboleth.sso
+  RewriteRule ^(.*)$ /seahub.fcgi/$1 [QSA,L,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
   # Enable this if your want HSTS (recommended)
   Header add Strict-Transport-Security "max-age=31536000"

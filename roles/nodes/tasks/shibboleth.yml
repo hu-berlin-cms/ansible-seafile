@@ -2,8 +2,6 @@
   fail: msg="Apache as webserver is needed for shibboleth!"
   when: webserver != "apache"
 
-#FIXME SSL@LB needed variables
-
 - name: "shibboleth: install dependencies"
   apt: name=libapache2-mod-shib2 state=present
 
@@ -11,6 +9,25 @@
   apache2_module: name=shib2 state=present
   notify:
   - Restart apache
+
+- name: "shibboleth: enable apache proxy modules"
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - "proxy"
+    - "proxy_http"
+    - "ssl"
+  notify:
+  - Restart apache
+  when: not ssl_nodes
+
+- name: "shibboleth: Listen on 8443 for shib-auth"
+  lineinfile: >
+    dest=/etc/apache2/ports.conf
+    state=present
+    line="Listen 8443"
+  notify:
+  - Restart apache
+  when: not ssl_nodes
 
 - name: "shibboleth: copy shibboleth configuration to node"
   copy: src={{ item }} dest=/etc/shibboleth
