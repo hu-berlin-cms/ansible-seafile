@@ -2,3 +2,32 @@ seahub_disable_throttling: no
 ssl_nodes: no
 webserver: "apache"
 use_shibboleth: no
+
+#password
+#password options. set true to use
+pw_options: False
+pw_repo_min_length: 8
+pw_user_min_length: 6
+pw_strength_level: 3
+pw_user_strong_password_required: False
+
+#thumbnail options
+thumbnail_options: True
+thumbnail_root: "{{ seafile_base_dir }}/seahub-data/thumbnail/thumb/" 
+thumbnail_extension: png
+thumbnail_default_size: 24
+thumbnail_preview_default_size: 100
+
+#session options
+session_cookie_age: "60 * 60 * 24 * 7 * 2"
+session_save_every_request: False
+session_expire_at_browser_close: False
+session_force_server_crypto: True
+
+#ccnet.conf
+ccnet_general_user_name: filesync
+ccnet_client_port: 13419
+
+#seafile.conf
+seafile_network_port: 12001
+seafile_fileserver_port: 8082
