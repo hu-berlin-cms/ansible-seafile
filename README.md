@@ -16,7 +16,7 @@ Some possibly interesting features:
 * SSL-decryption at loadbalancer (haproxy); enables load distribution based on traffic/uri (Sync, Web, WebDAV)
 * deploys own mariadb server or can use external server
 * supports nginx and Apache (both with SSL)
-* Shibboleth support using Apache (only with SSL@Apache, not SSL@LB)
+* Shibboleth support using Apache as webserver
 
 Currently planned features:
 * Support running seafile as arbitrary user
