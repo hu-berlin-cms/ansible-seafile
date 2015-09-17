@@ -71,6 +71,13 @@ SEND_EMAIL_ON_RESETTING_USER_PASSWD = {{ email_on_resetting_user_passwd }}
 CLOUD_MODE = True
 {% endif %}
 
+# Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# If running in a Windows environment this must be set to the same as your
+# system time zone.
+TIME_ZONE = '{{ time_zone }}'
+
 {% if pw_options %}
 # mininum length for password of encrypted library
 REPO_PASSWORD_MIN_LENGTH = {{ pw_repo_min_length }}
