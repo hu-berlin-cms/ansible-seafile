@@ -1,3 +1,4 @@
 seahub_disable_throttling: no
 ssl_nodes: no
 webserver: "apache"
+use_shibboleth: no

@@ -16,9 +16,9 @@ Some possibly interesting features:
 * SSL-decryption at loadbalancer (haproxy); enables load distribution based on traffic/uri (Sync, Web, WebDAV)
 * deploys own mariadb server or can use external server
 * supports nginx and Apache (both with SSL)
+* Shibboleth support using Apache as webserver
 
 Currently planned features:
-* Shibboleth support using Apache
 * Support running seafile as arbitrary user
 
 # Prerequisites
@@ -37,6 +37,7 @@ seafile-license.txt
 seafile-install.tar.gz  # symlink to pro installer archive
 ```
 
+If you are using Shibboleth, put your config in ```files/shibboleth```. They will be copied to /etc/shibboleth on the nodes.
 
 Adjust parameters:
 

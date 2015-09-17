@@ -52,10 +52,11 @@ listen seahub-https :443
 backend seahub-backend
 {% if ssl_dec_loadbalancer %}
   redirect scheme https if !{ ssl_fc }
+  cookie SERVERID insert indirect nocache
 {% endif %}
   option forwardfor
   {% for node in groups['master'] + groups['clones'] %}
-  server seahubserver{{ loop.index }} {{ node }}:80 check port 11001
+  server seahubserver{{ loop.index }} {{ node }}:80 check port 11001{{ " cookie %s" % node if ssl_dec_loadbalancer else '' }}
   {% endfor %}
 
 listen monitor

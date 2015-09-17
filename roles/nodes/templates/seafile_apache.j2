@@ -3,7 +3,7 @@
 {% if ssl_nodes %}
   Redirect permanent / https://secure.example.com/
 </VirtualHost>
-<VirtualHost *:443>
+<VirtualHost {{ ansible_default_ipv4.address }}:443>
   ServerName {{ server_name }}
 
   SSLEngine On
@@ -37,6 +37,18 @@
     Require all granted
   </Location>
 
+{% if use_shibboleth and ssl_nodes %}
+  <Location /Shibboleth.sso>
+    SetHandler shib
+  </Location>
+
+  <Location /shib-login>
+    AuthType shibboleth
+    ShibRequestSetting requireSession true
+    Require valid-user
+  </Location>
+{% endif %}
+
   #
   # seafile fileserver
   #
@@ -54,13 +66,65 @@
   #
   # seahub
   #
+{% if use_shibboleth and not ssl_nodes %}
+  # proxy shibboleth requests to shibboleth instance
+  SSLProxyEngine on
+  SSLProxyVerify none
+  SSLProxyCheckPeerCN off
+  SSLProxyCheckPeerName off
+  ProxyPreserveHost On
+  ProxyRequests Off
+
+  RewriteRule ^/(Shibboleth.sso.*)$ https://127.0.0.1:8443/$1 [P,L]
+  RewriteRule ^/(shib-login.*)$ https://127.0.0.1:8443/$1 [P,L]
+{% endif %}
   RewriteRule ^/(media.*)$ /$1 [QSA,L,PT]
   RewriteCond %{REQUEST_FILENAME} !-f
+{% if use_shibboleth and ssl_nodes %}
+  RewriteCond %{REQUEST_URI} !^/Shibboleth.sso
+{% endif %}
   RewriteRule ^(.*)$ /seahub.fcgi/$1 [QSA,L,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
   ErrorLog ${APACHE_LOG_DIR}/seahub.error.log
   CustomLog ${APACHE_LOG_DIR}/seahub.access.log combined
 </VirtualHost>
+{% if use_shibboleth and not ssl_nodes %}
+<VirtualHost 127.0.0.1:8443>
+  ServerName {{ server_name }}
+
+  RewriteEngine On
+  SSLEngine On
+  # Apache < 2.4.8 needs separate SSLCertificateChainFile
+  # Apache => 2.4.8 can use seafile-chain.pem in SSLCertificateFile, directly
+  SSLCertificateFile /etc/ssl/seafile-cert.pem
+  SSLCertificateChainFile /etc/ssl/seafile-chain.pem
+  SSLCertificateKeyFile /etc/ssl/seafile-key.pem
+
+  # Intermediate configuration, tweak to your needs
+  SSLProtocol             all -SSLv2 -SSLv3
+  SSLCipherSuite          'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-SEED-SHA:DHE-RSA-CAMELLIA128-SHA:HIGH:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS'
+  SSLHonorCipherOrder     on
+  SSLCompression          off
+
+  <Location /Shibboleth.sso>
+    SetHandler shib
+  </Location>
+
+  <Location /shib-login>
+    AuthType shibboleth
+    ShibRequestSetting requireSession true
+    Require valid-user
+  </Location>
+
+  RewriteCond %{REQUEST_URI} !^/Shibboleth.sso
+  RewriteRule ^(.*)$ /seahub.fcgi/$1 [QSA,L,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  # Enable this if your want HSTS (recommended)
+  Header add Strict-Transport-Security "max-age=31536000"
+  ErrorLog ${APACHE_LOG_DIR}/shibboleth.error.log
+  CustomLog ${APACHE_LOG_DIR}/shibboleth.access.log combined
+</VirtualHost>
+{% endif %}
 
 {% if ssl_nodes %}
 # TLS Session cache, outside of virtual host, apache 2.4+

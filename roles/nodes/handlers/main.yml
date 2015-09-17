@@ -4,3 +4,6 @@
 - name: Restart apache
   shell: service apache2 restart
   sudo: yes
+- name: Restart shibd
+  service: name=shibd state=restarted
+  sudo: yes

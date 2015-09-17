@@ -107,6 +107,20 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = {{ session_expire_at_browser_close }}
 # Using server side crypto by default, otherwise, let user choose crypto method.
 FORCE_SERVER_CRYPTO = {{ session_force_server_crypto }}
 
+{% if use_shibboleth %}
+EXTRA_AUTHENTICATION_BACKENDS = (
+    'shibboleth.backends.ShibbolethRemoteUserBackend',
+)
+EXTRA_MIDDLEWARE_CLASSES = (
+    'shibboleth.middleware.ShibbolethRemoteUserMiddleware',
+)
+SHIBBOLETH_ATTRIBUTE_MAP = {
+    "eppn": (True, "username"),
+}
+
+ENABLE_SHIB_LOGIN = True
+{% endif %}
+
 # settings new in 4.2
 SERVE_STATIC = False
 MEDIA_URL = '/media/'
