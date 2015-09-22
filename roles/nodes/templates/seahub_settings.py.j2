@@ -78,6 +78,12 @@ CLOUD_MODE = True
 # system time zone.
 TIME_ZONE = '{{ time_zone }}'
 
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+# Default language for sending emails.
+LANGUAGE_CODE = '{{ lang_code }}'
+
+
 {% if pw_options %}
 # mininum length for password of encrypted library
 REPO_PASSWORD_MIN_LENGTH = {{ pw_repo_min_length }}
