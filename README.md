@@ -94,3 +94,12 @@ ansible-playbook -i hosts -e force_install=true site.yaml
 ```
 ansible-playbook -i hosts site.yaml
 ```
+
+# Upgrades
+
+See [Upgrades](UPGRADE.md).
+
+# Known issues
+
+See [Known Issues](KnownIssues.md).
+
