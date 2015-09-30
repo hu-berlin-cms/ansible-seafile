@@ -13,7 +13,7 @@ installer_archive: seafile-install.tar.gz
 # fastcgi needs to be String! (surrounded by quotes)
 fastcgi: "true"
 time_zone: Europe/Berlin
-lang_code: de
+lang_code: en
 
 #db
 db_server: 141.20.237.149
