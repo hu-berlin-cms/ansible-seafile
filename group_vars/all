@@ -3,7 +3,7 @@
 
 #general
 server_name: filesync.ostack.hu-berlin.de
-seafile_user: root
+#seafile_user: seafile
 # admin user needs to be a valid email address
 seafile_admin_user: "admin@{{ server_name }}"
 seafile_admin_pw: "{{ vaulted_seafile_admin_pw }}"
