@@ -33,4 +33,5 @@ seafile_network_port: 12001
 seafile_fileserver_port: 8082
 
 # language / location
+time_zone: Europe/Berlin
 lang_code: en
