@@ -31,3 +31,6 @@ ccnet_client_port: 13419
 #seafile.conf
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
+
+# language / location
+lang_code: en
