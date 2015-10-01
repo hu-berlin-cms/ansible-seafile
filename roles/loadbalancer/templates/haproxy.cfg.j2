@@ -17,9 +17,9 @@ defaults
   option  dontlognull
   retries 3
   maxconn 2000
-  contimeout 5000
-  clitimeout 50000
-  srvtimeout 50000
+  timeout connect 10s
+  timeout client 5m
+  timeout server 5m
   errorfile 400 /etc/haproxy/errors/400.http
   errorfile 403 /etc/haproxy/errors/403.http
   errorfile 408 /etc/haproxy/errors/408.http
