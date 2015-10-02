@@ -5,9 +5,13 @@
 
 - name: copy ceph.conf
   copy: src=ceph.conf dest=/etc/ceph/ceph.conf
+  notify:
+    - Restart seafile
 
 - name: copy client.seafile
   copy: src=client.seafile dest=/etc/ceph/client.seafile
+  notify:
+    - Restart seafile
 
 - name: install ceph dependencies
   apt: name=python-ceph state=present

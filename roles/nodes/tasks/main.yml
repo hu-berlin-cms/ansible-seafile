@@ -23,6 +23,8 @@
 - name: create seafile user
   user: name={{ seafile_user }} createhome=no shell=/bin/false
   when: seafile_user is defined
+  notify:
+    - Restart seafile
 
 # startup config
 - include: startup.yml

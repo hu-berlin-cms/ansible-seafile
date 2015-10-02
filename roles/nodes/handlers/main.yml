@@ -7,3 +7,7 @@
 - name: Restart shibd
   service: name=shibd state=restarted
   sudo: yes
+- name: Restart seafile
+  service: name=seafile-server state=restarted
+  sudo: yes
+  when: restart_seafile_on_changes

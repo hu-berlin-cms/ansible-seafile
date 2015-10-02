@@ -9,6 +9,8 @@
     rsync_path="sudo rsync"
     rsync_opts="--delete --exclude=/logs --exclude=/pids --exclude=runtime/*"
   delegate_to: "{{ groups['master'][0] }}"
+  notify:
+    - Restart seafile
 
 # chown to seafile_user, if needed
 - name: test seafile_user chown on clones
@@ -18,6 +20,8 @@
     state=directory
   register: logs_chown
   when: seafile_user is defined
+  notify:
+    - Restart seafile
 # chown the rest, if logs didn't belong ro right user
 - name: recursively chown remaining clone dirs
   shell: "chown -R {{ seafile_user }} {{ seafile_base_dir }}/{{ item }}"
