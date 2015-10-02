@@ -48,9 +48,9 @@
 # make libreoffice office converter work with non-root account (control location of soffice working dir)
 - name: set soffice home
   lineinfile: >
-    name: "{{ seafile_base_dir }}/seafile-server-latest/seafile-background-tasks.sh"
-    insertafter: "^export SEAFILE_LD_LIBRARY_PATH"
-    line: "export HOME=${TOPDIR}/{{ soffice_home }}/"
+    name="{{ seafile_base_dir }}/seafile-server-latest/seafile-background-tasks.sh"
+    insertafter="^export SEAFILE_LD_LIBRARY_PATH"
+    line="export HOME=${TOPDIR}/{{ soffice_home }}/"
 
 # chown background working dirs to seafile_user, if needed
 # additionally: create soffice home dir
