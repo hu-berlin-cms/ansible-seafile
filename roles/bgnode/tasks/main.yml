@@ -67,6 +67,7 @@
     - "/tmp/seafile-office-output"
     - "{{ seafile_base_dir }}/{{ soffice_home }}"
   when: output_chown.changed
+# FIXME Notify restart!
 
 - name: restart seafile-background-tasks
   service: name=seafile-server state=restarted

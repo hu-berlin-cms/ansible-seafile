@@ -26,9 +26,17 @@
   register: ccnet_chown
   when: seafile_user is defined
 # chown the rest, if ccnet didn't belong to right user
+# because of pids seafile needs to be stopped
+- name: Stopping seafile for chown
+  service: name=seafile-server state=stopped
+  when: ccnet_chown.changed
+  register: seafile_chown_stop
 - name: recursively chown seafile base dir
   shell: "chown -R {{ seafile_user }} {{ seafile_base_dir }}"
   when: ccnet_chown.changed
+- name: Restarting seafile after chown
+  service: name=seafile-server state=started
+  when: seafile_chown_stop.changed
 
 # create cluster avatar database (duplicate)
 ## to support external databases this gets done

@@ -19,6 +19,11 @@
   register: logs_chown
   when: seafile_user is defined
 # chown the rest, if logs didn't belong ro right user
+# because of pids seafile needs to be stopped
+- name: Stopping seafile for chown
+  service: name=seafile-server state=stopped
+  when: logs_chown.changed
+  register: seafile_chown_stop
 - name: recursively chown remaining clone dirs
   shell: "chown -R {{ seafile_user }} {{ seafile_base_dir }}/{{ item }}"
   with_items:
@@ -26,4 +31,7 @@
     - "logs"
     - "seafile-server-latest/runtime"
   when: logs_chown.changed
+- name: Restarting seafile after chown
+  service: name=seafile-server state=started
+  when: seafile_chown_stop.changed
 
