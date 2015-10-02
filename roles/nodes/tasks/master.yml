@@ -17,6 +17,19 @@
 - include: initial_install.yml
   when: not ccnet_config.stat.exists
 
+# chown to seafile_user, if needed
+- name: test seafile_user chown
+  file: >
+    path="{{ seafile_base_dir }}/ccnet"
+    owner={{ seafile_user }}
+    state=directory
+  register: ccnet_chown
+  when: seafile_user is defined
+# chown the rest, if ccnet didn't belong to right user
+- name: recursively chown seafile base dir
+  shell: "chown -R {{ seafile_user }} {{ seafile_base_dir }}"
+  when: ccnet_chown.changed
+
 # create cluster avatar database (duplicate)
 ## to support external databases this gets done
 ## here, too (originally in db/tasks/main.yml)

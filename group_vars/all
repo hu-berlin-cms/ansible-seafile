@@ -3,7 +3,14 @@
 
 #general
 server_name: filesync.ostack.hu-berlin.de
-seafile_user: root
+## WARNING: You need to stop the cluster manually, if you change the
+## seafile_user setting! Otherwise running seafile services can't be stopped
+## by init.d scripts / through configstack anymore.
+## By default seafile runs as root
+##
+## Cluster can by stopped by:
+## ansible -s -i hosts -m service -a "name=seafile-server state=stopped" nodes
+#seafile_user: seafile
 # admin user needs to be a valid email address
 seafile_admin_user: "admin@{{ server_name }}"
 seafile_admin_pw: "{{ vaulted_seafile_admin_pw }}"

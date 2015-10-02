@@ -45,5 +45,28 @@
 - name: configure seafevents.conf
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
 
+# make libreoffice office converter work with non-root account (control location of soffice working dir)
+- name: set soffice home
+  lineinfile: >
+    name="{{ seafile_base_dir }}/seafile-server-latest/seafile-background-tasks.sh"
+    insertafter="^export SEAFILE_LD_LIBRARY_PATH"
+    line="export HOME=${TOPDIR}/{{ soffice_home }}/"
+
+# chown background working dirs to seafile_user, if needed
+# additionally: create soffice home dir
+- name: test seafile_user chown
+  file: >
+    path="{{ seafile_base_dir }}/{{ soffice_home }}"
+    owner={{ seafile_user|default('root') }}
+    state=directory
+  register: output_chown
+# chown the rest, if seafile_user changed
+- name: recursively chown working dirs
+  shell: "chown -R {{ seafile_user|default('root') }} {{ item }}"
+  with_items:
+    - "/tmp/seafile-office-output"
+    - "{{ seafile_base_dir }}/{{ soffice_home }}"
+  when: output_chown.changed
+
 - name: restart seafile-background-tasks
   service: name=seafile-server state=restarted

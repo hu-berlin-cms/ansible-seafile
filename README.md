@@ -17,8 +17,6 @@ Some possibly interesting features:
 * deploys own mariadb server or can use external server
 * supports nginx and Apache (both with SSL)
 * Shibboleth support using Apache as webserver
-
-Currently planned features:
 * Support running seafile as arbitrary user
 
 # Prerequisites
