@@ -20,7 +20,7 @@
     src="{{ seafile_base_dir }}/"
     dest="{{ seafile_base_dir }}"
     rsync_path="sudo rsync"
-    rsync_opts="--delete --exclude=/logs --exclude=/pids --exclude=runtime/ --exclude=/ccnet"
+    rsync_opts="--delete --exclude=/logs --exclude=/pids --exclude=runtime/ --exclude=/ccnet --exclude=/seafile-data/storage --exclude=/seafile-data/httptemp --exclude=/seafile-data/tmpfiles --exclude=/seafile-data/webdavtmp --exclude=pro-data/search --exclude=pro/python/seafes/update.lock --exclude=/{{ soffice_home }} --exclude=*.pyc"
   delegate_to: "{{ groups['master'][0] }}"
   notify:
     - Restart seafile
