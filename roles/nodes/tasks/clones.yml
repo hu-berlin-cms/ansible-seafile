@@ -3,11 +3,24 @@
 - name: "create {{ seafile_base_dir }}"
   file: name={{ seafile_base_dir }} state=directory
 
+- name: "sync timestamp changing stuff from golden image"
+  synchronize: >
+    src="{{ seafile_base_dir }}/"
+    dest="{{ seafile_base_dir }}"
+    checksum="yes"
+    times="no"
+    rsync_path="sudo rsync"
+    rsync_opts="--delete --include=/ccnet/*** --include=runtime/ --exclude=*"
+  delegate_to: "{{ groups['master'][0] }}"
+  notify:
+    - Restart seafile
+
 - name: "sync from golden image"
   synchronize: >
-    src="{{ seafile_base_dir }}/" dest="{{ seafile_base_dir }}"
+    src="{{ seafile_base_dir }}/"
+    dest="{{ seafile_base_dir }}"
     rsync_path="sudo rsync"
-    rsync_opts="--delete --exclude=/logs --exclude=/pids --exclude=runtime/*"
+    rsync_opts="--delete --exclude=/logs --exclude=/pids --exclude=runtime/ --exclude=/ccnet"
   delegate_to: "{{ groups['master'][0] }}"
   notify:
     - Restart seafile
