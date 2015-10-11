@@ -110,13 +110,6 @@
   notify:
     - Restart seafile
 
-# Fix db passwd issue
-- name: copy db patch
-  copy: src=seafevents_db.patch dest=/tmp
-- name: apply db patch
-  command: "patch -p 0 {{ seafile_base_dir }}/seafile-server-latest/pro/python/seafevents/db.py /tmp/seafevents_db.patch"
-  ignore_errors: true
-
 # FIXME config var, only do this, when needed
 # ldap workaround, see #940
 - name: ldap woraround
