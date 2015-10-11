@@ -38,3 +38,6 @@ lang_code: en
 
 # background node settings
 soffice_home: "soffice-home"
+
+# configstack settings
+restart_seafile_on_changes: True

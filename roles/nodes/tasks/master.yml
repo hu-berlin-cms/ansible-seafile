@@ -25,6 +25,8 @@
     state=directory
   register: ccnet_chown
   when: seafile_user is defined
+  notify:
+    - Restart seafile
 # chown the rest, if ccnet didn't belong to right user
 - name: recursively chown seafile base dir
   shell: "chown -R {{ seafile_user }} {{ seafile_base_dir }}"
@@ -60,6 +62,8 @@
 
 - name: copy seafile license
   copy: src=seafile-license.txt dest={{ seafile_base_dir }}/
+  notify:
+    - Restart seafile
 
 - name: gather seahub SECRET_KEY
   shell: fgrep SECRET_KEY {{ seafile_base_dir }}/seahub_settings.py | cut -d\" -f 2 | xargs echo
@@ -69,18 +73,26 @@
 
 - name: configure ccnet.conf
   template: src=ccnet.conf.j2 dest={{ seafile_base_dir }}/ccnet/ccnet.conf
+  notify:
+    - Restart seafile
 
 - name: configure seahub_settings.py
   template: src=seahub_settings.py.j2 dest={{ seafile_base_dir }}/seahub_settings.py
+  notify:
+    - Restart seafile
 
 - name: configure seafile.conf
   template: src=seafile.conf.j2 dest={{ seafile_base_dir }}/seafile-data/seafile.conf
+  notify:
+    - Restart seafile
 
 - name: copy seafdav.conf (default settings)
   copy: src=seafdav.conf dest={{ seafile_base_dir }}/conf/
 
 - name: configure seafevents.conf
   template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
+  notify:
+    - Restart seafile
 
 # Customization
 - name: make sure customization folder exists
@@ -89,10 +101,14 @@
   file: path={{ seafile_base_dir }}/seafile-server-latest/seahub/media/custom src=../../../seahub-data/custom state=link
 - name: copy seahub customizations
   copy: src=seahub-custom/ dest={{ seafile_base_dir }}/seahub-data/custom/
+  notify:
+    - Restart seafile
 - name: make sure template folder exists
   file: path="{{ seafile_base_dir }}/seahub-data/custom/templates" state=directory
 - name: copy seahub templates
   copy: src=seahub-templates/ dest={{ seafile_base_dir }}/seahub-data/custom/templates
+  notify:
+    - Restart seafile
 
 # Fix db passwd issue
 - name: copy db patch
