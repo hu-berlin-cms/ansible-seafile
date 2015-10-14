@@ -124,11 +124,14 @@
 # create admin after install
 # needed for init scripts to work
 - name: Create log directory
-  file: path="{{ seafile_base_dir }}/logs" state=directory
+  file: >
+    path="{{ seafile_base_dir }}/logs"
+    owner="{{ seafile_user|default('root') }}"
+    state=directory
 
 #- service: name=seafile-server state=started
 #  ignore_errors: yes  # seahub.sh not starting?
-- command: "{{ seafile_base_dir }}/seafile-server-latest/seafile.sh start"
+- command: "sudo -u {{ seafile_user|default('root') }} {{ seafile_base_dir }}/seafile-server-latest/seafile.sh start"
   when: not ccnet_config.stat.exists
 
 - include_vars: admin.yml
