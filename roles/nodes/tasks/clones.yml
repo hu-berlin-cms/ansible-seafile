@@ -10,7 +10,7 @@
     checksum="yes"
     times="no"
     rsync_path="sudo rsync"
-    rsync_opts="--delete --include=/ccnet/*** --include=runtime/ --exclude=*"
+    rsync_opts="--delete --include=/ccnet/*** --exclude=*"
   delegate_to: "{{ groups['master'][0] }}"
   notify:
     - Restart seafile
@@ -24,6 +24,15 @@
   delegate_to: "{{ groups['master'][0] }}"
   notify:
     - Restart seafile
+
+- name: "create needed directories we can't sync correctly"
+  file: >
+    state=directory
+    path="{{ seafile_base_dir }}/{{ item }}"
+  with_items:
+    - "pids"
+    - "logs"
+    - "seafile-server-latest/runtime"
 
 # chown to seafile_user, if needed
 - name: test seafile_user chown on clones
