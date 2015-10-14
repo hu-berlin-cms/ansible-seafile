@@ -134,6 +134,17 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
 ENABLE_SHIB_LOGIN = True
 {% endif %}
 
+{% if ping_throttle is defined or anon_throttle is defined or user_throttle is defined %}
+# rest_framwork
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_RATES': {
+        'ping': '{{ ping_throttle|default('600/minute') }}',
+        'anon': '{{ anon_throttle|default('5/minute') }}',
+        'user': '{{ user_throttle|default('300/minute') }}',
+    },
+}
+{% endif %}
+
 # settings new in 4.2
 SERVE_STATIC = False
 MEDIA_URL = '/media/'
