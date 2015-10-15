@@ -70,6 +70,6 @@
     - ssl/seafile-cert.pem
     - ssl/seafile-chain.pem
     - ssl/seafile-key.pem
-  when: ssl_nodes
+  when: ssl_nodes or use_shibboleth
   notify:
   - Restart apache
