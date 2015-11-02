@@ -38,7 +38,7 @@
 - name: "apache: configure fastcgi for seahub"
   lineinfile: >
     dest=/etc/apache2/apache2.conf
-    line="FastCGIExternalServer /var/www/seahub.fcgi -host 127.0.0.1:8000"
+    line="FastCGIExternalServer /var/www/seahub.fcgi -idle-timeout {{ fastcgi_timeout }} -host 127.0.0.1:8000"
     state=present
     insertafter=EOF
 

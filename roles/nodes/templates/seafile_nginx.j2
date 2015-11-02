@@ -42,8 +42,8 @@ server {
 {% if ssl_nodes %}
     fastcgi_param   HTTPS               on;
 {% endif %}
-    fastcgi_send_timeout	600s;
-    fastcgi_read_timeout	600s;
+    fastcgi_send_timeout	{{ fastcgi_timeout }}s;
+    fastcgi_read_timeout	{{ fastcgi_timeout }}s;
 
     access_log      /var/log/nginx/seahub.access.log;
     error_log       /var/log/nginx/seahub.error.log;
