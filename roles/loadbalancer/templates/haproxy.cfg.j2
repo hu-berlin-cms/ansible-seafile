@@ -45,7 +45,7 @@ listen seahub-https :443
   mode tcp
   option tcplog
   {% for node in groups['master'] + groups['clones'] %}
-  server node {{ hostvars[node]['ansible_default_ipv4']['address'] }}:443 check port 11001
+  server {{ node }} {{ hostvars[node]['ansible_default_ipv4']['address'] }}:443 check port 11001
   {% endfor %}
 {% endif %}
 
@@ -56,7 +56,7 @@ backend seahub-backend
   option forwardfor
   balance source
   {% for node in groups['master'] + groups['clones'] %}
-  server node {{ hostvars[node]['ansible_default_ipv4']['address'] }}:80 check port 11001
+  server {{ node }} {{ hostvars[node]['ansible_default_ipv4']['address'] }}:80 check port 11001
   {% endfor %}
 
 listen monitor
