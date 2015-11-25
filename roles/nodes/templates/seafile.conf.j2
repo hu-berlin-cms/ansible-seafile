@@ -4,7 +4,7 @@ enabled = true
 {% if memcached_servers is defined %}
 memcached_options = --SERVER={{ memcached_servers|join(' --SERVER=') }} {{ memcached_options }}
 {% else %}
-memcached_options ={% for server in groups['memcached'] %} --SERVER={{ server['ansible_default_ipv4']['address'] }}'{% endfor %} {{ memcached_options }}
+memcached_options ={% for server in groups['memcached'] %} --SERVER={{ hostvars[server]['ansible_default_ipv4']['address'] }}{% endfor %} {{ memcached_options }}
 {% endif %}
 {% endblock %}
 

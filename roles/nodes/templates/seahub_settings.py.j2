@@ -27,7 +27,7 @@ CACHES = {
 {% endfor %}
 {% else %}
 {% for server in groups['memcached'] %}
-            '{{ server['ansible_default_ipv4']['address'] }}:11211',
+            '{{ hostvars[server]['ansible_default_ipv4']['address'] }}:11211',
 {% endfor %}
 {% endif %}
         ]
