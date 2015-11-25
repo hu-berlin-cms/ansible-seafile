@@ -16,10 +16,21 @@ DATABASES = {
 
 FILE_SERVER_ROOT = 'https://{{ server_name }}/seafhttp'
 
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '{{ memcached_server }}:11211',
+        'LOCATION': [
+{% if memcached_servers is defined %}
+{% for server in memcached_servers %}
+            '{{ server }}:11211',
+{% endfor %}
+{% else %}
+{% for server in groups['memcached'] %}
+            '{{ hostvars[server]['ansible_default_ipv4']['address'] }}:11211',
+{% endfor %}
+{% endif %}
+        ]
     }
 }
 

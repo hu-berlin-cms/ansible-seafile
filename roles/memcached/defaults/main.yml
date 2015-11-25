@@ -1,0 +1,2 @@
+memcached_memory: 256
+memcached_port: 11211

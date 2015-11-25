@@ -1,6 +1,12 @@
 [cluster]
 enabled = true
-memcached_options = {{ memcached_options }}
+{% block memcached_options %}
+{% if memcached_servers is defined %}
+memcached_options = --SERVER={{ memcached_servers|join(' --SERVER=') }} {{ memcached_options }}
+{% else %}
+memcached_options ={% for server in groups['memcached'] %} --SERVER={{ hostvars[server]['ansible_default_ipv4']['address'] }}{% endfor %} {{ memcached_options }}
+{% endif %}
+{% endblock %}
 
 [network]
 port = {{ seafile_network_port }}
@@ -22,19 +28,19 @@ name = {{ ceph_name }}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
 pool = {{ ceph_pool_block }}
-memcached_options = {{ memcached_options }}
+{{ self.memcached_options() }}
 
 [commit_object_backend]
 name = {{ ceph_name }}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
 pool = {{ ceph_pool_commit }}
-memcached_options = {{ memcached_options }}
+{{ self.memcached_options() }}
 
 [fs_object_backend]
 name = {{ ceph_name }}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
 pool = {{ ceph_pool_fs }}
-memcached_options = {{ memcached_options }}
+{{ self.memcached_options() }}
 
