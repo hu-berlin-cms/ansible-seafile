@@ -40,7 +40,9 @@ ldap_cloud: True #cloud mode for seahub. hides organization tab. use this with b
 
 #storage backend
 ##ceph
-ceph_name: ceph
+block_backend_name: ceph
+commit_backend_name: ceph
+fs_backend_name: ceph
 ceph_config: /etc/ceph/ceph.conf
 ceph_client_id: seafile
 ceph_pool_block: seafile-blocks

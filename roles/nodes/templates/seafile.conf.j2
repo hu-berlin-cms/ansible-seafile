@@ -24,23 +24,59 @@ db_name = {{ db_seafile }}
 connection_charset = utf8
 
 [block_backend]
-name = {{ ceph_name }}
+name = {{ block_backend_name }}
+{% if block_backend_name == "ceph" %}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
 pool = {{ ceph_pool_block }}
+{% elif block_backend_name == "s3" %}
+bucket = {{ s3_bucket_block }}
+key_id = {{ s3_key_id }}
+key = {{ s3_key }}
+{% if s3_sigv4 %}
+use_v4_signature = true
+{% endif %}
+{% if s3_aws_region is defined %}
+aws_region = {{ s3_aws_region }}
+{% endif %}
+{% endif %}
 {{ self.memcached_options() }}
 
 [commit_object_backend]
-name = {{ ceph_name }}
+name = {{ commit_backend_name }}
+{% if commit_backend_name == "ceph" %}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
 pool = {{ ceph_pool_commit }}
+{% elif commit_backend_name == "s3" %}
+bucket = {{ s3_bucket_commit }}
+key_id = {{ s3_key_id }}
+key = {{ s3_key }}
+{% if s3_sigv4 %}
+use_v4_signature = true
+{% endif %}
+{% if s3_aws_region is defined %}
+aws_region = {{ s3_aws_region }}
+{% endif %}
+{% endif %}
 {{ self.memcached_options() }}
 
 [fs_object_backend]
-name = {{ ceph_name }}
+name = {{ fs_backend_name }}
+{% if fs_backend_name == "ceph" %}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
 pool = {{ ceph_pool_fs }}
+{% elif fs_backend_name == "s3" %}
+bucket = {{ s3_bucket_fs }}
+key_id = {{ s3_key_id }}
+key = {{ s3_key }}
+{% if s3_sigv4 %}
+use_v4_signature = true
+{% endif %}
+{% if s3_aws_region is defined %}
+aws_region = {{ s3_aws_region }}
+{% endif %}
+{% endif %}
 {{ self.memcached_options() }}
 

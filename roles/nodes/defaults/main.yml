@@ -49,3 +49,19 @@ enable_resumable_fileupload: False
 
 # internal settings
 fastcgi_timeout: 60
+
+# backends
+block_backend_name: ceph
+commit_backend_name: ceph
+fs_backend_name: ceph
+# ceph backend
+ceph_config: /etc/ceph/ceph.conf
+ceph_client_id: seafile
+ceph_pool_block: seafile-blocks
+ceph_pool_commit: seafile-commits
+ceph_pool_fs: seafile-fs
+# s3 backend
+s3_bucket_block: my-block-objects
+s3_bucket_commit: my-commit-objects
+s3_bucket_fs: my-fs-objects
+s3_sigv4: False
