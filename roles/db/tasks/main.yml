@@ -1,14 +1,14 @@
 # install and configure mariadb db stuff
 
 # install mariadb
-- name: Install MariaDB server
-  apt: name=mariadb-server state=present
-
-- name: Install MariaDB client (for maintenance / debugging)
-  apt: name=mariadb-client state=present
-
-- name: Install stack requirements
-  apt: name=python-mysqldb state=present
+- name: Install MariaDB server and dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - mariadb-server
+# Install MariaDB client (for maintenance / debugging)
+    - mariadb-client
+# stack (ansible) requirement
+    - python-mysqldb
 
 # configure initial mysql root pw
 - include_vars: dbconfig.yml

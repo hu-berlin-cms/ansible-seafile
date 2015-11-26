@@ -17,8 +17,14 @@
   notify:
   - Restart haproxy
 
-- name: Install haproxy
-  apt: name=haproxy state=present
+- name: Install haproxy and dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - haproxy
+# haproxyctl dependencies (see below)
+    - git
+    - python2.7
+    - python-setuptools
 
 - name: Configure haproxy
   template: >
@@ -38,15 +44,6 @@
   service: name=haproxy state=started
 
 ## haproxyctl
-- name: install git
-  apt: name=git state=present
-
-- name: install python2.7
-  apt: name=python2.7 state=present
-
-- name: Install python-setuptools
-  apt: name=python-setuptools state=present
-
 - name: git neurogeek/haproxyctl repo
   git: >
     repo=https://github.com/neurogeek/haproxyctl.git

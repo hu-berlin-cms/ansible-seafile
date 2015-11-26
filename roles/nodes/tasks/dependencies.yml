@@ -1,31 +1,13 @@
 # This playbook installs dependency packages for the seafile nodes
 
-- name: Install python2.7
-  apt: name=python2.7 state=present
-
-- name: Install python-setuptools
-  apt: name=python-setuptools state=present
-
-- name: Install python-imaging
-  apt: name=python-imaging state=present
-
-- name: Install python-mysqldb
-  apt: name=python-mysqldb state=present
-
-- name: Install python-memcache
-  apt: name=python-memcache state=present
-
-- name: Install python-flup
-  apt: name=python-flup state=present
-
-- name: Install pip
-  easy_install: name=pip
-
-- name: Install boto via pip
-  pip: name=boto
-
-- name: Install libnss3
-  apt: name=libnss3 state=present
-
-- name: Install rsync (needed for configstack)
-  apt: name=rsync state=present
+- name: Install node dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - python2.7
+    - python-setuptools
+    - python-imaging
+    - python-mysqldb
+    - python-memcache
+    - python-flup
+    - libnss3
+    - rsync

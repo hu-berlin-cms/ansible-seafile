@@ -1,0 +1,14 @@
+#This playbook prepares all nodes
+## currently needed to enable pipelining with sudo
+
+# disable requiretty
+- hosts: all
+  tasks:
+    - name: disable requiretty to enable pipelining with sudo
+      lineinfile: >
+        dest=/etc/sudoers
+        state=present
+        insertafter='^Defaults.*env_reset'
+        line='Defaults\t!requiretty'
+        validate='visudo -cf %s'
+  sudo: yes
