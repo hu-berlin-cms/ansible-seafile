@@ -81,8 +81,12 @@ for pool in seafile-blocks seafile-commits seafile-fs; do ceph osd pool set $poo
 ceph auth get-or-create client.seafile mon 'allow r' osd 'allow rwx pool=seafile-blocks, allow rwx pool=seafile-commits, allow rwx pool=seafile-fs' -o client.seafile
 ```
 
+# Prepare first run (for using Ansible pipelining and sudo, *disables requiretty!*)
+```
+./prepares-nodes.sh
+```
 
-# First Run (initial install)
+# First run (initial install)
 
 ```
 ansible-playbook -i hosts -e force_install=true site.yaml
