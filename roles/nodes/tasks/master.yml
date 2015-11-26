@@ -36,8 +36,10 @@
 ## to support external databases this gets done
 ## here, too (originally in db/tasks/main.yml)
 ## But it's guarded by IF NOT EXISTS
-- name: Install mysql-client for db import
-  apt: name=mysql-client state=present
+- name: Uninstall mysql-client, if there (conflict with mariadb-client)
+  apt: name=mysql-client state=absent
+- name: Install mariadb-client for db import
+  apt: name=mariadb-client state=present
 
 - copy: src=avatar_uploaded.sql dest=/tmp
 - name: "seahub-db: creating avatar_uploaded table (if not exists)"
