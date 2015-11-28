@@ -24,7 +24,9 @@ db_name = {{ db_seafile }}
 connection_charset = utf8
 
 [block_backend]
+{% if block_backend_name != "fs" %}
 name = {{ block_backend_name }}
+{% endif %}
 {% if block_backend_name == "ceph" %}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
@@ -43,7 +45,9 @@ aws_region = {{ s3_aws_region }}
 {{ self.memcached_options() }}
 
 [commit_object_backend]
+{% if commit_backend_name != "fs" %}
 name = {{ commit_backend_name }}
+{% endif %}
 {% if commit_backend_name == "ceph" %}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
@@ -62,7 +66,9 @@ aws_region = {{ s3_aws_region }}
 {{ self.memcached_options() }}
 
 [fs_object_backend]
+{% if fs_backend_name != "fs" %}
 name = {{ fs_backend_name }}
+{% endif %}
 {% if fs_backend_name == "ceph" %}
 ceph_config = {{ ceph_config }}
 ceph_client_id = {{ ceph_client_id }}
