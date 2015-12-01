@@ -19,21 +19,17 @@
 - name: "apache: install fastcgi support"
   apt: name=libapache2-mod-fastcgi state=present
 
-- name: "apache: enable rewrite module"
-  apache2_module: name=rewrite state=present
-
-- name: "apache: enable fastcgi module"
-  apache2_module: name=fastcgi state=present
-
-- name: "apache: enable proxy_http module"
-  apache2_module: name=proxy_http state=present
-
-- name: "apache: enable ssl module"
-  apache2_module: name=ssl state=present
-
-# for HSTS Header
-- name: "apache: enable headers module"
-  apache2_module: name=headers state=present
+- name: "apache: enable needed modules"
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - rewrite
+    - fastcgi
+    - proxy_http
+    - ssl
+    # for HSTS Header
+    - headers
+  notify:
+  - Restart apache
 
 - name: "apache: configure fastcgi for seahub"
   lineinfile: >
