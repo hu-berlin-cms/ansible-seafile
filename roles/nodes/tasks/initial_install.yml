@@ -16,18 +16,11 @@
     src="files/{{ installer_archive }}"
     dest="{{ seafile_base_dir }}"
 
-# get install dir
-- name: get install dir
-  command: "ls -1 {{ seafile_base_dir }}"
-  register: install_dir_cmd
-
-- set_fact: install_dir="{{ install_dir_cmd.stdout }}"
-
 # run install module
 - name: init seafile master install
   seafile-init: >
     path="{{ seafile_base_dir }}"
-    subdir="{{ install_dir }}"
+    subdir="seafile-pro-server-{{ seafile_version }}"
     seafile_mysql_user="{{ db_user }}"
     seafile_mysql_password="{{ db_pw }}"
     mysql_host="{{ db_server }}"

@@ -140,7 +140,7 @@
 - name: create admin user, if there is none
   seafile-admin-init: >
     path="{{ seafile_base_dir }}"
-    subdir="{{ install_dir }}"
+    subdir="seafile-pro-server-{{ seafile_version }}"
     name="{{ seafile_admin_user }}"
     password="{{ seafile_admin_pw }}"
   when: not ccnet_config.stat.exists
