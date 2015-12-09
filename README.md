@@ -34,12 +34,12 @@ seafile-cert.pem  # server certificate
 seafile-chain.pem  # intermediate certificates
 seafile-key.pem
 seafile-license.txt
-seafile-install.tar.gz  # symlink to pro installer archive
+seafile-pro-server_5.0.1_x86-64.tar.gz  # pro installer archive
 ```
 
 If you are using Shibboleth, put your config in ```files/shibboleth```. They will be copied to /etc/shibboleth on the nodes.
 
-Adjust parameters:
+Adjust parameters (especially seafile_version):
 
 ```
 groups_vars/all
