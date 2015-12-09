@@ -67,24 +67,26 @@
   notify:
     - Restart seafile
 
+- set_fact: new_conf_layout="{{ seafile_version | version_compare('5.0', operator='ge') }}"
+
 - name: gather seahub SECRET_KEY
-  shell: fgrep SECRET_KEY {{ seafile_base_dir }}/seahub_settings.py | cut -d\" -f 2 | xargs echo
+  shell: "fgrep SECRET_KEY {{ seafile_base_dir }}{% if new_conf_layout %}/conf{% endif %}/seahub_settings.py | cut -d\\\" -f 2 | xargs echo"
   register: seahub_secret_cmd
 
 - set_fact: ccnet_id="{{ ccnet_id_cmd.stdout }}" seahub_secret="{{ seahub_secret_cmd.stdout }}"
 
 - name: configure ccnet.conf
-  template: src=ccnet.conf.j2 dest={{ seafile_base_dir }}/ccnet/ccnet.conf
+  template: src=ccnet.conf.j2 dest="{{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}ccnet{% endif %}/ccnet.conf2"
   notify:
     - Restart seafile
 
 - name: configure seahub_settings.py
-  template: src=seahub_settings.py.j2 dest={{ seafile_base_dir }}/seahub_settings.py
+  template: src=seahub_settings.py.j2 dest="{{ seafile_base_dir }}/{% if new_conf_layout %}conf/{% endif %}seahub_settings.py"
   notify:
     - Restart seafile
 
 - name: configure seafile.conf
-  template: src=seafile.conf.j2 dest={{ seafile_base_dir }}/seafile-data/seafile.conf
+  template: src=seafile.conf.j2 dest={{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}seafile-data{% endif %}/seafile.conf
   notify:
     - Restart seafile
 
@@ -92,7 +94,7 @@
   copy: src=seafdav.conf dest={{ seafile_base_dir }}/conf/
 
 - name: configure seafevents.conf
-  template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
+  template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}pro-data{% endif %}/seafevents.conf
   notify:
     - Restart seafile
 
