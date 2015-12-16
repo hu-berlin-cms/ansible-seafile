@@ -17,7 +17,7 @@ To assist you with upgrading Seafile we provide two playbooks:
 
 If you want to use them, upgrading consists of the following steps:
 * copy new seafile installer archive to files dir
-* update seafile-install.tar.gz symlink
+* update seafile_version variable to new version
 * run prepare-upgrade.yml playbook **This STOPS running seafile instances!**
 * manually run upgrade scripts on master node
 * run finish-upgrade.yml playbook to finish the upgrade (site.yaml would work, too)
@@ -25,22 +25,19 @@ If you want to use them, upgrading consists of the following steps:
 Example of an upgrade:
 ```
 # check md5sum of installer archive
-md5sum seafile-pro-server_4.3.3_x86-64.tar.gz
-417bd9d618367cac328e17076eeb2a3e  seafile-pro-server_4.3.3_x86-64.tar.gz
-cat seafile-pro-server_4.3.3_x86-64.tar.gz.md5.txt
-417bd9d618367cac328e17076eeb2a3e
+md5sum seafile-pro-server_5.0.1_x86-64.tar.gz
+e498a4978e1e7f1c8755aa9d21712c91  seafile-pro-server_5.0.1_x86-64.tar.gz
+cat seafile-pro-server_5.0.1_x86-64.tar.gz.md5.txt
+e498a4978e1e7f1c8755aa9d21712c91
 
 # copy installer to deploy node
-scp seafile-pro-server_4.3.3_x86-64.tar.gz deploy-node:configstack/files
+scp seafile-pro-server_5.0.1_x86-64.tar.gz deploy-node:configstack/files
 
 # connect to deploy node
 ssh deploy-node
 
-# update symlink
-cd configstack/files/
-rm seafile-install.tar.gz 
-ln -s seafile-pro-server_4.3.3_x86-64.tar.gz seafile-install.tar.gz
-cd ..
+# update version string
+sed -i 's/^seafile_version:.*/seafile_version: "5.0.1"/' group_vars/all
 
 # prepare upgrade; This STOPS all running instances
 ansible-playbook -i hosts prepare-upgrade.yml 
@@ -48,7 +45,7 @@ ansible-playbook -i hosts prepare-upgrade.yml
 # actual upgrade
 ssh master-node
 # run upgrade scripts needed for current upgrade (major, minor?)
-sudo /data/seafile/seafile-pro-server-4.3.3/upgrade/minor-upgrade.sh
+sudo /data/seafile/seafile-pro-server-5.0.1/upgrade/minor-upgrade.sh
 exit
 
 # finish upgrade

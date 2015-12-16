@@ -11,9 +11,9 @@
 
 # adapt seahub_settings.py
 - name: Remove CONVERTOR_ROOT from seahub_settings.py
-  lineinfile: dest={{ seafile_base_dir }}/seahub_settings.py state=absent regexp="^OFFICE_CONVERTOR_ROOT"
+  lineinfile: dest="{{ seafile_base_dir }}{% if new_conf_layout %}/conf{% endif %}/seahub_settings.py" state=absent regexp="^OFFICE_CONVERTOR_ROOT"
 - name: Add CONVERTOR_NODE to seahub_settings.py
-  lineinfile: dest={{ seafile_base_dir }}/seahub_settings.py state=present line="OFFICE_CONVERTOR_NODE = True"
+  lineinfile: dest={{ seafile_base_dir }}{% if new_conf_layout %}/conf{% endif %}/seahub_settings.py state=present line="OFFICE_CONVERTOR_NODE = True"
 
 # rollout background init.d script
 - name: Create init.d script
@@ -40,7 +40,7 @@
 
 - include_vars: dbconfig.yml
 - name: configure seafevents.conf
-  template: src=seafevents.conf.j2 dest={{ seafile_base_dir }}/pro-data/seafevents.conf
+  template: src=seafevents.conf.j2 dest="{{ seafile_base_dir }}/{% if new_conf_layout %}/conf{% else %}pro-data{% endif %}/seafevents.conf"
 
 # make libreoffice office converter work with non-root account (control location of soffice working dir)
 - name: set soffice home
