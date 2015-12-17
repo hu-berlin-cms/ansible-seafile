@@ -9,6 +9,9 @@
 #poppler-utils (pdftotext)
     - poppler-utils
 
+# new config layout?
+- set_fact: new_conf_layout="{{ seafile_version | version_compare('5.0', operator='ge') }}"
+
 # adapt seahub_settings.py
 - name: Remove CONVERTOR_ROOT from seahub_settings.py
   lineinfile: dest="{{ seafile_base_dir }}{% if new_conf_layout %}/conf{% endif %}/seahub_settings.py" state=absent regexp="^OFFICE_CONVERTOR_ROOT"
