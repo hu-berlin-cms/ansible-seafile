@@ -2,11 +2,21 @@
 #(including dependencies)
 # It doesn't install/upgrade Seafile itself
 
-# update packet cache
 - hosts: all
   tasks:
+  # update packet cache
   - apt:
       cache_valid_time: 3600
       update_cache: yes
+  # upgrade packages
+  - apt:
       upgrade: "yes"
+    when: "not simulate|default(False)"
+  # only show upgrades
+  - command: "aptitude upgrade -y -s"
+    register: upgrade_info
+    when: "simulate|default(False)"
+  # show upgrades
+  - debug: var=upgrade_info.stdout
+    when: "simulate|default(False)"
   sudo: yes

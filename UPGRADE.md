@@ -67,3 +67,8 @@ To upgrade os packages on the nodes (not seafile itself!) run:
 ```
 ansible -i hosts upgrade_os.yml
 ```
+
+You can simulate this, if you want to see, what would be done in advance:
+```
+ansible -i hosts -e simulate=yes upgrade_os.yml
+```
