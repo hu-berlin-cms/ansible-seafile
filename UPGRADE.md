@@ -54,7 +54,7 @@ ansible-playbook -i hosts finish-upgrade.yml
 
 If you don't want to use them, upgrading consists of the following steps:
 * copy new seafile installer archive to files dir
-* update seafile-install.tar.gz symlink (just for consistency)
+* update seafile_version variable to new version (to support version specific changes)
 * copy new seafile installer to master node
 * extract new seafile installer on master node
 * stop all running seafile instances
@@ -68,7 +68,7 @@ To upgrade os packages on the nodes (not seafile itself!) run:
 ansible -i hosts upgrade_os.yml
 ```
 
-You can simulate this, if you want to see, what would be done in advance:
+You can simulate this, if you want to see in advance, what would be done:
 ```
 ansible -i hosts -e simulate=yes upgrade_os.yml
 ```
