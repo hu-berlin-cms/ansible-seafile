@@ -140,6 +140,11 @@ EXTRA_MIDDLEWARE_CLASSES = (
 )
 SHIBBOLETH_ATTRIBUTE_MAP = {
     "eppn": (True, "username"),
+    "displayName": (False, "display_name"),
+    "givenname": (False, "givenname"),
+    "surname": (False, "surname"),
+    "emailaddress": (False, "contact_email"),
+    "organization": (False, "institution"),
 }
 
 ENABLE_SHIB_LOGIN = True
