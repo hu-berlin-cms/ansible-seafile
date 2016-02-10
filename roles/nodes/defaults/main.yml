@@ -1,5 +1,7 @@
 seahub_disable_throttling: no
 ssl_nodes: no
+# decrypt ssl at loadbalancer
+ssl_dec_loadbalancer: yes
 webserver: "apache"
 use_shibboleth: no
 

@@ -161,6 +161,10 @@ REST_FRAMEWORK = {
 }
 {% endif %}
 
+{% if ssl_dec_loadbalancer %}
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+{% endif %}
+
 # settings new in 4.2
 SERVE_STATIC = False
 MEDIA_URL = '/media/'
