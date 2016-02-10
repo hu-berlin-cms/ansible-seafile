@@ -65,10 +65,10 @@ If you don't want to use them, upgrading consists of the following steps:
 
 To upgrade os packages on the nodes (not seafile itself!) run:
 ```
-ansible -i hosts upgrade_os.yml
+ansible-playbook -i hosts upgrade_os.yml
 ```
 
 You can simulate this, if you want to see in advance, what would be done:
 ```
-ansible -i hosts -e simulate=yes upgrade_os.yml
+ansible-playbook -i hosts -e simulate=yes upgrade_os.yml
 ```
