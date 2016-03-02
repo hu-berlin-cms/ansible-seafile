@@ -76,7 +76,7 @@
 - set_fact: ccnet_id="{{ ccnet_id_cmd.stdout }}" seahub_secret="{{ seahub_secret_cmd.stdout }}"
 
 - name: configure ccnet.conf
-  template: src=ccnet.conf.j2 dest="{{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}ccnet{% endif %}/ccnet.conf2"
+  template: src=ccnet.conf.j2 dest="{{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}ccnet{% endif %}/ccnet.conf"
   notify:
     - Restart seafile
 
