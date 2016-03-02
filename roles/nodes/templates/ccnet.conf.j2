@@ -16,8 +16,10 @@ PASSWD = {{ db_pw }}
 DB = {{ db_ccnet }}
 CONNECTION_CHARSET = utf8
 
+{% if use_ldap %}
 [LDAP]
 HOST = {{ ldap_host }}
 BASE = {{ ldap_base }}
 LOGIN_ATTR = {{ ldap_login_attr }}
 USE_PAGED_RESULT = true
+{% endif %}

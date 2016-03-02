@@ -34,9 +34,11 @@ db_seahub: seahub-db
 db_seafile: seafile-db
 
 #ldap
-ldap_host: ldaps://ldapmaster.cms.hu-berlin.de/
-ldap_base: ou=users,ou=filesync,ou=Server,ou=Computer- und Medienservice,o=Humboldt-Universitaet zu Berlin,c=de
-ldap_login_attr: mail
+#use_ldap: yes
+#ldap_host: ldaps://<your ldap server>/
+## ldap base_dn
+#ldap_base: ou=users,o=YourOrg,c=de
+#ldap_login_attr: mail
 ldap_cloud: True #cloud mode for seahub. hides organization tab. use this with big ldap or unknown user base
 
 #storage backend

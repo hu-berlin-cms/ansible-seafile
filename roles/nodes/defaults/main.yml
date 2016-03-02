@@ -4,6 +4,7 @@ ssl_nodes: no
 ssl_dec_loadbalancer: yes
 webserver: "apache"
 use_shibboleth: no
+use_ldap: no
 
 #password
 #password options. set true to use
