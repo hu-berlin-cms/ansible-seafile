@@ -6,7 +6,7 @@
 # check if initial config already exists
 - name: check for existing config
   stat: >
-    path="{{ seafile_base_dir }}/ccnet/ccnet.conf"
+    path="{{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}ccnet{% endif %}/ccnet.conf"
     get_md5=no
     get_checksum=no
   register: ccnet_config
@@ -59,7 +59,7 @@
     state=absent
 
 - name: gather ccnet ID
-  shell: fgrep ID = {{ seafile_base_dir }}/ccnet/ccnet.conf | cut -d= -f 2 | xargs echo
+  shell: "fgrep 'ID =' {{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}ccnet{% endif %}/ccnet.conf | cut -d= -f 2 | xargs echo"
   register: ccnet_id_cmd
 
 - name: copy seafile license
