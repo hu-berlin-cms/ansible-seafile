@@ -3,6 +3,8 @@
 - name: "create {{ seafile_base_dir }}"
   file: name={{ seafile_base_dir }} state=directory
 
+- set_fact: new_conf_layout="{{ seafile_version | version_compare('5.0', operator='ge') }}"
+
 # check if initial config already exists
 - name: check for existing config
   stat: >
@@ -66,8 +68,6 @@
   copy: src=seafile-license.txt dest={{ seafile_base_dir }}/
   notify:
     - Restart seafile
-
-- set_fact: new_conf_layout="{{ seafile_version | version_compare('5.0', operator='ge') }}"
 
 - name: gather seahub SECRET_KEY
   shell: "fgrep SECRET_KEY {{ seafile_base_dir }}{% if new_conf_layout %}/conf{% endif %}/seahub_settings.py | cut -d\\\" -f 2 | xargs echo"
