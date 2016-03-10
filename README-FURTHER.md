@@ -11,6 +11,17 @@ You can choose between nginx and apache. There is a config template located at /
 webserver: "apache"
 ```
 
+## SSL Decryption
+
+The ssl decryption can be handled by the loadbalancer or the nodes. Default is the loadbalancer.
+The two parameters depend on each other, so we probably will merge them at some point. Now one has to be 'yes' and the other 'no'.
+
+```
+# decrypt ssl at loadbalancer
+ssl_dec_loadbalancer: yes
+ssl_nodes: no
+```
+
 ## Authentification
 
 For external authentification there is LDAP and Shibboleth.
