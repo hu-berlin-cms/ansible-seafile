@@ -16,28 +16,19 @@
 - mysql_user: name=root password={{ db_root_pw }} state=present
   ignore_errors: True
 
-# configure seafile databases
-- name: creating/checking ccnet-db
+# configure/create databases
+- name: creating/checking seafile databases
   mysql_db: >
-    name={{ db_ccnet }}
+    name={{ item }}
     encoding=utf8
     state=present
     login_user=root
     login_password={{ db_root_pw }}
-- name: creating/checking seafile-db
-  mysql_db: >
-    name={{ db_seafile }}
-    encoding=utf8
-    state=present
-    login_user=root
-    login_password={{ db_root_pw }}
-- name: creating/checking seahub-db
-  mysql_db: >
-    name={{ db_seahub }}
-    encoding=utf8
-    state=present
-    login_user=root
-    login_password={{ db_root_pw }}
+  with_items:
+   - "{{ db_ccnet }}"
+   - "{{ db_seafile }}"
+   - "{{ db_seahub }}"
+
 # create cluster avatar database
 ## to support external databases this gets done
 ## in nodes/tasks/master.yml, too
