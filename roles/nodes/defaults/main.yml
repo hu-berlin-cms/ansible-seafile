@@ -5,6 +5,7 @@ ssl_dec_loadbalancer: yes
 webserver: "apache"
 use_shibboleth: no
 use_ldap: no
+email_replace_from_email: False
 
 #password
 #password options. set true to use
