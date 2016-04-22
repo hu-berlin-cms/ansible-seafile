@@ -75,6 +75,16 @@ SEND_EMAIL_ON_ADDING_SYSTEM_MEMBER = {{ email_on_adding_system_member }}
 # Whether to send email when a system admin resetting a user's password. Default is `True`.
 # NOTE: since version 1.4.
 SEND_EMAIL_ON_RESETTING_USER_PASSWD = {{ email_on_resetting_user_passwd }}
+
+{% if email_replace_from_email %}
+# Replace default from email with the users email address; defaults to 'False'
+REPLACE_FROM_EMAIL = True
+{% endif %}
+
+{% if email_add_reply_to_header %}
+# Add Reply-To header with the users email address; defaults to 'False'
+ADD_REPLY_TO_HEADER = True
+{% endif %}
 {% endif %}
 
 {% if ldap_cloud %}
