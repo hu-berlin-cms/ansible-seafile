@@ -38,6 +38,9 @@ OFFICE_CONVERTOR_ROOT = 'http://{{ bg_server }}'
 
 AVATAR_FILE_STORAGE = 'seahub.base.database_storage.DatabaseStorage'
 
+# COMPRESS backend for cluster with memcached
+COMPRESS_CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
+
 {% if thumbnail_options %}
 # Enable or disable thumbnails
 ENABLE_THUMBNAIL = {{ thumbnail_options }}
