@@ -8,7 +8,7 @@ Ansible >=1.6 is needed (installing mariadb/mysql using Ansible 1.5.4 doesn't wo
 This playbook tries to keep in sync with the official manuals and therefore uses a "golden image", that is used
 as clone source for the other instances.
 
-It is tested against Seafile-Pro 4.4 deployed on Ubuntu 14.04.
+It is tested against Seafile-Pro 5.1 deployed on Ubuntu 14.04.
 
 This is work in progress. If you have ideas or find bugs, please file an issue.
 We are planning to make this pretty flexible and modular, to ease adjusting it to your needs.
