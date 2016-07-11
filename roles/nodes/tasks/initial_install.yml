@@ -16,6 +16,12 @@
     src="files/{{ installer_archive }}"
     dest="{{ seafile_base_dir }}"
 
+- name: remove unnecessary java dependency check
+  lineinfile: >
+    dest="{{ seafile_base_dir }}/seafile-pro-server-{{ seafile_version }}/setup-seafile-mysql.sh"
+    regexp="^check_java;"
+    state=absent
+
 - name: remove unnecessary locks from sql dump
   lineinfile: >
     dest="{{ seafile_base_dir }}/seafile-pro-server-{{ seafile_version }}/seahub/sql/mysql.sql"
@@ -23,7 +29,7 @@
     state=absent
 
 # run install module
-- name: init seafile master install
+- name: init seafile master install by module
   seafile-init: >
     path="{{ seafile_base_dir }}"
     subdir="seafile-pro-server-{{ seafile_version }}"
@@ -34,3 +40,8 @@
     ccnet_db_name="{{ db_ccnet }}"
     seafile_db_name="{{ db_seafile }}"
     seahub_db_name="{{ db_seahub }}"
+  when: "{{ seafile_version | version_compare('5.1.2', operator='<') }}"
+
+- name: init seafile master install by script call
+  command: "{{ seafile_base_dir }}/seafile-pro-server-{{ seafile_version }}/setup-seafile-mysql.sh auto -n seafile -i {{ server_name }} -e 1 -o {{ db_server }} -t {{ db_port }} -u {{ db_user }} -w {{ db_pw }} -c {{ db_ccnet }} -s {{ db_seafile }} -b {{ db_seahub }} -q {{ db_allowed_hosts }}"
+  when: "{{ seafile_version | version_compare('5.1.2', operator='>=') }}"

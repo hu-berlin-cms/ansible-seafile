@@ -37,6 +37,9 @@ ccnet_client_port: 13419
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
 
+#database defaults
+db_allowed_hosts: '%'
+
 # language / location
 time_zone: Europe/Berlin
 lang_code: en
