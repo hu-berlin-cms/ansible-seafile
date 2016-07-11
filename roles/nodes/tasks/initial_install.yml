@@ -16,6 +16,12 @@
     src="files/{{ installer_archive }}"
     dest="{{ seafile_base_dir }}"
 
+- name: remove unnecessary locks from sql dump
+  lineinfile: >
+    dest="{{ seafile_base_dir }}/seafile-pro-server-{{ seafile_version }}/seahub/sql/mysql.sql"
+    regexp="^(UN)?LOCK TABLES"
+    state=absent
+
 # run install module
 - name: init seafile master install
   seafile-init: >

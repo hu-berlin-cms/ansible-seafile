@@ -34,6 +34,9 @@ def main():
     # 'CCNET_CONF_DIR'
     if not 'CCNET_CONF_DIR' in os.environ:
         os.environ['CCNET_CONF_DIR'] = os.path.join(module.params['path'], 'ccnet')
+    # 'SEAFILE_CENTRAL_CONF_DIR'
+    if not 'SEAFILE_CENTRAL_CONF_DIR' in os.environ:
+        os.environ['SEAFILE_CENTRAL_CONF_DIR'] = os.path.join(module.params['path'], 'conf')
 
     try:
         #import setup-seafile-mysql.py
