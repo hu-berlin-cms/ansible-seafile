@@ -31,6 +31,7 @@ def main():
             ccnet_port = dict(default=10001,type='int'),
             seafile_port = dict(default=12001,type='int'),
             seafile_fileserver_port = dict(default=8082,type='int'),
+            central_conf_dir=dict(default=True, choices=BOOLEANS),
             #initialize=dict(default=False, choices=BOOLEANS),
             #something=dict(aliases=['whatever'])
         ),
@@ -89,7 +90,10 @@ def main():
     seafile_config.seafile_dir = os.path.join(env_mgr.top_dir, 'seafile-data')
     seafile_config.port = module.params['seafile_port']
     seafile_config.fileserver_port = module.params['seafile_fileserver_port']
-    seahub_config.seahub_settings_py = os.path.join(env_mgr.top_dir, 'seahub_settings.py')
+    if module.params['central_conf_dir'] in BOOLEANS_TRUE:
+        seahub_config.seahub_settings_py = os.path.join(env_mgr.top_dir, 'conf', 'seahub_settings.py')
+    else:
+        seahub_config.seahub_settings_py = os.path.join(env_mgr.top_dir, 'seahub_settings.py')
     #seahub_config.admin_email = 'test@blubb'
     #seahub_config.admin_password = ''
 

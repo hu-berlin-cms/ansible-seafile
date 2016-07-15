@@ -40,6 +40,7 @@
     ccnet_db_name="{{ db_ccnet }}"
     seafile_db_name="{{ db_seafile }}"
     seahub_db_name="{{ db_seahub }}"
+    central_conf_dir="{{ seafile_version | version_compare('5.0', operator='>=') | lower }}"
   when: "{{ seafile_version | version_compare('5.1.2', operator='<') }}"
 
 - name: init seafile master install by script call
