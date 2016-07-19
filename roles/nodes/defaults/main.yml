@@ -78,3 +78,5 @@ s3_sigv4: False
 # Fixes
 # ldap workaround, see #940; enabled for backwards compatibility
 ldap_lib_fix: True
+# rados/ceph workaround, see #1720
+rados_lib_fix: False

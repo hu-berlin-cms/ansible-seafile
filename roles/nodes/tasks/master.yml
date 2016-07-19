@@ -123,6 +123,18 @@
     - liblber-2.4.so.2
     - libldap-2.4.so.2
     - libsasl2.so.2
+  when: ldap_lib_fix
+
+# fix ceph libs, see #1720
+- name: ceph workaround
+  file: >
+    name="{{ seafile_base_dir }}/seafile-server-latest/seafile/lib/{{ item }}"
+    state=absent
+  with_items:
+    - librados.so.2
+    - libstdc++.so.6
+    - libnspr4.so
+  when: rados_lib_fix
 
 # create admin after install
 # needed for init scripts to work
