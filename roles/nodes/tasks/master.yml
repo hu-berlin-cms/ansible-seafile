@@ -114,9 +114,8 @@
   notify:
     - Restart seafile
 
-# FIXME config var, only do this, when needed
 # ldap workaround, see #940
-- name: ldap woraround
+- name: ldap workaround
   file: >
     name="{{ seafile_base_dir }}/seafile-server-latest/seafile/lib/{{ item }}"
     state=absent

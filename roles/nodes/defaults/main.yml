@@ -73,3 +73,8 @@ s3_bucket_block: my-block-objects
 s3_bucket_commit: my-commit-objects
 s3_bucket_fs: my-fs-objects
 s3_sigv4: False
+
+
+# Fixes
+# ldap workaround, see #940; enabled for backwards compatibility
+ldap_lib_fix: True
