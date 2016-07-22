@@ -1,2 +1,4 @@
 # decrypt ssl at loadbalancer
 ssl_dec_loadbalancer: yes
+lb_use_ha: no
+vips: []
