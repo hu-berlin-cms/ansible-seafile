@@ -20,7 +20,7 @@ Some possibly interesting features:
 * Shibboleth support using Apache as webserver
 * Support running seafile as arbitrary user (*experimental*)
 * Support for ceph and s3 as storage backends
-* HA loadbalancer
+* HA loadbalancer (Debian 8 or Ubuntu 16.04 needed on loadbalancer nodes)
 
 # Prerequisites
 
