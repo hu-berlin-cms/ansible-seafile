@@ -53,3 +53,6 @@
 - name: install haproxyctl
   command: python setup.py install chdir=/opt/haproxy
   when: get_haproxyctl.changed
+
+- include: ha.yml
+  when: lb_use_ha

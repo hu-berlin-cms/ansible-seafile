@@ -1,0 +1,17 @@
+- name: Configure vips
+  pacemaker:
+    resource: >
+      primitive IPaddr_{{ item.name }} ocf:heartbeat:IPaddr2
+      params ip={{ item.addr }} cidr_netmask={{ item.prefix }}{% if "nic" in item %} nic={{ item.nic }}{% endif %}
+      op monitor interval=5s timeout=5s
+  with_items: '{{ vips }}'
+  run_once: yes
+
+- name: Configure vip group
+  pacemaker: resource="group vips IPaddr_{{ vips|map(attribute='name')|join(' IPaddr_') }}"
+  run_once: yes
+
+- name: Configure preferred location
+  pacemaker: 'resource="location prefer-vips-loc vips role=Started 100: {{ lb_preferred_node }}"'
+  run_once: yes
+  when: lb_preferred_node is defined

@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: pacemaker, pm_group: "loadbalancer", pm_properties: ["no-quorum-policy=freeze", "stonith-enabled=false"], when: lb_use_ha }

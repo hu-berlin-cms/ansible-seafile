@@ -1,0 +1,3 @@
+[submodule "roles/pacemaker"]
+	path = roles/pacemaker
+	url = https://github.com/hu-berlin-cms/ansible-role-pacemaker.git
