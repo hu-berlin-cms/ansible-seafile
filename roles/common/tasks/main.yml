@@ -1,2 +1,12 @@
 - name: Check availability of all hosts
   ping:
+
+- name: Install ntp
+  apt: name=ntp
+
+- name: Configure ntp
+  template: src=ntp.conf dest=/etc/ntp.conf mode=0644
+  notify: Restart ntp
+
+- name: Assure ntp is started
+  service: name=ntp state=started
