@@ -74,6 +74,40 @@ s3_bucket_commit: my-commit-objects
 s3_bucket_fs: my-fs-objects
 s3_sigv4: False
 
+# logrotation
+use_logrotate: yes
+logrotate_interval: daily
+logrotate_limit: 10
+logrotate_seafile_service_options:
+  - "{{ logrotate_interval }}"
+  - missingok
+  - "rotate {{ logrotate_limit }}"
+  - compress
+  - delaycompress
+  - notifempty
+  - sharedscripts
+
+logrotate_config:
+  - name: seafile
+    path: "{{ seafile_base_dir }}/logs/seafile.log"
+    options: "{{ logrotate_seafile_service_options }}"
+    scripts:
+      postrotate: "[ ! -f {{ seafile_base_dir }}/pids/seaf-server.pid ] || kill -USR1 `cat {{ seafile_base_dir }}/pids/seaf-server.pid`"
+
+  - name: seafile-init
+    path: "{{ seafile_base_dir }}/logs/seafile.init.log"
+    options: "{{ logrotate_seafile_service_options }}"
+
+  - name: ccnet
+    path: "{{ seafile_base_dir }}/logs/ccnet.log"
+    options: "{{ logrotate_seafile_service_options }}"
+    scripts:
+      postrotate: "[ ! -f {{ seafile_base_dir }}/pids/ccnet.pid ] || kill -USR1 `cat {{ seafile_base_dir }}/pids/ccnet.pid`"
+
+  - name: seahub-init
+    path: "{{ seafile_base_dir }}/logs/seahub.init.log"
+    options: "{{ logrotate_seafile_service_options }}"
+
 
 # Fixes
 # ldap workaround, see #940; enabled for backwards compatibility
