@@ -93,20 +93,24 @@ logrotate_config:
     options: "{{ logrotate_seafile_service_options }}"
     scripts:
       postrotate: "[ ! -f {{ seafile_base_dir }}/pids/seaf-server.pid ] || kill -USR1 `cat {{ seafile_base_dir }}/pids/seaf-server.pid`"
-
   - name: seafile-init
     path: "{{ seafile_base_dir }}/logs/seafile.init.log"
     options: "{{ logrotate_seafile_service_options }}"
-
   - name: ccnet
     path: "{{ seafile_base_dir }}/logs/ccnet.log"
     options: "{{ logrotate_seafile_service_options }}"
     scripts:
       postrotate: "[ ! -f {{ seafile_base_dir }}/pids/ccnet.pid ] || kill -USR1 `cat {{ seafile_base_dir }}/pids/ccnet.pid`"
-
   - name: seahub-init
     path: "{{ seafile_base_dir }}/logs/seahub.init.log"
     options: "{{ logrotate_seafile_service_options }}"
+  - name: seahub
+    path: "{{ seafile_base_dir }}/logs/seahub.log"
+    options: "{{ logrotate_seafile_service_options }}"
+  - name: seahub-requests
+    path: "{{ seafile_base_dir }}/logs/seahub_django_request.log"
+    options: "{{ logrotate_seafile_service_options }}"
+
 
 
 # Fixes
