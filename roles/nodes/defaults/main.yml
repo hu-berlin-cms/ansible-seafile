@@ -110,6 +110,9 @@ logrotate_config:
   - name: seahub-requests
     path: "{{ seafile_base_dir }}/logs/seahub_django_request.log"
     options: "{{ logrotate_seafile_service_options }}"
+  - name: seafdav
+    path: "{{ seafile_base_dir }}/logs/seafdav.log"
+    options: "{{ logrotate_seafile_service_options }}"
 
 
 
