@@ -114,7 +114,17 @@ logrotate_config:
     path: "{{ seafile_base_dir }}/logs/seafdav.log"
     options: "{{ logrotate_seafile_service_options }}"
 
-
+# settings for background node
+bg_logrotate_config:
+  - name: search indexer
+    path: "{{ seafile_base_dir }}/logs/index.log"
+    options: "{{ logrotate_seafile_service_options }}"
+  - name: email sender
+    path: "{{ seafile_base_dir }}/logs/seahub_email_sender.log"
+    options: "{{ logrotate_seafile_service_options }}"
+  - name: seafile-background-init
+    path: "{{ seafile_base_dir }}/logs/seafile-background.init.log"
+    options: "{{ logrotate_seafile_service_options }}"
 
 # Fixes
 # ldap workaround, see #940; enabled for backwards compatibility
