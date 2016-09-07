@@ -118,6 +118,27 @@ logrotate_config:
     options: "{{ logrotate_seafile_service_options }}"
     scripts:
       postrotate: "touch /etc/shibboleth/shibboleth2.xml > /dev/null"
+  - name: apache2
+    path: "/var/log/apache2/*.log"
+    options:
+      - "{{ logrotate_interval }}"
+      - missingok
+      - "rotate {{ logrotate_limit }}"
+      - compress
+      - delaycompress
+      - notifempty
+      - create 640 root adm
+      - sharedscripts
+    scripts:
+      postrotate: |2
+        if /etc/init.d/apache2 status > /dev/null ; then \
+                /etc/init.d/apache2 reload > /dev/null; \
+            fi;
+      prerotate: |2
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                run-parts /etc/logrotate.d/httpd-prerotate; \
+            fi; \
+
 
 # settings for background node
 bg_logrotate_config:
