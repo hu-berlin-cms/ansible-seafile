@@ -113,6 +113,11 @@ logrotate_config:
   - name: seafdav
     path: "{{ seafile_base_dir }}/logs/seafdav.log"
     options: "{{ logrotate_seafile_service_options }}"
+  - name: shibboleth
+    path: "/var/log/shibboleth/*.log"
+    options: "{{ logrotate_seafile_service_options }}"
+    scripts:
+      postrotate: "touch /etc/shibboleth/shibboleth2.xml > /dev/null"
 
 # settings for background node
 bg_logrotate_config:
