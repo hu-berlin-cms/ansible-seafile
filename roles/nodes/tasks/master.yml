@@ -60,6 +60,12 @@
     regexp="^\s*test_java;"
     state=absent
 
+- name: apply seafdav logrotate patch
+  patch: >
+    dest={{ seafile_base_dir }}/seafile-server-latest/seahub/thirdpart/wsgidav/util.py
+    src=seafdav_logrotate.patch
+  when: use_logrotate
+
 - name: gather ccnet ID
   shell: "fgrep 'ID =' {{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}ccnet{% endif %}/ccnet.conf | cut -d= -f 2 | xargs echo"
   register: ccnet_id_cmd

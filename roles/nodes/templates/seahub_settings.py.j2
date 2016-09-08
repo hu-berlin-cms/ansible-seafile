@@ -163,6 +163,57 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
 ENABLE_SHIB_LOGIN = True
 {% endif %}
 
+{% if use_logrotate %}
+# Logging
+import os
+LOG_DIR = os.environ.get('SEAHUB_LOG_DIR', '/tmp')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s:%(lineno)s %(funcName)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+         }
+     },
+    'handlers': {
+        'default': {
+            'level':'INFO',
+            'class':'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_DIR, 'seahub.log'),
+            'formatter':'standard',
+        },
+        'request_handler': {
+            'level':'INFO',
+            'class':'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_DIR, 'seahub_django_request.log'),
+            'formatter':'standard',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['default'],
+            'level': 'INFO',
+            'propagate': True
+        },
+        'django.request': {
+            'handlers': ['request_handler', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False
+        },
+    }
+}
+{% endif %}
+
 {% if ping_throttle is defined or anon_throttle is defined or user_throttle is defined %}
 # rest_framwork
 REST_FRAMEWORK = {
