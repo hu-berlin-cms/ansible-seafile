@@ -138,6 +138,23 @@ logrotate_config:
         if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
                 run-parts /etc/logrotate.d/httpd-prerotate; \
             fi; \
+  - name: nginx
+    path: "/var/log/nginx/*.log"
+    options:
+      - "{{ logrotate_interval }}"
+      - missingok
+      - "rotate {{ logrotate_limit }}"
+      - compress
+      - delaycompress
+      - notifempty
+      - create 640 www-data adm
+      - sharedscripts
+    scripts:
+      postrotate: "invoke-rc.d nginx rotate >/dev/null 2>&1"
+      prerotate: |2
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                run-parts /etc/logrotate.d/httpd-prerotate; \
+           fi \
 
 
 # settings for background node
