@@ -196,7 +196,12 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
+{% if admin_error_email_include_html %}
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True
+{% else %}
             'class': 'django.utils.log.AdminEmailHandler'
+{% endif %}
         }
     },
     'loggers': {
@@ -212,6 +217,17 @@ LOGGING = {
         },
     }
 }
+{% endif %}
+
+{% if admin_error_email is defined %}
+ADMINS = (
+    # ('Your Name', 'your_email@domain.com'),
+{% for admin in admin_error_email %}
+    ('{{ admin.name }}', '{{ admin.email }}'),
+{% endfor %}
+)
+
+MANAGERS = ADMINS
 {% endif %}
 
 {% if ping_throttle is defined or anon_throttle is defined or user_throttle is defined %}
