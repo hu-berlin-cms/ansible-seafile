@@ -68,7 +68,6 @@ email_host_user: ''    # username and domain
 email_host_password: ''    # password
 email_port: 25
 email_default_from: filesync@cms.hu-berlin.de
-email_server_email: EMAIL_HOST_USER
 email_on_adding_system_member: True
 email_on_resetting_user_passwd: True
 

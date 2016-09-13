@@ -71,7 +71,9 @@ EMAIL_HOST_USER = '{{ email_host_user }}'   # username and domain
 EMAIL_HOST_PASSWORD = '{{ email_host_password }}'    # password
 EMAIL_PORT = '{{ email_port }}'
 DEFAULT_FROM_EMAIL = '{{ email_default_from }}'
+{% if email_server_email is defined %}
 SERVER_EMAIL = '{{ email_server_email }}'
+{% endif %}
 # Whether to send email when a system admin adding a new member. Default is `True`.
 # NOTE: since version 1.4.
 SEND_EMAIL_ON_ADDING_SYSTEM_MEMBER = {{ email_on_adding_system_member }}
