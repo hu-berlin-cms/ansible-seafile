@@ -171,6 +171,16 @@ bg_logrotate_config:
     path: "{{ seafile_base_dir }}/logs/seafile-background.init.log"
     options: "{{ logrotate_seafile_service_options }}"
 
+
+memcached_backend: 'memcached'
+memcached_backends:
+  memached:
+    package: python-memcache
+    django_backend: 'django.core.cache.backends.memcached.MemcachedCache'
+  pylibmc:
+    package: python-pylibmc
+    django_backend: 'django.core.cache.backends.memcached.PyLibMCCache'
+
 # Fixes
 # ldap workaround, see #940; enabled for backwards compatibility
 ldap_lib_fix: True
