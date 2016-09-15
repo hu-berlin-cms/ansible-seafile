@@ -58,6 +58,7 @@ enable_resumable_fileupload: False
 
 # internal settings
 fastcgi_timeout: 60
+max_open_files: 30000
 
 # backends
 block_backend_name: ceph
