@@ -180,6 +180,10 @@ memcached_backends:
   pylibmc:
     package: python-pylibmc
     django_backend: 'django.core.cache.backends.memcached.PyLibMCCache'
+  django-pylibmc:
+    package: python-pylibmc
+    pip: django-pylibmc
+    django_backend: 'django_pylibmc.memcached.PyLibMCCache'
 
 # Fixes
 # ldap workaround, see #940; enabled for backwards compatibility
