@@ -15,12 +15,14 @@
     - rsync
 
 - name: Install memcached backend
-  apt: name={{ memcached_backends[memcached_backend]['package'] }} state=present
+  apt: name={{ item }} state=present
+  with_items: "{{ memcached_backends[memcached_backend]['packages'] }}"
 
 - name: Install python-pip
   apt: name=python-pip state=present
   when: "'pip' in memcached_backends[memcached_backend]"
 
 - name: Install pip dependencies
-  pip: name={{ memcached_backends[memcached_backend]['pip'] }} state=present
+  pip: name={{ item }} state=present
+  with_items: "{{ memcached_backends[memcached_backend]['pip'] }}"
   when: "'pip' in memcached_backends[memcached_backend]"
