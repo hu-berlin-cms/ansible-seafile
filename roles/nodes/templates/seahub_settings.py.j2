@@ -136,6 +136,12 @@ SITE_ROOT = '{{ site_root }}'
 BRANDING_CSS = '{{ site_custom_css }}'
 LOGO_PATH = '{{ site_logo_path }}'
 LOGO_URL = '{{ site_logo_url }}'
+{% if site_logo_width is defined %}
+LOGO_WIDTH = {{ site_logo_width }}
+{% endif %}
+{% if site_logo_height is defined %}
+LOGO_HEIGHT = {{ site_logo_height }}
+{% endif %}
 
 # Age of cookie, in seconds (default: 2 weeks).
 SESSION_COOKIE_AGE = {{ session_cookie_age }}
