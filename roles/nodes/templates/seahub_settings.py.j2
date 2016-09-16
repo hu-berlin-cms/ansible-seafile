@@ -19,7 +19,7 @@ FILE_SERVER_ROOT = 'https://{{ server_name }}/seafhttp'
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'BACKEND': '{{ memcached_backends[memcached_backend]['django_backend'] }}',
         'LOCATION': [
 {% if memcached_servers is defined %}
 {% for server in memcached_servers %}

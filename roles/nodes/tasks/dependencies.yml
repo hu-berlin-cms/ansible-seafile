@@ -8,9 +8,21 @@
     - python-setuptools
     - python-imaging
     - python-mysqldb
-    - python-memcache
     - python-flup
     - python-urllib3
     - python-requests
     - libnss3
     - rsync
+
+- name: Install memcached backend
+  apt: name={{ item }} state=present
+  with_items: "{{ memcached_backends[memcached_backend]['packages'] }}"
+
+- name: Install python-pip
+  apt: name=python-pip state=present
+  when: "'pip' in memcached_backends[memcached_backend]"
+
+- name: Install pip dependencies
+  pip: name={{ item }} state=present
+  with_items: "{{ memcached_backends[memcached_backend]['pip'] }}"
+  when: "'pip' in memcached_backends[memcached_backend]"
