@@ -57,6 +57,11 @@ share_link_password_min_length: 8
 enable_resumable_fileupload: False
 enable_guest_invitation: False
 
+# Libreoffice Online settings
+libreoffice_webapp: False
+libreoffice_webapp_host: "{{ hostvars[groups[background][0]]['ansible_default_ipv4']['address'] }}"
+libreoffice_webapp_base_url: 'https://{{ libreoffice_webapp_host }}:9980/hosting/discovery'
+
 # internal settings
 fastcgi_timeout: 60
 max_open_files: 30000
