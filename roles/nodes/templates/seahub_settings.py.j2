@@ -165,6 +165,18 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
 ENABLE_SHIB_LOGIN = True
 {% endif %}
 
+{% if role_permissions is defined %}
+ENABLED_ROLE_PERMISSIONS = {
+{% for role, permissions in role_permissions.iteritems() %}
+    '{{ role }}': {
+{% for perm, allowed in permissions.iteritems() %}
+        '{{ perm }}': {{ 'True' if allowed else 'False' }},
+{% endfor %}
+    },
+{% endfor %}
+}
+{% endif %}
+
 {% if use_logrotate %}
 # Logging
 import os
@@ -257,3 +269,6 @@ STATIC_URL = MEDIA_URL+'assets/'
 SHOW_TRAFFIC = {{ show_traffic }}
 SHARE_LINK_PASSWORD_MIN_LENGTH = {{ share_link_password_min_length }}
 ENABLE_RESUMABLE_FILEUPLOAD = {{ enable_resumable_fileupload }}
+
+# settings new in 6.0
+ENABLE_GUEST_INVITATION = {{ enable_guest_invitation }}

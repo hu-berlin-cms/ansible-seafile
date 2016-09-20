@@ -55,6 +55,7 @@ restart_seafile_on_changes: True
 show_traffic: True
 share_link_password_min_length: 8
 enable_resumable_fileupload: False
+enable_guest_invitation: False
 
 # internal settings
 fastcgi_timeout: 60
