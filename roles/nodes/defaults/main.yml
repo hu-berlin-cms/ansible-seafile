@@ -59,7 +59,7 @@ enable_guest_invitation: False
 
 # Libreoffice Online settings
 libreoffice_webapp: False
-libreoffice_webapp_host: "{{ hostvars[groups[background][0]]['ansible_default_ipv4']['address'] }}"
+libreoffice_webapp_host: "{{ hostvars[groups['background'][0]]['ansible_default_ipv4']['address'] }}"
 libreoffice_webapp_base_url: 'https://{{ libreoffice_webapp_host }}:9980/hosting/discovery'
 
 # internal settings
