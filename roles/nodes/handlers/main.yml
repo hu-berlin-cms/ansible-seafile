@@ -7,6 +7,7 @@
 - name: Restart shibd
   service: name=shibd state=restarted
   sudo: yes
+  when: use_shibboleth
 - name: Restart seafile
   service: name=seafile-server state=restarted
   sudo: yes

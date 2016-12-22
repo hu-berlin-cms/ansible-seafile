@@ -71,3 +71,4 @@
   when: ssl_nodes or use_shibboleth
   notify:
   - Restart apache
+  - Restart shibd

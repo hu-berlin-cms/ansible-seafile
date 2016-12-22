@@ -38,6 +38,15 @@
   - Restart shibd
 # FIXME restart of apache necessary?
 
+- name: "shibboleth: install old certificate on rollover"
+  copy: src={{ item }} dest=/etc/ssl/ owner=root group=root
+  with_items:
+    - ssl/seafile-cert_old.pem
+    - ssl/seafile-key_old.pem
+  when: shibboleth_cert_rollover
+  notify:
+  - Restart shibd
+
 - name: "shibboleth: assure shibd is running"
   service: name=shibd state=started
 
