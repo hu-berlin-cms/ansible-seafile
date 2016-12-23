@@ -1,0 +1,12 @@
+--- backends.py.orig	2016-12-23 07:51:25.263442253 +0000
++++ backends.py	2016-12-23 08:24:16.834886456 +0000
+@@ -48,6 +48,9 @@
+             if self.create_unknown_user:
+                 user = User.objects.create_user(
+                     email=username, is_active=self.activate_after_creation)
++                if (user and getattr(settings, 'SHIBBOLETH_GUESTS', False) and not
++                        username.endswith(getattr(settings, 'SHIBBOLETH_HOST_INST_SUFFIX', 'UNDEF'))):
++                    User.objects.update_role(username, getattr(settings, 'SHIBBOLETH_GUEST_ROLE', 'guest'))
+                 if user and self.activate_after_creation is False:
+                     notify_admins_on_activate_request(user.email)
+             else:

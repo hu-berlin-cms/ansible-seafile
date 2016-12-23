@@ -199,6 +199,11 @@ memcached_backends:
     django_backend: 'django_pylibmc.memcached.PyLibMCCache'
 
 shibboleth_cert_rollover: no
+# use shibboleth guest mapping (users not coming from the hosting institution get the guest role)
+shibboleth_guests: no
+# domain part of the hosting institutions eppn (like '@hu-berlin.de')
+shibboleth_host_inst_suffix: 'UNDEF'
+shibboleth_guest_role: 'guest'
 
 # Fixes
 # ldap workaround, see #940; enabled for backwards compatibility
