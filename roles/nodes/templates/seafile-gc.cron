@@ -3,4 +3,4 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-{{ cron_garbage_collector_time }} {{ seafile_user|default('root') }} {% if cron_garbage_collector_run_week %} run-if-today {{ cron_garbage_collector_run_week }}  && {% endif %}run_gc_with_log {{ seafile_base_dir }}/logs/seafile-gc.log
+{{ cron_garbage_collector_time }} {{ seafile_user|default('root') }} {% if cron_garbage_collector_run_week %} run-if-today {{ cron_garbage_collector_run_week }}  && {% endif %}run_gc_with_log {{ seafile_base_dir }}/logs/seafile-gc.log{% if cron_garbage_collector_threads is defined %} -t {{ cron_garbage_collector_threads }}{% endif %}
