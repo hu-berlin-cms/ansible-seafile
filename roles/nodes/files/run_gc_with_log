@@ -1,0 +1,11 @@
+#/bin/sh
+
+# get logfile
+LOGFILE=$1
+shift
+
+echo "Starting gc at `date` (`date +%s`)" >> $LOGFILE 2>&1
+
+/data/seafile/seafile-server-latest/seaf-gc.sh $@ >> $LOGFILE 2>&1
+
+echo "Finishing gc at `date` (`date +%s`)" >> $LOGFILE 2>&1
