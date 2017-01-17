@@ -138,6 +138,12 @@
   notify:
     - Restart seafile
 
+# install maintenance scripts
+- name: make sure script folder exists
+  file: path={{ seafile_base_dir }}/scripts state=directory
+- name: copy scripts
+  copy: src=scripts/ dest={{ seafile_base_dir }}/scripts/ owner=root mode="go-w"
+
 # ldap workaround, see #940
 - name: ldap workaround
   file: >

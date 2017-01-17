@@ -5,6 +5,7 @@ roles/nodes/files/filesync-key.pem
 vars/dbconfig.yml
 vars/admin.yml
 /files/*
+!/files/scripts
 
 # Compiled source #
 ###################
