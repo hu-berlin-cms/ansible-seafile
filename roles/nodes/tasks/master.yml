@@ -117,6 +117,11 @@
   template: src=seafile-gc.cron dest=/etc/cron.d/seafile-gc owner=root group=root mode=0644
   when: cron_garbage_collector
 
+- name: prevent cronjob for garbage collector, when feature disabled
+  file: path=/etc/cron.d/seafile-gc state=absent
+  when: not cron_garbage_collector
+
+
 # Customization
 - name: make sure customization folder exists
   file: path={{ seafile_base_dir }}/seahub-data/custom state=directory

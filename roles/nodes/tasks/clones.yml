@@ -1,5 +1,9 @@
 # clones of golden image
 #
+
+- name: prevent gc-cronjob from running on clones
+  file: path=/etc/cron.d/seafile-gc state=absent
+
 - name: "create {{ seafile_base_dir }}"
   file: name={{ seafile_base_dir }} state=directory
 
