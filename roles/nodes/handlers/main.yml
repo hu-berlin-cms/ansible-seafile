@@ -1,14 +1,10 @@
 - name: Reload nginx
   shell: nginx -s reload
-  sudo: yes
 - name: Restart apache
   shell: service apache2 restart
-  sudo: yes
 - name: Restart shibd
   service: name=shibd state=restarted
-  sudo: yes
   when: use_shibboleth
 - name: Restart seafile
   service: name=seafile-server state=restarted
-  sudo: yes
   when: restart_seafile_on_changes

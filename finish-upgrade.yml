@@ -5,16 +5,12 @@
 
 - name: deploy seafile and apply configuration
   hosts: nodes
-  remote_user: ubuntu
-  sudo: yes
 
   roles:
     - nodes
 
 - name: deploy seafile background node
   hosts: background
-  remote_user: ubuntu
-  sudo: yes
 
   roles:
     - bgnode
