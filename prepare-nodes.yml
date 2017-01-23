@@ -1,14 +1,17 @@
 #This playbook prepares all nodes
-## currently needed to enable pipelining with sudo
+## currently needed to enable root access on ubuntu servers
 
-# disable requiretty
+# enable root login without password
 - hosts: all
+  gather_facts: no
+  vars:
+    - ansible_ssh_user: ubuntu
+
   tasks:
-    - name: disable requiretty to enable pipelining with sudo
-      lineinfile: >
-        dest=/etc/sudoers
-        state=present
-        insertafter='^Defaults.*env_reset'
-        line='Defaults\t!requiretty'
-        validate='visudo -cf %s'
-  sudo: yes
+    - name: Disable remote root login
+      lineinfile: dest=/etc/ssh/sshd_config regexp="^#?PermitRootLogin" line="PermitRootLogin without-password"
+      register: permitroot
+    - name: Restart sshd
+      service: name=ssh state=restarted
+      when: permitroot|changed
+  become: yes
