@@ -15,11 +15,9 @@
     unarchive: >
       src="files/{{ installer_archive }}"
       dest="{{ seafile_base_dir }}"
-  sudo: yes
 
 # stop seafile instances
 - hosts: nodes
   tasks:
   - name: stop all running instances BEFORE upgrade
     service: name="seafile-server" state=stopped
-  sudo: yes

@@ -6,44 +6,33 @@
   - apt:
       cache_valid_time: 3600
       update_cache: yes
-  sudo: yes
 
 - name: apply common configuration to all nodes
   hosts: all
-  remote_user: ubuntu
-  sudo: yes
 
   roles:
     - common
 
 - name: deploy and configure memcached server
   hosts: memcached
-  remote_user: ubuntu
-  sudo: yes
 
   roles:
     - memcached
 
 - name: deploy MySQL and configure the databases
   hosts: db
-  remote_user: ubuntu
-  sudo: yes
 
   roles:
     - db
 
 - name: deploy seafile and apply configuration
   hosts: nodes
-  remote_user: ubuntu
-  sudo: yes
 
   roles:
     - nodes
 
 - name: deploy seafile background node
   hosts: background
-  remote_user: ubuntu
-  sudo: yes
 
   roles:
     - bgnode
@@ -51,8 +40,6 @@
 
 - name: deploy loadbalancer
   hosts: loadbalancer
-  remote_user: ubuntu
-  sudo: yes
 
   roles:
     - loadbalancer

@@ -1,3 +1,3 @@
 ---
 dependencies:
-  - { role: logrotate, logrotate_scripts: logrotate_config, when: use_logrotate }
+  - { role: logrotate, logrotate_scripts: "{{ logrotate_config }}", when: use_logrotate }

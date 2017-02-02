@@ -1,6 +1,4 @@
 - name: Reload nginx
   shell: nginx -s reload
-  sudo: yes
 - name: Restart apache
   shell: service apache2 restart
-  sudo: yes

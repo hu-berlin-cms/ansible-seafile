@@ -181,7 +181,7 @@
 
 - include_vars: admin.yml
 - name: create admin user, if there is none
-  seafile-admin-init: >
+  seafile_admin_init: >
     path="{{ seafile_base_dir }}"
     subdir="seafile-pro-server-{{ seafile_version }}"
     name="{{ seafile_admin_user }}"
