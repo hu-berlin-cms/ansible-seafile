@@ -14,6 +14,11 @@ port = {{ seafile_network_port }}
 [fileserver]
 port = {{ seafile_fileserver_port }}
 
+{% if keep_days is defined %}
+[history]
+keep_days = {{ keep_days }}
+{% endif %}
+
 [database]
 type = mysql
 host = {{ db_server }}
