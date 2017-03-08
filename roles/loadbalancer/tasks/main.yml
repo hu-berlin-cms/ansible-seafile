@@ -9,6 +9,7 @@
   assemble: >
     dest=/etc/ssl/seafile-all.pem
     src=ssl
+    regexp="seafile-(?:cert|chain|key).pem"
     remote_src=False
     mode=0600
     owner=root
