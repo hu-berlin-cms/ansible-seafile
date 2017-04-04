@@ -199,6 +199,12 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
 }
 
 ENABLE_SHIB_LOGIN = True
+{% if shibboleth_guests %}
+
+SHIBBOLETH_GUESTS = True
+SHIBBOLETH_HOST_INST_SUFFIX = '{{ shibboleth_host_inst_suffix }}'
+SHIBBOLETH_GUEST_ROLE = '{{ shibboleth_guest_role }}'
+{% endif %}
 {% endif %}
 
 {% if role_permissions is defined %}
