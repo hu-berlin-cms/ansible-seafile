@@ -314,3 +314,7 @@ ENABLE_RESUMABLE_FILEUPLOAD = {{ enable_resumable_fileupload }}
 
 # settings new in 6.0
 ENABLE_GUEST_INVITATION = {{ enable_guest_invitation }}
+
+{% if enable_wiki %}
+ENABLE_WIKI = True
+{% endif %}

@@ -57,6 +57,9 @@ share_link_password_min_length: 8
 enable_resumable_fileupload: False
 enable_guest_invitation: False
 
+# Server settings
+enable_wiki: False
+
 # Libreoffice Online settings
 libreoffice_webapp: False
 libreoffice_webapp_host: "{{ hostvars[groups['background'][0]]['ansible_default_ipv4']['address'] }}"
