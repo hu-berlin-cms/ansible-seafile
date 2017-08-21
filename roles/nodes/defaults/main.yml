@@ -208,12 +208,6 @@ shibboleth_guests: no
 shibboleth_host_inst_suffix: 'UNDEF'
 shibboleth_guest_role: 'guest'
 
-# cronjob for garbage collector
-cron_garbage_collector: no
-cron_garbage_collector_time: "@monthly"
-## extra shell magic, if you want to run on first dow in a month (i.e. first friday)
-cron_garbage_collector_run_week: no
-
 # Fixes
 # ldap workaround, see #940; enabled for backwards compatibility
 ldap_lib_fix: True

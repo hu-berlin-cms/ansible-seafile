@@ -1,0 +1,6 @@
+# cronjob for garbage collector
+cron_garbage_collector: no
+cron_garbage_collector_time: "@monthly"
+## extra shell magic, if you want to run on first dow in a month (i.e. first friday)
+cron_garbage_collector_run_week: no
+

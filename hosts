@@ -11,6 +11,10 @@
 # background task node
 [background]
 
+# garbage collection node
+[garbage:children]
+master
+
 [nodes:children]
 master
 clones
