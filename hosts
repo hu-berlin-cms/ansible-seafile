@@ -11,17 +11,19 @@
 # background task node
 [background]
 
-# garbage collection node
-[garbage:children]
-master
-
 [nodes:children]
 master
 clones
 background
+garbage
 
 [loadbalancer]
 
 #[memcached]
 [memcached:children]
+master
+
+# garbage collection node
+#[garbage]
+[garbage:children]
 master
