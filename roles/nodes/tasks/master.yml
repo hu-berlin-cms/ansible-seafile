@@ -76,7 +76,7 @@
   patch: >
     dest={{ seafile_base_dir }}/seafile-server-latest/seahub/thirdpart/seafobj/backends/ceph.py
     src=seafobj_ceph_jewel_xenial.patch
-  when: ansible_distribution == 'Ubuntu' and {{ ansible_distribution_version | version_compare('16', operator='ge') }}
+  when: ansible_distribution == 'Ubuntu' and ( ansible_distribution_version | version_compare('16', operator='ge') )
 
 - name: gather ccnet ID
   shell: "fgrep 'ID =' {{ seafile_base_dir }}/{% if new_conf_layout %}conf{% else %}ccnet{% endif %}/ccnet.conf | cut -d= -f 2 | xargs echo"
