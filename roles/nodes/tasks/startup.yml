@@ -25,3 +25,6 @@
     mode=0755
   notify:
     - Restart seafile
+
+- name: Enable seafile-server on boot
+  service: name="seafile-server" enabled="yes"
