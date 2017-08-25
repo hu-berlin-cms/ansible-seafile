@@ -1,0 +1,12 @@
+--- seahub/thirdpart/seafobj/backends/ceph.py.orig	2016-07-05 10:42:43.553995563 +0000
++++ seahub/thirdpart/seafobj/backends/ceph.py	2016-07-05 11:20:22.913925670 +0000
+@@ -34,7 +34,8 @@
+         except Queue.Empty:
+             ioctx = self.create_ioctx()
+ 
+-        ioctx_set_namespace(ioctx, repo_id)
++        ioctx.set_namespace(repo_id)
++        #ioctx_set_namespace(ioctx, repo_id)
+ 
+         return ioctx
+ 

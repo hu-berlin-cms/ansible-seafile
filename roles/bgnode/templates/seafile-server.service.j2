@@ -1,0 +1,19 @@
+[Unit]
+Description=Seafile
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart={{ seafile_base_dir }}/seafile-server-latest/seafile.sh start
+ExecStart={{ seafile_base_dir }}/seafile-server-latest/seahub.sh start{% if fastcgi %}-fastcgi{% endif %}
+
+ExecStart={{ seafile_base_dir }}/seafile-server-latest/seafile-background-tasks.sh start
+ExecStop={{ seafile_base_dir }}/seafile-server-latest/seafile-background-tasks.sh stop
+ExecStop={{ seafile_base_dir }}/seafile-server-latest/seahub.sh stop
+ExecStop={{ seafile_base_dir }}/seafile-server-latest/seafile.sh stop
+RemainAfterExit=yes
+User={{ seafile_user|default('root') }}
+Group={{ seafile_user|default('root') }}
+
+[Install]
+WantedBy=multi-user.target

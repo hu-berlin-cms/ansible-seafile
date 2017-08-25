@@ -8,6 +8,10 @@
     - ansible_ssh_user: ubuntu
 
   tasks:
+    - name: Ensure python is available
+      raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal aptitude)"
+      register: output
+      changed_when: output.stdout != ""
     - name: Disable remote root login
       lineinfile: dest=/etc/ssh/sshd_config regexp="^#?PermitRootLogin" line="PermitRootLogin without-password"
       register: permitroot
