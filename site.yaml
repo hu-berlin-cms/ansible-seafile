@@ -37,6 +37,11 @@
   roles:
     - bgnode
 
+- name: deploy garbage collection node
+  hosts: garbage
+
+  roles:
+    - gcnode
 
 - name: deploy loadbalancer
   hosts: loadbalancer

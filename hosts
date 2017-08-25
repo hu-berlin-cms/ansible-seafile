@@ -15,9 +15,15 @@
 master
 clones
 background
+garbage
 
 [loadbalancer]
 
 #[memcached]
 [memcached:children]
+master
+
+# garbage collection node
+#[garbage]
+[garbage:children]
 master

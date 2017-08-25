@@ -116,24 +116,6 @@
   notify:
     - Restart seafile
 
-# garbage collector
-- name: install helper tool for special gc cron jobs
-  copy: src=run-if-today dest=/usr/local/bin owner=root group=root mode=0755
-  when: cron_garbage_collector and cron_garbage_collector_run_week
-
-- name: install script for running seafile-gc
-  copy: src=run_gc_with_log dest=/usr/local/bin owner=root group=root mode=0755
-  when: cron_garbage_collector
-
-- name: cronjob for garbage collector
-  template: src=seafile-gc.cron dest=/etc/cron.d/seafile-gc owner=root group=root mode=0644
-  when: cron_garbage_collector
-
-- name: prevent cronjob for garbage collector, when feature disabled
-  file: path=/etc/cron.d/seafile-gc state=absent
-  when: not cron_garbage_collector
-
-
 # Customization
 - name: make sure customization folder exists
   file: path={{ seafile_base_dir }}/seahub-data/custom state=directory
