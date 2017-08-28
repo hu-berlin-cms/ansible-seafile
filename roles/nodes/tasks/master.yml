@@ -182,7 +182,7 @@
     password="{{ seafile_admin_pw }}"
   when: not ccnet_config.stat.exists
 
-- service: name=seafile-server state=stopped
+- command: "sudo -u {{ seafile_user|default('root') }} {{ seafile_base_dir }}/seafile-server-latest/seafile.sh stop"
   when: not ccnet_config.stat.exists
 
 - name: make sure ssh-agent works via sudo
