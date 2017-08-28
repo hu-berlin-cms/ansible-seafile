@@ -1,2 +1,2 @@
 - name: Restart memcached
-  shell: service memcached restart
+  service: name="memcached" state="restarted"

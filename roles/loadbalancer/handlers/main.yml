@@ -1,2 +1,2 @@
 - name: Restart haproxy
-  shell: service haproxy restart
+  service: name="haproxy" state="restarted"
