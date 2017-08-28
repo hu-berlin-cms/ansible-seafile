@@ -19,6 +19,10 @@
 - include: initial_install.yml
   when: not ccnet_config.stat.exists
 
+# configure seafile-data volume
+- include: seafile-data_vol.yml
+  when: use_separate_seafile_data_volume and ccnet_config.stat.exists
+
 # chown to seafile_user, if needed
 - name: test seafile_user chown
   file: >

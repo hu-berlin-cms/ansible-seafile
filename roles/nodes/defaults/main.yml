@@ -68,6 +68,8 @@ libreoffice_webapp_base_url: 'https://{{ libreoffice_webapp_host }}:9980/hosting
 # internal settings
 fastcgi_timeout: 60
 max_open_files: 30000
+use_separate_seafile_data_volume: False
+
 
 # backends
 block_backend_name: ceph

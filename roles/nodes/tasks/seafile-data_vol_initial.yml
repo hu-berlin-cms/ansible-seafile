@@ -1,0 +1,70 @@
+# guard for needed variables
+- name: "Check for needed variables"
+  fail: msg="Variable '{{ item }}' is not defined!"
+  when: item not in vars
+  with_items:
+    - seafile_data_pvolumes
+
+- name: "Create / extend volume group"
+  lvg:
+    vg: "seafile-data_vg"
+    pvs: "{{ seafile_data_pvolumes }}"
+  register: lvg_seafile_data
+
+- name: "Create / extend logical volume"
+  lvol:
+    vg: "seafile-data_vg"
+    lv: "seafile-data_lv"
+    size: "100%FREE"
+  when: lvg_seafile_data.changed
+  register: lvol_seafile_data
+
+- name: "Create / extend filesystem"
+  filesystem:
+    fstype: ext4
+    dev: /dev/mapper/seafile--data_vg-seafile--data_lv
+    resizefs: yes
+  when: lvol_seafile_data.changed
+
+- name: "Mount seafile-data on boot"
+  mount:
+    fstype: ext4
+    path: "{{ seafile_base_dir }}/seafile-data"
+    src: /dev/mapper/seafile--data_vg-seafile--data_lv
+    state: present
+
+- name: "Temporary mount seafile-data for copying"
+  mount:
+    fstype: ext4
+    path: "/tmp/seafile-data"
+    src: /dev/mapper/seafile--data_vg-seafile--data_lv
+    state: mounted
+
+- name: "Synchronize existing seafile-data with separate volume"
+  synchronize:
+    archive: yes
+    src: "{{ seafile_base_dir }}/seafile-data/"
+    dest: "/tmp/seafile-data/"
+  delegate_to: "{{ inventory_hostname }}"
+
+- name: "Mount seafile-data on boot"
+  mount:
+    fstype: ext4
+    path: "{{ seafile_base_dir }}/seafile-data"
+    src: /dev/mapper/seafile--data_vg-seafile--data_lv
+    state: mounted
+
+#cleanup 
+- name: "Unmount temporary mount of seafile-data"
+  mount:
+    fstype: ext4
+    path: "/tmp/seafile-data"
+    src: /dev/mapper/seafile--data_vg-seafile--data_lv
+    state: unmounted
+
+- name: "Remove temporary mount of seafile-data"
+  mount:
+    fstype: ext4
+    path: "/tmp/seafile-data"
+    src: /dev/mapper/seafile--data_vg-seafile--data_lv
+    state: absent

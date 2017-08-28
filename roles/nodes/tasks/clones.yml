@@ -7,6 +7,10 @@
 - name: "create {{ seafile_base_dir }}"
   file: name={{ seafile_base_dir }} state=directory
 
+# configure seafile-data volume
+- include: seafile-data_vol.yml
+  when: use_separate_seafile_data_volume
+
 - name: "sync timestamp changing stuff from golden image"
   synchronize:
     src: "{{ seafile_base_dir }}/"
