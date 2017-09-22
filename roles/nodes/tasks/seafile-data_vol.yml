@@ -17,6 +17,11 @@
   with_items:
     - seafile_data_pvolumes
 
+- name: Install volume dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - lvm2
+
 - name: "Create / extend volume group"
   lvg:
     vg: "seafile-data_vg"
