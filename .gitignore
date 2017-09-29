@@ -34,6 +34,14 @@ vars/admin.yml
 *.log
 *.sqlite
    
+# Vim swap files #
+######################
+*.swp
+
+# Ansible files #
+######################
+*.retry
+
 # OS generated files #
 ######################
 .DS_Store
