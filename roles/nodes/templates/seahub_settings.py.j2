@@ -68,6 +68,11 @@ OFFICE_WEB_APP_EDIT_FILE_EXTENSION = ('ods', 'xls', 'xlsb', 'xlsm', 'xlsx','ppsx
 
 AVATAR_FILE_STORAGE = 'seahub.base.database_storage.DatabaseStorage'
 
+{% if enable_logout_button is defined %}
+# LOGOUT button for accessibility
+SHOW_LOGOUT_ICON = {{ enable_logout_button }}
+{% endif %}
+
 # COMPRESS backend for cluster with memcached
 COMPRESS_CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
 
