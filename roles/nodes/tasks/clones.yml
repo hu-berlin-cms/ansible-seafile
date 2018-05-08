@@ -39,6 +39,7 @@
       - "--exclude=/seafile-data/httptemp"
       - "--exclude=/seafile-data/tmpfiles"
       - "--exclude=/seafile-data/webdavtmp"
+      - "--exclude=/seahub-data/thumbnail"
       - "--exclude=pro-data/search"
       - "--exclude=pro/python/seafes/update.lock"
       - "--exclude=/{{ soffice_home }}"
