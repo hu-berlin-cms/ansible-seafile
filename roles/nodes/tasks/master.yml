@@ -38,6 +38,16 @@
   shell: "chown -R {{ seafile_user }} {{ seafile_base_dir }}"
   when: ccnet_chown.changed
 
+# setup seafile-user home directory and directory for extraction of python-eggs-packages (since v6.2.9)
+- name: create dir for python-eggs
+  file:
+    path="{{ seafile_user_home }}/.python-eggs"
+    owner={{ seafile_user|default('root') }}
+    group={{ seafile_user|default('root') }}
+    state=directory
+    mode=0700
+  when: seafile_version | version_compare('6.2.9', operator='ge')
+
 # create cluster avatar database (duplicate)
 ## to support external databases this gets done
 ## here, too (originally in db/tasks/main.yml)
