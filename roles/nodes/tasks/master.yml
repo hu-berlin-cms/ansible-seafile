@@ -38,6 +38,15 @@
   shell: "chown -R {{ seafile_user }} {{ seafile_base_dir }}"
   when: ccnet_chown.changed
 
+- name: "create needed runtime directory with seafile user rights"
+  file: >
+    state=directory
+    path="{{ seafile_base_dir }}/{{ item }}"
+    owner={{ seafile_user|default('root') }}
+    mode=0770 
+  with_items:
+    - "seafile-server-latest/runtime"
+
 # create cluster avatar database (duplicate)
 ## to support external databases this gets done
 ## here, too (originally in db/tasks/main.yml)
