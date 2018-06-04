@@ -52,6 +52,8 @@
   file: >
     state=directory
     path="{{ seafile_base_dir }}/{{ item }}"
+    owner={{ seafile_user|default('root') }}
+    mode=0770 
   with_items:
     - "pids"
     - "logs"

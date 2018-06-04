@@ -48,6 +48,15 @@
     mode=0700
   when: seafile_version | version_compare('6.2.9', operator='ge')
 
+- name: "create needed runtime directory with seafile user rights"
+  file: >
+    state=directory
+    path="{{ seafile_base_dir }}/{{ item }}"
+    owner={{ seafile_user|default('root') }}
+    mode=0770 
+  with_items:
+    - "seafile-server-latest/runtime"
+
 # create cluster avatar database (duplicate)
 ## to support external databases this gets done
 ## here, too (originally in db/tasks/main.yml)
