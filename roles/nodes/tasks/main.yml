@@ -21,7 +21,11 @@
 
 # configure user if defined
 - name: create seafile user
-  user: name={{ seafile_user }} createhome=no shell=/bin/false
+  user:
+    name: "{{ seafile_user }}"
+    createhome: yes
+    home: "{{ seafile_user_home }}"
+    shell: "/bin/false"
   when: seafile_user is defined
   notify:
     - Restart seafile

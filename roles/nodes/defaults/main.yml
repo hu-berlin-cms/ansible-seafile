@@ -215,3 +215,6 @@ shibboleth_guest_role: 'guest'
 ldap_lib_fix: True
 # rados/ceph workaround, see #1720
 rados_lib_fix: False
+
+# set users static home folder
+seafile_user_home: "/var/local/seafile"
