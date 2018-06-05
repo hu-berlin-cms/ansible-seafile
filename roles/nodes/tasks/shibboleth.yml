@@ -2,8 +2,17 @@
   fail: msg="Apache as webserver is needed for shibboleth!"
   when: webserver != "apache"
 
+- name: "shibboleth: Install SWITCH repo key"
+  apt_key:
+    data: "{{ lookup('file', 'SWITCHaai-swdistrib.asc') }}"
+    state: present
+
+- name: "shibboleth: add SWITCH package source"
+  apt_repository: repo="deb http://pkg.switch.ch/switchaai/ubuntu {{ansible_distribution_release}} main"
+
+
 - name: "shibboleth: install dependencies"
-  apt: name=libapache2-mod-shib2 state=present
+  apt: name=shibboleth install_recommends=yes state=present
 
 - name: "shibboleth: enable apache module"
   apache2_module: name=shib2 state=present
