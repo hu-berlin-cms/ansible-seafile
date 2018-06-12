@@ -1,9 +1,9 @@
 # haproxy supports ssl decryption since 1.5
 # install the PPA of Debian haproxy Maintainer
 # Vincent Bernat (Ubuntu 14.04 LTS only has 1.4)
-- name: Install haproxy-1.5 PPA
-  apt_repository: repo='ppa:vbernat/haproxy-1.5'
-  when: ssl_dec_loadbalancer
+- name: Install haproxy-{{ haproxy_version }} PPA
+  apt_repository: repo='{{ haproxy_repo }}'
+  when: haproxy_custom or (ansible_distribution == 'Ubuntu' and ( ansible_distribution_version | version_compare('14', operator='le') ) and ssl_dec_loadbalancer)
 
 - name: assemble combined cert-key-file
   assemble: >

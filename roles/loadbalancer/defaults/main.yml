@@ -2,3 +2,6 @@
 ssl_dec_loadbalancer: yes
 lb_use_ha: no
 vips: []
+haproxy_custom: no
+haproxy_version: '1.5'
+haproxy_repo: "ppa:vbernat/haproxy-{{ haproxy_version }}"

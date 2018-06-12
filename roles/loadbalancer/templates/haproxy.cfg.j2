@@ -10,6 +10,15 @@ global
   ssl-default-bind-options no-sslv3 no-tls-tickets
   tune.ssl.default-dh-param 2048
 {% endif %}
+{% if haproxy_version is version_compare('1.8', '>=') %}
+{% if haproxy_threads is defined %}
+  nbproc 1
+  nbthread {{ haproxy_threads }}
+{% if haproxy_pinning is defined %}
+  {{ haproxy_pinning }}
+{% endif %}
+{% endif %}
+{% endif %}
 
 defaults
   log  global
