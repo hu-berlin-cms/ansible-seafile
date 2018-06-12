@@ -5,6 +5,11 @@
   apt_repository: repo='{{ haproxy_repo }}'
   when: haproxy_custom or (ansible_distribution == 'Ubuntu' and ( ansible_distribution_version | version_compare('14', operator='le') ) and ssl_dec_loadbalancer)
 
+- apt_key:
+    data: "{{ haproxy_repo_key }}"
+    state: present
+  when: haproxy_repo_key is defined
+
 - name: assemble combined cert-key-file
   assemble: >
     dest=/etc/ssl/seafile-all.pem
