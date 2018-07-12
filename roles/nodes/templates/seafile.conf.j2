@@ -13,6 +13,7 @@ port = {{ seafile_network_port }}
 
 [fileserver]
 port = {{ seafile_fileserver_port }}
+max_download_dir_size={{ seafile_maximum_zip_dir_size }}
 
 {% if keep_days is defined %}
 [history]
