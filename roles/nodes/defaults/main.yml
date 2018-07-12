@@ -37,6 +37,7 @@ ccnet_client_port: 13419
 #seafile.conf
 seafile_network_port: 12001
 seafile_fileserver_port: 8082
+seafile_maximum_zip_dir_size: 200
 
 #database defaults
 db_allowed_hosts: '%'
