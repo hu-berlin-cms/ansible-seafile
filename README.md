@@ -1,3 +1,12 @@
+# Archived
+
+For the last three years we took the burden of maintaining this upstream repo and our own internal repo with our customizations.
+Since we never managed to build a community around this, we now decided to stop investing time into it.
+
+We will continue to use ansible-seafile internally. If you are interested in deploying Seafile Pro using Ansible, feel free to ask us.
+Especially in the higher education context we are still willing to share.
+
+
 # Introduction
 
 Ansible playbook to deploy seafile-pro cluster using HAProxy as loadbalancer, nginx or Apache as webservers, mariadb (single-node).
